@@ -1,0 +1,36 @@
+---
+title: "Fair2-PIT-UN Teaching Materials"
+output: html_document
+date: "2026-01-30"
+---
+
+## Welcome
+
+This site contains teaching materials for understanding bias in data science and machine learning, developed for a university-level course.
+
+## Course Modules
+
+### [Collider Bias](Collider bias.html)
+Learn about collider bias, how it occurs in data analysis, and strategies to identify and mitigate it.
+
+### [Labels Bias](Labels bias.html)
+Explore how bias can be introduced through labeling processes and its implications for fairness in machine learning.
+
+---
+
+## About This Course
+
+These materials were developed as part of the FAIR2-PIT-UN initiative to teach responsible data science practices.
+
+### License
+
+- **Code:** Licensed under the [MIT License](LICENSE)
+- **Educational Content:** Licensed under [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/)
+
+### Attribution
+
+If you use or adapt these materials, please provide appropriate attribution.
+
+---
+
+*Last updated: `r format(Sys.Date(), "%B %d, %Y")`*

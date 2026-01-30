@@ -1,11 +1,7 @@
 ---
 title: "PIT-IDS: Labels Bias"
-output:
-  html_document: 
-    code_folding: hide
-  word_document: default
-  pdf_document: default
-date: "2025-08-18"
+date: "2026-01-30"
+output: html_document
 ---
 
 ```{r setup, include=TRUE, message=FALSE, warning=FALSE}
@@ -260,7 +256,6 @@ df %>%
     axis.text.x = element_text(angle = 45, size = 5, vjust = 1.4, hjust = 1, colour = "black")
   )
 
-ggsave(here::here("output", "health_histogram.png"), dpi = 200, width = 5, height = 3)
 ```
 
 
@@ -299,7 +294,6 @@ df_long %>%
   )
 
 
-ggsave(here::here("output", "health_by_homeless_histogram.png"), dpi = 200, width = 5, height = 3)
 
 ```
 
@@ -398,7 +392,6 @@ ggplot(data = new_data_long, aes(x = Health, y = pred_prob, color = name) ) +
     color = NULL
   )
 
-ggsave("pred_prob_fig.png", dpi = 200, width = 7, height = 5)
 
 ```
 

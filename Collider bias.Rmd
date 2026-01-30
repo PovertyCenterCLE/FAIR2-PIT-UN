@@ -1,6 +1,6 @@
 ---
 title: "PIT-IDS: Collider Bias"
-date: "2025-09-01"
+date: "2026-01-30"
 output: html_document
 ---
 
@@ -356,7 +356,7 @@ round(cor(df %>% filter(Poor_Nbhd=="1") %>% select(Marginalization, Vulnerabilit
 ```
 #### Poor_Nbhd == 0
 
-```{r corr2, echo=FALSE, message=FALSE, warning=FALSE}
+```{r corr3, echo=FALSE, message=FALSE, warning=FALSE}
 
 round(cor(df %>% filter(Poor_Nbhd=="0") %>% select(Marginalization, Vulnerabilities, prob_poor, HSG)), 3) %>% 
   reactable()

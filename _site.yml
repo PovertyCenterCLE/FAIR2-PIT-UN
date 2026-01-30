@@ -1,0 +1,21 @@
+name: "FAIR2-PIT-UN"
+output_dir: "."
+navbar:
+  title: "FAIR2-PIT-UN"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "Collider Bias"
+      href: Collider bias.html
+    - text: "Labels Bias"
+      href: Labels bias.html
+  right:
+    - icon: fa-github
+      href: https://github.com/PovertyCenterCLE/FAIR2-PIT-UN
+output:
+  html_document:
+    theme: cosmo
+    highlight: tango
+    toc: true
+    toc_float: true
+    code_folding: show
