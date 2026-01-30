@@ -10,10 +10,10 @@ This site contains teaching materials for understanding sources of bias in....
 
 ## Course Modules
 
-### [Collider Bias](Collider bias.html)
+### [Collider Bias](Collider-bias.html)
 Learn about collider bias, how it can arise, and strategies to identify and mitigate it.
 
-### [Labels Bias](Labels bias.html)
+### [Labels Bias](Labels-bias.html)
 Explore how bias can be introduced when....
 
 ---

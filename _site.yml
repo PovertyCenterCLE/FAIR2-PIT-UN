@@ -6,9 +6,9 @@ navbar:
     - text: "Home"
       href: index.html
     - text: "Collider Bias"
-      href: Collider bias.html
+      href: Collider-bias.html
     - text: "Labels Bias"
-      href: Labels bias.html
+      href: Labels-bias.html
   right:
     - icon: fa-github
       href: https://github.com/PovertyCenterCLE/FAIR2-PIT-UN
