@@ -1,0 +1,414 @@
+---
+title: "PIT-IDS: Labels Bias"
+output:
+  html_document: 
+    code_folding: hide
+  word_document: default
+  pdf_document: default
+date: "2025-08-18"
+---
+
+```{r setup, include=TRUE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+#install.packages("DiagrammeR")
+library(DiagrammeR)
+library(plotly)
+library(corrplot)
+library(tidyverse)
+library(reactable)
+```
+# Labels Bias
+
+Label bias occurs when an outcome of interest is difficult to observe or capture in data, and we use a closely related variable that *is* observable as a stand-in (i.e., label or proxy) (Mhasawade et al., 2024). For example, homeless populations are notoriously difficult to observe, and thus capture in administrative data. 
+
+On the other hand, service providers keep detailed records on the individuals seeking to stay at local shelters. So if we're interested in determining the need for local homeless services, we might decide to use shelter stays as stand-in for homelessness. The problem is that many homeless individuals never stay at a shelter. As a result, any decisions made based on an analysis that uses shelter stays to represent homelessness may be biased by the exclusion of an important part of the overall homeless population (those without a shelter stay).
+
+<br>
+
+*“If you're not mentally all the way there, then you're not going to actively seek help to fix the situation that you're in, you know. So I think, … your mental state should be taken care of because we can put people in houses or put them in shelters. But are they actively working with the psychiatrist? Are they actively working with the mental health [system]?”* - Data Chat Participant.
+
+<br>
+
+```{r DAG, echo=TRUE, message=FALSE, warning=FALSE}
+grViz("
+digraph DAG {
+  # Node definitions
+  node [shape = ellipse, style = filled, fillcolor = LightSkyBlue, fontname = Helvetica]
+  Poverty [label = 'Poverty']
+  Health [label = 'Health issue']
+  Homelessness [label = 'Homelessness']
+  Shelter [label = 'Shelter']
+
+  # Edge definitions with labels
+  Poverty -> Homelessness [label = '+', fontsize=18]
+  Poverty -> Health [label = '+', fontsize=18]
+  Homelessness -> Shelter [label = '+', fontsize=18]
+  Health -> Shelter [label = '-', fontsize=18]
+  Health -> Homelessness [label = '+', fontsize=18]
+}
+")
+```
+## Simulate data based on causal graph
+
+To illustrate how label bias can occur, and what it might look like, we'll create an example dataset, _df_, consisting of 10,000 administrative records for 10,000 made up people.
+
+_df_ is an individual-level (one record per person) dataset containing the following information about each individual: 
+
+* _Poverty_: 
+
+  * Binary variable indicating poverty status
+    * 1 = Yes (income below poverty threshold)
+    * 0 = No (income above poverty threshold)
+  * In this example, we randomly assign each individual a poverty status, with a 60% probability of being assigned a poverty status of 1
+
+        
+* _Health_: 
+
+  * Continuous variable
+    * Lower values = better health score
+    * Higher values = worse health score 
+    * In this example, health scores are randomly assigned to each individual from a distribution with a mean of 0 and a standard deviation of 1. 
+      * In reality, we know that living in poverty is tied to a wide range of health risks. Therefore, a 'health penalty' of 0.6 is added on to the health score of the 60% of individuals assigned a _Poverty_ value of 1. 
+    
+* _Homelessness_: 
+
+  * Binary variable 
+    * 1 = experiencing homelessness
+    * 0 = not experiencing homelessness. 
+    * This is our our *true variable of interest*. It accurately identifies every homeless individual, including the homeless without a shelter stay.
+    * The probability of a being assigned a value of 1 is determined by multiple factors: 
+      * Experiencing poverty (_Poverty_=1) increases the chances a value of _Homelessness_=1
+      * A higher _Health_ score (where higher values indicate worse health) also increases the chances of experiencing _Homelessness_
+        
+        
+* _Shelter_: 
+  * Binary variable
+  * 1 = shelter stay
+  * 0 = no shelter stay
+  * Because a true, accurate, and complete indicator of _Homelessness_ is unlikely to exist in any real-world administrative dataset, we we might use a variable indicating whether a person stayed at a shelter as a stand-in for homelessness, as shelter stays are more easily observed in administrative records.
+  
+
+
+<br>
+
+```{r simulated data, echo=TRUE, message=FALSE, warning=FALSE}
+set.seed(42)
+N <- 10000
+
+# Poverty: exogenous variable (binary for simplicity)
+Poverty <- rbinom(N, 1, 0.6)  # 60% in poverty
+
+# Health issues: affected by Poverty (+), more poverty -> more health issues
+Health <- 0.6 * Poverty + rnorm(N, mean=0, sd=1)  # continuous
+
+# Homelessness: affected by Poverty (+) and Health issues (+) plus random shock
+Homelessness_score <- 0.7 * Poverty + 0.5 * Health + rnorm(N, mean=0, sd=1) #temporary variable used to assign a binary "Homelessness" value
+Homelessness <- ifelse(Homelessness_score > 1.5, 1, 0)  # binary outcome; Homeless=1 for any individual with a homelessness_score > 1.5 
+
+# Shelter: affected by Homelessness (+) plus random shock and Health (negatively when health issues are high) 
+
+# Calculate mean and SD of Health
+health_mean <- mean(Health)
+health_sd <- sd(Health)
+
+# Indicator for high health issues
+high_health_issue <- ifelse(Health > (health_mean + 0.5*health_sd), 1, 0)
+
+# Shelter score: negative effect only for high health issues
+Shelter_score <-  Homelessness_score - 1.3 * high_health_issue  + rnorm(N, mean=0, sd=0.5) #temporary variable used to assign a binary "Shelter" value
+Shelter <- ifelse(Shelter_score > 0.4 & Homelessness == 1, 1, 0) # binary outcome
+
+
+# Assemble data frame
+df <- data.frame(
+  Poverty = Poverty,
+  Health = Health,
+  Homelessness = Homelessness,
+  Shelter = Shelter
+)
+
+
+
+
+df_long <- df %>% 
+  pivot_longer(-Health) %>% 
+  mutate(health_bins = cut(Health, breaks = seq(min(df$Health)-.5, max(df$Health)+.5, by = 0.5))) %>% 
+  group_by(name, health_bins) %>% 
+  summarise(
+    n1 = sum(value),
+    n = n(), 
+    pct = round(n1 / n * 100)
+  ) %>% 
+  ungroup()
+
+```
+
+<br>
+<br>
+
+### Look at the data
+
+Here are the first few records in our simulated dataset
+```{r, echo=TRUE, message=FALSE, warning=FALSE}
+df %>% 
+  head() %>% 
+  mutate(Health = round(Health, 5)) %>% 
+  reactable()
+```
+
+<br>
+
+### Summarize the data
+
+```{r summary, echo=TRUE, message=FALSE, warning=FALSE}
+# Summary and correlation
+
+df %>% 
+  summarise(across(everything(), list(mean = mean,min = min,max = max))) %>%
+  t() %>% 
+  as.data.frame() %>% 
+  mutate(V1 = round(V1, 3)) %>% 
+  rownames_to_column() %>% 
+  separate(rowname, into = c("variable", "stat"), sep = "_") %>% 
+  pivot_wider(names_from = variable, values_from = V1) %>% 
+  reactable::reactable()
+
+```
+
+
+<br>
+
+
+### Correlation matrix
+
+```{r summary2, echo=TRUE, message=FALSE, warning=FALSE}
+
+
+cor(df) %>% 
+  as.data.frame() %>% 
+  mutate(across(everything(), round, 3)) %>% 
+  reactable()
+
+
+df %>% count(Shelter, Homelessness, Poverty)
+df %>% count(Shelter, Poverty)
+
+```
+<br>
+
+### Differences in average health
+
+```{r summary3, echo=TRUE, message=FALSE, warning=FALSE}
+
+by_df <- df %>% 
+  select(-Health) %>% 
+  rownames_to_column() %>% 
+  pivot_longer(-rowname) %>% 
+  count(name, value) %>% 
+  ungroup() %>% 
+  mutate(value = if_else(value == 0, "Condition = 0", "Condition = 1"), 
+         name = factor(name, ordered = TRUE, levels = c("Poverty", "Shelter", "Homelessness"))) 
+
+
+
+df %>% 
+  group_by(Homelessness, Shelter) %>% 
+  summarise(
+    n_people = n(), 
+    mean_poverty = mean(Poverty), 
+    mean_health = mean(Health)
+  ) %>% 
+  ungroup() 
+
+```
+<br>
+<br>
+
+### Slicing up the data{.tabset}
+
+
+#### Binary counts
+
+Counts of individuals within each of the three binary variables (Poverty, Shelter, and Homelessness)
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+ggplot() + 
+  geom_col(data = by_df, aes(x = name, y = n, group = value, fill = value), position = position_dodge()) + 
+  geom_text(data = by_df, aes(label = n, x = name, y = n + 20, group = value), position = position_dodge(.9)) + 
+  theme_minimal() + 
+  labs(x = "", fill = "Condition", y = "Number of People")
+
+
+```
+
+
+#### Health score
+
+This figure shows the number of people at different levels of health (people with similar health scores are grouped into one of 15 health score 'bins')
+```{r}
+df %>% 
+  mutate(health_bins = cut(Health, breaks = seq(min(df$Health)-.5, max(df$Health)+.5, by = 0.5))) %>% 
+  count(health_bins) %>% 
+  ungroup() %>% 
+  ggplot( aes(x = health_bins, y = n)) + 
+  geom_col( fill = "orange", color = "gray30") +
+  theme_minimal() +
+  labs(
+    x = "←better-----Health Score-----worse→",
+    y = "Number of People") +
+  theme(
+    axis.text.x = element_text(angle = 45, size = 5, vjust = 1.4, hjust = 1, colour = "black")
+  )
+
+ggsave(here::here("output", "health_histogram.png"), dpi = 200, width = 5, height = 3)
+```
+
+
+
+
+
+
+
+
+#### Health-Homelessness
+
+This figure shows the percent of people within each Health Score bin experiencing homelessness (Homelessness = 1)
+
+```{r dist3, echo=TRUE, message=FALSE, warning=FALSE}
+
+
+
+df_long %>% 
+  filter(name == "Homelessness")  %>%  
+  ggplot(aes(x = health_bins, y = n, fill = pct), alpha = .55) + 
+  geom_col() +
+  scale_fill_viridis_c() +
+  geom_text(aes(y = n + 80, label = paste0(pct, "%")), size = 2.5, angle = 45) +
+  theme_minimal() +
+  labs(
+    x = "←better-----Health Score-----worse→",
+    y = "Number of People",
+    fill = "Percent\nHomeless") +
+  theme(
+    axis.text.x = element_text(angle = 45, size = 5, vjust = 1.4, hjust = 1, colour = "black"), 
+    legend.position = "inside", 
+    legend.justification.inside = c(0.93, 0.7), 
+    legend.key.size = unit(0.75, "lines"),
+      legend.title = element_text(size = 7),
+  legend.text  = element_text(size = 5)
+  )
+
+
+ggsave(here::here("output", "health_by_homeless_histogram.png"), dpi = 200, width = 5, height = 3)
+
+```
+
+#### Health-Shelter
+
+This figure shows the percent of people within each Health Score bin who are experiencing homelessness with a shelter stay (Shelter = 1). Comparing this graph with the previous one, the rates of homelessness (with or without a shelter stay) are close to identical for people with relatively fewer health concerns. As we continue looking further to the right, however, we can see some differences between the rates of homelessness vs. shelter for people with more health challenges.  
+
+```{r dist2, echo=TRUE, message=FALSE, warning=FALSE}
+
+
+
+df_long %>% 
+  filter(name == "Shelter")  %>%  
+  ggplot(aes(x = health_bins, y = n, fill = pct), alpha = 0.6) + 
+  geom_col() +
+  scale_fill_viridis_c() +
+  geom_text(aes(y = n + 60, label = paste0(pct, "%")), size = 2.9, angle = 45) +
+  theme_minimal() +
+  labs(
+    x = "←better-----Health Score-----worse→",
+    y = "Number of People",
+    fill = "Percent\n    in\nShelter") +
+  theme(
+    axis.text.x = element_text(angle = 45)
+  )
+
+```
+
+
+
+
+<br>
+<br>
+<br>
+<br>
+
+# Generate Models for Homelessness (unobserved) and Shelter use (observed)
+```{r predictions, echo=TRUE, message=FALSE, warning=FALSE, class.source = 'fold-show'}
+
+# Logistic regression: Homelessness ~ Poverty + Health
+model_homeless <- glm(Homelessness ~ Poverty + Health, data = df, family = binomial)
+
+
+# Logistic regression: Shelter ~ Poverty + Health
+model_shelter <- glm(Shelter ~ Poverty + Health, data = df, family = binomial)
+
+```
+
+We can do a lot with the results of a regression model, as in the code above. We can learn about the relationships between the input variables (i.e., "independent", "upstream", or "cause" variables. Everything after the ~) and the outcome.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+health_seq <- seq(min(df$Health), max(df$Health), length.out = 100)
+head(health_seq)
+tail(health_seq)
+
+new_data <- data.frame(
+  Poverty = 1, 
+  Health = health_seq
+)
+
+
+Homeless <- predict(model_homeless, newdata = new_data, type = "response" )
+Shelter <- predict(model_shelter, newdata = new_data, type = "response" )
+
+
+new_data$Homeless <- round(Homeless * 100, 2)
+new_data$Shelter <- round(Shelter * 100, 2)
+new_data$pred_diff <- round(new_data$Homeless - new_data$Shelter, 2)
+new_data$health_rank <- 1:100
+
+new_data <- new_data %>% 
+  select(health_rank, Homeless, Shelter, pred_diff, Health)
+
+new_data_long <- new_data %>% 
+  select(-pred_diff) %>% 
+  pivot_longer(-c(Health, health_rank)) %>% 
+  rename(pred_prob = value)
+```
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(data = new_data_long, aes(x = Health, y = pred_prob, color = name) ) + 
+  geom_line(size = .9) + 
+  geom_point(data = new_data_long %>% filter(health_rank %in% seq(1, 100, 5)), aes(x = Health, y = pred_prob)) + 
+  theme_minimal() + 
+  theme(
+    legend.position = "bottom"
+    # legend.position = "inside", 
+    # legend.justification.inside = c(.15, .75)
+  ) + 
+  labs(
+    title = "Predicted Probability of Experiencing Homelessness vs. Shelter Stay", 
+    subtitle = "At Different Levels of Health, for Individuals Experiencing Poverty",
+    x = "←(fewer) Health Challenges (more)→", 
+    y = "←(lower) Probability (higher)→", 
+    color = NULL
+  )
+
+ggsave("pred_prob_fig.png", dpi = 200, width = 7, height = 5)
+
+```
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,489 @@
+---
+title: "PIT-IDS: Collider Bias"
+date: "2025-09-01"
+output: html_document
+---
+
+
+```{r setup, include=TRUE,	message = FALSE, warning = FALSE, echo = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+#install.packages("DiagrammeR")
+#if (!requireNamespace("broom", quietly = TRUE)) install.packages("broom")
+
+library(DiagrammeR)
+library(corrplot)
+library(ggplot2)
+library(dplyr)
+library(dagitty)
+library(ggdag)
+library(ggrepel)
+library(tidyverse)
+library(broom)
+library(reactable)
+
+library(patchwork)
+library(knitr)
+```
+
+We're interested in estimating the impact of discrimination (referred to as __marginalized__ or __marginalization__ going forward) on educational outcomes (we could look at any number of different education-related outcomes; today, we'll focus on high school graduation, __HSG__) in a city where low income neighborhoods carry a higher risk of exposure to environmental hazards than higher-income neighborhoods (**Poor_Nbhds**). We'll focus specifically on the risk of exposure to lead, a toxin associated with cognitive and behavioral impairments, via chipped paint and lead-contaminated dust in older homes that may not have been properly maintained over the years.
+
+We start by sketching a simple graphical model (a Directed Acyclic Graph or DAG) representing a hypothesized explanation of the ways in which __marginalization__ impacts __HSG__. Each variable in the DAG is represented by a node, while an edge or arrow between two nodes indicates a causal relationship in the direction of the arrow.
+
+This model proposes two pathways through which __marginalization__ can shape __HSG__ 
+
+* First, there is the direct pathway from __marginalization__ to __HSG__, 
+* There is also an indirect pathway from *marginalization* to __HSG__, via __Poor_Nbhds__. 
+
+
+
+
+
+_Questions:_ 
+
+1. Can you identify the direct and indirect pathways connecting __marginalization__ to __HSG__?
+
+2. In addition to the direct & indirect pathways connecting __marginalization__ to __HSG__, there is one more causal pathway shown in this model. What is it? (i.e., *'X has a direct/indirect impact Y'*)
+
+3. Can you think of a plausible reason (or reasons) for the hypothesized relationships between __marginalization__, __Poor_Nbhds__, and __HSG__ that are shown in the DAG below? 
+
+4. We know that not everyone experiences identical educational outcomes. Do you think this model does a good job of explaining why different people have different educational experiences (whether __HSG__ or educational outcomes more broadly)?
+
+
+
+```{r collider bias DAG, echo=FALSE, message=FALSE, warning=FALSE}
+
+grViz("
+digraph DAG {
+  graph [layout = neato, overlap = false, splines = true]
+
+  # Node definitions
+  node [shape = ellipse, style = filled, fillcolor = '#EAF2F8', fontsize = 11]
+
+  HSG           [label = 'HSG', pos = '2, 1!']
+  Marginalized [label = 'Marginalized', pos = '1,2!']
+  Poor_Nbhd [pos = '-1, 1!']
+
+  # Directed edges
+     Marginalized -> Poor_Nbhd [color = blue, penwidth = 2]
+      Poor_Nbhd -> HSG [color = blue, penwidth = 2]
+    Marginalized -> HSG [color = blue, penwidth = 2]
+
+}
+")
+
+```
+
+<br>
+
+A more realistic DAG recognizes that factors _other than_ discrimination may lead to living in poor neighborhoods. We'll refer to these factors as vulnerabilities (**V**).
+
+What are some possible examples of __V__?
+
+Once included as a variable in the model, we notice that while **V** does influence __Poor_Nbhds__, it doesn't _only_ influence __Poor_Nbhds__. It may _also_ influence __HSG__; to reflect this, we connect these variables with a causal edge. These Vulnerabilities are often difficult to observe, and thus difficult to identify in data, which we note using a dotted contour.  
+
+The updated DAG looks like this:
+
+
+```{r collider bias DAG+, echo=FALSE, message=FALSE, warning=FALSE}
+
+grViz("
+digraph DAG {
+  graph [layout = neato, overlap = false, splines = true]
+
+  # Node definitions
+  node [shape = ellipse, style = filled, fillcolor = '#EAF2F8', fontsize = 11]
+
+  HSG [label = 'HSG', pos = '2,1!']
+  Marginalization [ pos = '1,2!']
+  Poor_Nbhd [pos = '-1, 1!']
+  Vulnerabilities [pos = '1, 0!', style = dotted]
+  
+  # Directed edges
+     Marginalization -> Poor_Nbhd [color = blue, penwidth = 2]
+      Poor_Nbhd -> HSG [color = blue, penwidth = 2]
+    Marginalization -> HSG [color = blue, penwidth = 2]
+ 
+  Vulnerabilities -> Poor_Nbhd [color = darkgreen, penwidth = 2]
+    Vulnerabilities -> HSG [color = darkgreen, penwidth = 2]
+      
+  # Optional styling
+  edge [color = '#555555', arrowsize = 0.8]
+}
+")
+
+```
+
+<br>
+
+Now, let's say our data was restricted to a school district where the majority of students face poverty. In other words, if, in our data, __Poor_Nbhds__ is a binary variable where 1 == "poor neighborhood" and 0 == "non-poor neighborhood", __Poor_Nbhds__ is fixed at 1 (and no longer a variable, as it doesn't vary).
+
+In this scenario, we are "selecting" on __Poor_Nbhds__ (a collider), which opens up a non-causal pathway between __marginalization__ and __HSG__. 
+
+
+The updated DAG looks like this:
+
+
+```{r collider bias DAG++, echo=FALSE, message=FALSE, warning=FALSE}
+
+grViz("
+digraph DAG {
+  graph [layout = neato, overlap = false, splines = true]
+
+  # Node definitions
+  node [shape = ellipse, style = filled, fillcolor = '#EAF2F8', fontsize = 11]
+
+  HSG           [label = 'HSG', pos = '2,0!']
+  Marginalization [label = 'Marginalization', pos = '1,2!']
+  Poor_Nbhd [pos = '-1, 1!', shape = rectangule, style = filled, fillcolor = pink, fontsize = 11]
+  Vulnerabilities [pos = '-1.2, 0.5!', style = 'dotted']
+  
+  # Directed edges
+       
+    Marginalization -> Poor_Nbhd [color = red, penwidth = 2]
+    Poor_Nbhd -> HSG [color = blue, penwidth = 2]
+    Marginalization -> HSG [color = blue, penwidth = 2]
+ 
+  Vulnerabilities -> Poor_Nbhd [color = red, penwidth = 2]
+    Vulnerabilities -> HSG [color = blue, penwidth = 2]
+
+}
+")
+
+```
+
+How does selection on a collider bias our estimates on the causal effect of discrimination on high school graduation?
+
+
+To explore this question, we will simulate data that mirrors the relationships specified in our DAG. The data simulation also needs to make assumptions about the statistical characteristics of the data such as distributional forms and parameters. In reality, we would work with real data, make distributional assumption and estimate parameters under those assumptions. However, simulated data works well to illustrate collider bias as we can see how the "real" (simulated) parameters compare to those estimated when bias is present. 
+
+```{r Simulate data, echo=FALSE}
+
+#students may skip this data simulation step
+#set a seed to generate random numbers
+set.seed(2025)
+
+# We will assume living in a poor nbhd and Marginalization are binary variables, while Vulnerabilities is a standardized scores (normal(0,1)), where higher values reflect higher levels of Vulnerabilities.
+
+# ### Simulation parameters 
+
+# ---- Simulation (use the working parameters you had) ----
+n <- 10000
+p_M <- 0.30
+bM <- 3.0
+bV <- 3.0
+bInt <- 6.0
+# calibrated intercept from prior run (replace with your a_guess if you calibrated)
+# For reproducibility here we solve intercept so prevalence ~ 0.40
+target_prev_poor <- 0.40
+calib_n <- 200000
+M_calib <- rbinom(calib_n, 1, p_M)
+V_calib <- rnorm(calib_n)
+expected_prev <- function(a) mean(plogis(a + bM*M_calib + bV*V_calib + bInt*(1-M_calib)*V_calib))
+a_guess <- uniroot(function(a) expected_prev(a) - target_prev_poor, c(-10,10))$root
+
+# HSG DGP
+beta_M_to_HSG <- -2.0
+beta_V_to_HSG <- -2.5
+beta_Poor_to_HSG <- -3.0
+sigma_HSG <- 0.8
+
+# Simulate final
+M <- rbinom(n, 1, p_M)
+V <- rnorm(n)
+lp_final <- a_guess + bM*M + bV*V + bInt*(1 - M) * V
+prob_poor <- plogis(lp_final)
+Poor <- rbinom(n, 1, prob_poor)
+
+HSG_raw <- beta_M_to_HSG * M + beta_V_to_HSG * V + beta_Poor_to_HSG * Poor + rnorm(n, 0, sigma_HSG)
+
+# Rescale HSG to 0-1 (min-max)
+HSG_01 <- (HSG_raw - min(HSG_raw)) / (max(HSG_raw) - min(HSG_raw))
+
+# Put into data.frame
+df <- tibble::tibble(
+  Marginalization = M,
+  Vulnerabilities = V,
+  Poor_Nbhd = factor(Poor,ordered = TRUE, levels = c(0,1)),
+  prob_poor = prob_poor,
+  HSG_raw = HSG_raw,
+  HSG = HSG_01
+)
+
+```
+
+
+
+### Simulated data descriptive statistics{.tabset}
+
+Let's see what the data looks like. What do you notice when comparing all students vs. those living in poor neighborhood vs. those living in non-poor neighborhoods?
+
+#### Full data
+
+In this table, the mean values for __Marginalization__ and __Poor_Nbhd__ can be interpreted as 'the probability that a student belongs to a marginalized group' and 'the probability that a student lives in a poor neighborhood', respectively.
+
+These probability statements can also be written as: 
+
+_P(Marginalization)_ and
+
+_P(Poor_Nbhd)_
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+df %>% 
+  mutate(Poor_Nbhd = as.numeric(Poor_Nbhd) - 1) %>% 
+  summarise(across(c(Marginalization, Vulnerabilities, Poor_Nbhd, HSG), 
+                   list(a = n_distinct, b = mean, c = min, d = max))) %>% 
+  t() %>% 
+  as.data.frame() %>% 
+  rownames_to_column() %>% 
+  mutate(
+    var = str_sub(rowname, 1, -3), 
+    stat = str_sub(rowname, -1)
+  ) %>% 
+  select(-rowname) %>% 
+  mutate(
+    stat = case_when(
+      stat == "a" ~ "n_distinct", 
+      stat == "b" ~ "mean", 
+      stat == "c" ~ "min", 
+      stat == "d" ~ "max"
+    )
+  ) %>% 
+  pivot_wider(names_from = stat, values_from = V1) %>% 
+  mutate(across(c(mean, min, max), ~round(., 5))) %>% 
+  reactable()
+
+```
+
+#### Poor_Nbhd == 1
+
+If we look only at the subset of students living in a _poor_ neighborhood, the mean value of __Marginalization__ can be interpreted as 'the probability that a student belongs to a marginalized group, given that they live in a poor neighborhood', or
+
+_P(Marginalization|Poor_Nbhd == 1)_
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+df %>% 
+  mutate(Poor_Nbhd = as.numeric(Poor_Nbhd) - 1) %>% 
+  filter(Poor_Nbhd == 1) %>% 
+  summarise(across(c(Marginalization, Vulnerabilities, HSG), 
+                   list(a = n_distinct, b = mean, c = min, d = max))) %>% 
+  t() %>% 
+  as.data.frame() %>% 
+  rownames_to_column() %>% 
+  mutate(
+    var = str_sub(rowname, 1, -3), 
+    stat = str_sub(rowname, -1)
+  ) %>% 
+  select(-rowname) %>% 
+  mutate(
+    stat = case_when(
+      stat == "a" ~ "n_distinct", 
+      stat == "b" ~ "mean", 
+      stat == "c" ~ "min", 
+      stat == "d" ~ "max"
+    )
+  ) %>% 
+  pivot_wider(names_from = stat, values_from = V1) %>% 
+  mutate(across(c(mean, min, max), ~round(., 5))) %>% 
+  reactable()
+```
+
+
+#### Poor_Nbhd == 0
+
+
+And if we focus only on students living in _non-poor_ neighborhoods, the mean value of __Marginalization__ can be interpreted as 'the probability that a student belongs to a marginalized group, given that they live in a non-poor neighborhood', or
+
+_P(Marginalization|Poor_Nbhd == 0)_
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+df %>% 
+  mutate(Poor_Nbhd = as.numeric(Poor_Nbhd) - 1) %>% 
+  filter(Poor_Nbhd == 0) %>% 
+  summarise(across(c(Marginalization, Vulnerabilities, HSG), 
+                   list(a = n_distinct, b = mean, c = min, d = max))) %>% 
+  t() %>% 
+  as.data.frame() %>% 
+  rownames_to_column() %>% 
+  mutate(
+    var = str_sub(rowname, 1, -3), 
+    stat = str_sub(rowname, -1)
+  ) %>% 
+  select(-rowname) %>% 
+  mutate(
+    stat = case_when(
+      stat == "a" ~ "n_distinct", 
+      stat == "b" ~ "mean", 
+      stat == "c" ~ "min", 
+      stat == "d" ~ "max"
+    )
+  ) %>% 
+  pivot_wider(names_from = stat, values_from = V1) %>% 
+  mutate(across(c(mean, min, max), ~round(., 5))) %>% 
+  reactable()
+```
+
+
+
+
+<br>
+<br>
+
+### Correlations{.tabset}
+
+
+Next let's see how the variables in our simulated data are correlated with one another overall, and among the subset of student living in poor neighborhoods.
+
+What is the correlation coefficient on __marginalization__ and __vulnerabilities__ in the full sample? Do they have a strong relationship?
+
+What about when we restrict our data to students living in poor neighborhoods? What is the nature of the relationship between __marginalization__ and __vulnerabilities__ now? 
+
+#### Full sample
+
+```{r corr1, echo=FALSE, message=FALSE, warning=FALSE}
+
+
+round(cor(df %>% select(Marginalization, Vulnerabilities, prob_poor, HSG)), 3) %>% reactable()
+
+```
+
+#### Poor_Nbhd == 1
+
+```{r corr2, echo=FALSE, message=FALSE, warning=FALSE}
+
+round(cor(df %>% filter(Poor_Nbhd=="1") %>% select(Marginalization, Vulnerabilities, prob_poor, HSG)), 3) %>% 
+  reactable()
+```
+#### Poor_Nbhd == 0
+
+```{r corr2, echo=FALSE, message=FALSE, warning=FALSE}
+
+round(cor(df %>% filter(Poor_Nbhd=="0") %>% select(Marginalization, Vulnerabilities, prob_poor, HSG)), 3) %>% 
+  reactable()
+```
+# 
+
+
+See how __marginalization__ and __vulnerabilities__ are NOT correlated in the entire sample, but for the data on students in poor neighborhoods only, __marginalization__ and __vulnerabilities__ appear to be negatively correlated. 
+
+This is a product of selecting on a collider and leads to bias in our estimation of causal effects of __marginalization__ on high school graduation.
+
+<br>
+
+### Estimating the effect of marginalization on High school graduation under collider bias.{.tabset}
+
+#### Model 1
+
+We first estimate parameters in linear regressions for all data (poor and non-poor neighborhoods) to see if we can recover the causal effect estimates of __marginalization__ on __HSG__.
+
+```{r regression1, echo=TRUE, message=FALSE, warning=FALSE}
+# Estimate parameters in linear regressions for all data (poor and non-poor neighborhoods) to see if we can recover the causal effect estimates of Marginalization on HSG
+lm_full <- lm(HSG ~ Marginalization + Poor_Nbhd, data = df)                # Observational realistic model (V unobserved)
+summary(lm_full)
+```
+
+#### Model 2
+
+Then we assume we only have data for students living in poor neighborhoods (selection on collider) and run the regression for this data.
+
+```{r regression2, echo=TRUE, message=FALSE, warning=FALSE}
+
+# Now assume we only have data for students living in poor neighborhoods (selection on collider) and run the regression for this data.
+df_sel <- df %>% filter(Poor_Nbhd == "1")
+lm_sel  <- lm(HSG ~ Marginalization, data = df_sel)                       # selected-only
+summary(lm_sel)
+```
+
+#### Model 3
+
+Finally assume we can observe Vulnerabilities  (unfeasible in practice) so we are able to control for this confounder. This model should give better estimates of the causal effect of __marginalization__ on __HSG__.
+
+```{r regression3, echo=TRUE, message=FALSE, warning=FALSE}
+
+# Finally assume we observed Vulnerabilities so we could control for this confounder
+lm_full_v <- lm(HSG ~ Marginalization + Poor_Nbhd + Vulnerabilities, data = df)  # reference (unfeasible in practice)
+
+summary(lm_full_v)
+
+```
+
+
+#### Compare models
+
+We see, in fact, that this negative effect is the strongest in the model with all variables including vulnerabilities and the smallest when collider bias is present.
+
+This is an example of how, even when we have population data (meaning data from all students in a school district), our estimates may carry bias.
+
+```{r regression results, echo=FALSE, message=FALSE, warning=FALSE}
+
+# Print tidy regression outputs
+tab_full <- tidy(lm_full) %>% mutate(model = "Full (no V)")
+tab_sel  <- tidy(lm_sel)  %>% mutate(model = "Selected (Poor==1)")
+tab_ref  <- tidy(lm_full_v)%>% mutate(model = "Full (with V)")
+reg_table <- bind_rows(tab_full, tab_sel, tab_ref) %>%
+  select(model, term, estimate, std.error, statistic, p.value) %>%
+  mutate(across(where(is.numeric), ~round(.,4)))
+reactable(reg_table)
+
+# Numeric bias in Marginalization coefficient
+coef_full <- coef(lm_full)["Marginalization"]
+coef_sel  <- coef(lm_sel)["Marginalization"]
+bias <- coef_sel - coef_full
+# cat("\nMarginalization coef - full:", round(coef_full,4), 
+#     "; selected:", round(coef_sel,4), "; bias (sel - full):", round(bias,4), "\n\n")
+
+
+# ---- Coefficient plot (Marginalization estimate with 95% CI) ----
+# Extract Marginalization coefficient & CI for each model
+get_coef_ci <- function(mod, term = "Marginalization") {
+  s <- summary(mod)
+  est <- coef(mod)[term]
+  se  <- s$coefficients[term, "Std. Error"]
+  ci_low <- est - 1.96 * se
+  ci_high <- est + 1.96 * se
+  tibble::tibble(term = term, estimate = est, se = se, ci_low = ci_low, ci_high = ci_high)
+}
+
+coef_full <- get_coef_ci(lm_full) %>% mutate(model = "Full (no V)")
+coef_sel  <- get_coef_ci(lm_sel)  %>% mutate(model = "Selected (Poor==1)")
+coef_v    <- get_coef_ci(lm_full_v)%>% mutate(model = "Full (with V)")
+
+coef_all <- bind_rows(coef_full, coef_sel, coef_v) %>%
+  mutate(across(where(is.numeric), ~round(.,4)))
+
+```
+
+<br>
+<br>
+
+```{r plot1, echo=FALSE, message=FALSE, warning=FALSE}
+
+
+# Plot coefficient estimates under three scenarios showing how selecting on a collider biases the estimate of marginalization on HSG downward.
+ggplot(coef_all, aes(x = model, y = estimate)) +
+  geom_point(size = 3) +
+  geom_errorbar(aes(ymin = ci_low, ymax = ci_high), width = 0.2) +
+  labs(title = "Marginalization coefficient (95% CI) across models",
+       y = "Estimate (difference in HSG, 0-1 scale)", x = "") +
+  theme_minimal()
+
+```
+
+<br>
+
+
+
+
+
+<br>
+
+
+# 
+
+<br>
+
+### Some real-world examples of collider bias
+
+A salient example of collider bias was featured in a study that used police records (selected sample) to estimate the effects of segregation on use of force by police and erroneously found minimal effects. https://jmummolo.scholar.princeton.edu/publications/bias-built-how-administrative-records-mask-racially-biased-policing
+
+Look for other cases of collider bias in public health and social welfare to become familiar with this type of bias and its potential impact on social policy. https://pmc.ncbi.nlm.nih.gov/articles/PMC6452862/ 
