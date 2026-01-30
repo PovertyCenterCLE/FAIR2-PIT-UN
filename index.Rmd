@@ -6,21 +6,21 @@ date: "2026-01-30"
 
 ## Welcome
 
-This site contains teaching materials for understanding bias in data science and machine learning, developed for a university-level course.
+This site contains teaching materials for understanding sources of bias in....
 
 ## Course Modules
 
 ### [Collider Bias](Collider bias.html)
-Learn about collider bias, how it occurs in data analysis, and strategies to identify and mitigate it.
+Learn about collider bias, how it can arise, and strategies to identify and mitigate it.
 
 ### [Labels Bias](Labels bias.html)
-Explore how bias can be introduced through labeling processes and its implications for fairness in machine learning.
+Explore how bias can be introduced when....
 
 ---
 
 ## About This Course
 
-These materials were developed as part of the FAIR2-PIT-UN initiative to teach responsible data science practices.
+These materials were developed as part of the FAIR2-PIT-UN initiative....
 
 ### License
 
