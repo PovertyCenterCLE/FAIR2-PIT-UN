@@ -33,6 +33,8 @@ library(knitr)
 
 ```
 
+*(note, the R code used to generate this page can be downloaded [here](https://github.com/PovertyCenterCLE/FAIR2-PIT-UN/blob/main/Collider-bias.Rmd))*
+
 We're interested in estimating the impact of discrimination (referred to as __marginalized__ or __marginalization__ going forward) on educational outcomes (we could look at any number of different education-related outcomes; today, we'll focus on high school graduation, __hs_grad__) in a city where lower-income neighborhoods carry a higher risk of exposure to environmental hazards than higher-income neighborhoods (**low_income_nhood**). We'll focus specifically on the risk of exposure to lead, a toxin associated with cognitive and behavioral impairments, via chipped paint and lead-contaminated dust in older homes that may not have been properly maintained over the years.
 
 We start by sketching a simple graphical model (a Directed Acyclic Graph or DAG) representing a hypothesized explanation of the ways in which __marginalization__ impacts __hs_grad__. Each variable in the DAG is represented by a node, while an edge or arrow between two nodes indicates a causal relationship in the direction of the arrow.

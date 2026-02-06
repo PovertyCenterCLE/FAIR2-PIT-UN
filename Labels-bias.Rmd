@@ -24,7 +24,7 @@ library(reactable)
 
 
 
-# Labels Bias
+*(note, the R code used to generate this page can be downloaded [here](https://github.com/PovertyCenterCLE/FAIR2-PIT-UN/blob/main/Labels-bias.Rmd))*
 
 Label bias occurs when an outcome of interest is difficult to observe or capture in data, and we use a closely related variable that *is* observable as a stand-in for it (Mhasawade et al., 2024). For example, say we're interested in determining the need for local homeless services. A logical first step might be to identify the size of the homeless population in the service area. 
 

@@ -1,7 +1,6 @@
 ---
 title: "Fair2-PIT-UN Teaching Materials"
 output: html_document
-date: "2026-01-30"
 ---
 
 ```{css, echo=FALSE}
@@ -33,10 +32,12 @@ Join us in enhancing the power of linked administrative data with community know
 •	**Module 3: Label Bias in IDS Analytics** Not everything that matters is measured. Learn to identify Label Bias, where administrative proxies (like shelter use) are used to represent complex human outcomes (like homelessness).
 
   * [Slide presentation](https://cwru.box.com/s/3q1dn93nvpgm7h33qipn55i4d8y7lqr7)
+  * [R code](https://github.com/PovertyCenterCLE/FAIR2-PIT-UN/blob/main/Labels-bias.Rmd)
 
 •	**Module 4: Collider Bias** Here we see how administrative data is prone to what is called collider bias and how ignoring the selection process of people represented in administrative data can create statistical illusions that mask discrimination.
 
   * [Slide presentation](https://cwru.box.com/s/gq0aio4xoyywqsk0a2bkyhco7rsj4ns2)
+  * [R code](https://github.com/PovertyCenterCLE/FAIR2-PIT-UN/blob/main/Collider-bias.Rmd)
 
 •	**Module 5: Recommendations for Social Change** This final module provides strategies for social workers and data practitioners to advocate for better data intake, more precise research questions, and the ethical dissemination of findings. 
 
