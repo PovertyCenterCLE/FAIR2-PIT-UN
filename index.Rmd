@@ -36,8 +36,8 @@ Join us in enhancing the power of linked administrative data with community know
 
 •	**Module 4: Collider Bias** Here we see how administrative data is prone to what is called collider bias and how ignoring the selection process of people represented in administrative data can create statistical illusions that mask discrimination.
 
-  * [Collider bias in IDS analytics](https://cwru.box.com/s/gq0aio4xoyywqsk0a2bkyhco7rsj4ns2)
+  * [Slide presentation](https://cwru.box.com/s/gq0aio4xoyywqsk0a2bkyhco7rsj4ns2)
 
 •	**Module 5: Recommendations for Social Change** This final module provides strategies for social workers and data practitioners to advocate for better data intake, more precise research questions, and the ethical dissemination of findings. 
 
-  * [Slides](https://cwru.box.com/s/4y28irzq5onz99gupddmd22fksuxjmsj)
+  * [Slide presentation](https://cwru.box.com/s/4y28irzq5onz99gupddmd22fksuxjmsj)

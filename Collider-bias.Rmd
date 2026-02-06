@@ -386,7 +386,7 @@ We first estimate parameters in linear regressions for all data (poor and non-po
 
 ```{r regression1, echo=TRUE, message=FALSE, warning=FALSE}
 # Estimate parameters in linear regressions for all data (poor and non-poor neighborhoods) to see if we can recover the causal effect estimates of Marginalization on hs_grad
-lm_full <- lm(hs_grad ~ Marginalization + low_income_nhood, data = df)                # Observational realistic model (V unobserved)
+lm_full <- lm(hs_grad ~ Marginalization, data = df)                # Observational realistic model (V unobserved)
 summary(lm_full)
 ```
 
@@ -397,34 +397,22 @@ Then we assume we only have data for students living in poor neighborhoods (sele
 ```{r regression2, echo=TRUE, message=FALSE, warning=FALSE}
 
 # Now assume we only have data for students living in poor neighborhoods (selection on collider) and run the regression for this data.
-df_sel <- df %>% filter(low_income_nhood == "1")
-lm_sel  <- lm(hs_grad ~ Marginalization, data = df_sel)                       # selected-only
+
+lm_sel  <- lm(hs_grad ~ Marginalization, data = df[df$low_income_nhood == 1,])                       # selected-only
 summary(lm_sel)
 ```
 
+
 #### Model 3
-
-Finally assume we can observe Vulnerabilities  (unfeasible in practice) so we are able to control for this confounder. This model should give better estimates of the causal effect of __marginalization__ on __hs_grad__.
-
-```{r regression3, echo=TRUE, message=FALSE, warning=FALSE}
-
-# Finally assume we observed Vulnerabilities so we could control for this confounder
-lm_full_v <- lm(hs_grad ~ Marginalization + low_income_nhood + Vulnerabilities, data = df)  # reference (unfeasible in practice)
-
-summary(lm_full_v)
-
-```
-
-#### Model 4
 
 Finally assume we do not take into account neighborhood poverty/income, but can observe Vulnerabilities (unfeasible in practice), so we are able to control for this confounder. This model should give better estimates of the causal effect of __marginalization__ on __hs_grad__.
 
 ```{r regression4, echo=TRUE, message=FALSE, warning=FALSE}
 
 # Finally assume we observed Vulnerabilities so we could control for this confounder
-lm_no_nhood <- lm(hs_grad ~ Marginalization +  Vulnerabilities, data = df)  # reference (unfeasible in practice)
+lm_ref <- lm(hs_grad ~ Marginalization +  Vulnerabilities, data = df)  # reference (unfeasible in practice)
 
-summary(lm_no_nhood)
+summary(lm_ref)
 
 ```
 
@@ -440,9 +428,8 @@ This is an example of how, even when we have population data (meaning data from 
 # Print tidy regression outputs
 tab_full <- tidy(lm_full) %>% mutate(model = "Full (no V)")
 tab_sel  <- tidy(lm_sel)  %>% mutate(model = "Selected (Poor==1)")
-tab_ref  <- tidy(lm_full_v)%>% mutate(model = "Full (with V)")
-tab_no_nhood  <- tidy(lm_no_nhood) %>% mutate(model = "Full (dropped low-income neighborhood)")
-reg_table <- bind_rows(tab_full, tab_sel, tab_ref, tab_no_nhood) %>%
+tab_ref  <- tidy(lm_ref) %>% mutate(model = "Full (with V)")
+reg_table <- bind_rows(tab_full, tab_sel, tab_ref) %>%
   select(model, term, estimate, std.error, statistic, p.value) %>%
   mutate(across(where(is.numeric), ~round(.,4)))
 reactable(reg_table)
@@ -468,10 +455,9 @@ get_coef_ci <- function(mod, term = "Marginalization") {
 
 coef_full <- get_coef_ci(lm_full) %>% mutate(model = "Full (no V)")
 coef_sel  <- get_coef_ci(lm_sel)  %>% mutate(model = "Selected (Poor==1)")
-coef_v    <- get_coef_ci(lm_full_v)%>% mutate(model = "Full (with V)")
-coef_no_nhood    <- get_coef_ci(lm_no_nhood)%>% mutate(model = "lm_no_nhood")
+coef_ref    <- get_coef_ci(lm_ref)%>% mutate(model = "Full (with V)")
 
-coef_all <- bind_rows(coef_full, coef_sel, coef_v, coef_no_nhood) %>%
+coef_all <- bind_rows(coef_full, coef_sel, coef_ref) %>%
   mutate(across(where(is.numeric), ~round(.,4)))
 
 ```
