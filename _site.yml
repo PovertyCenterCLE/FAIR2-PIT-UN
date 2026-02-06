@@ -16,6 +16,6 @@ output:
   html_document:
     theme: cosmo
     highlight: tango
-    toc: true
-    toc_float: true
+    toc: false
+    toc_float: false
     code_folding: show

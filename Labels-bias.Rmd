@@ -335,11 +335,11 @@ df_long %>%
 
 # Logistic regression: Homelessness ~ Poverty + Health
 model_homeless <- glm(Homelessness ~ Poverty + Health, data = df, family = binomial)
-
+summary(model_homeless)
 
 # Logistic regression: Shelter ~ Poverty + Health
 model_shelter <- glm(Shelter ~ Poverty + Health, data = df, family = binomial)
-
+summary(model_shelter)
 ```
 
 We can do a lot with the results of a regression model, as in the code above. We can learn about the relationships between the input variables (i.e., "independent", "upstream", or "cause" variables. Everything after the ~) and the outcome.
