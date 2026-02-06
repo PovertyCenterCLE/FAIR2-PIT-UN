@@ -5,10 +5,10 @@ navbar:
   left:
     - text: "Home"
       href: index.html
-    - text: "Collider Bias"
-      href: Collider-bias.html
-    - text: "Labels Bias"
+    - text: "Module 3: Labels Bias"
       href: Labels-bias.html
+    - text: "Module 4: Collider Bias"
+      href: Collider-bias.html
   right:
     - icon: fa-github
       href: https://github.com/PovertyCenterCLE/FAIR2-PIT-UN
@@ -18,4 +18,4 @@ output:
     highlight: tango
     toc: false
     toc_float: false
-    code_folding: show
+    code_folding: hide

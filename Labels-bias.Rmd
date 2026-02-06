@@ -4,7 +4,7 @@ date: "2026-01-30"
 output: html_document
 ---
 
-```{r setup, include=TRUE, message=FALSE, warning=FALSE}
+```{r setup, include=TRUE, message = FALSE, warning = FALSE, echo = FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 #install.packages("DiagrammeR")
 library(DiagrammeR)
@@ -13,11 +13,22 @@ library(corrplot)
 library(tidyverse)
 library(reactable)
 ```
+
+```{css, echo=FALSE}
+.navbar-default {
+    background-color: #123271;
+    border-color: #123271;
+}
+
+```
+
+
+
 # Labels Bias
 
-Label bias occurs when an outcome of interest is difficult to observe or capture in data, and we use a closely related variable that *is* observable as a stand-in (i.e., label or proxy) (Mhasawade et al., 2024). For example, homeless populations are notoriously difficult to observe, and thus capture in administrative data. 
+Label bias occurs when an outcome of interest is difficult to observe or capture in data, and we use a closely related variable that *is* observable as a stand-in for it (Mhasawade et al., 2024). For example, say we're interested in determining the need for local homeless services. A logical first step might be to identify the size of the homeless population in the service area. 
 
-On the other hand, service providers keep detailed records on the individuals seeking to stay at local shelters. So if we're interested in determining the need for local homeless services, we might decide to use shelter stays as stand-in for homelessness. The problem is that many homeless individuals never stay at a shelter. As a result, any decisions made based on an analysis that uses shelter stays to represent homelessness may be biased by the exclusion of an important part of the overall homeless population (those without a shelter stay).
+This presents an immediate challenge, as homeless populations are notoriously difficult to observe. On the other hand, providers of homeless services keep detailed records on the individuals seeking to stay at local shelters. So if we're interested in determining the need for local homeless services, we might decide to use shelter stays as stand-in for homelessness. The problem is that many homeless individuals never stay at a shelter. As a result, any decisions made based on an analysis that **labels** *shelter stays* as *homelessness*, may be biased by the exclusion of an important part of the overall homeless population: those experiencing housing instability or homelessness, who never interact with a shelter.
 
 <br>
 
@@ -82,7 +93,7 @@ _df_ is an individual-level (one record per person) dataset containing the follo
   * 1 = shelter stay
   * 0 = no shelter stay
   * Because a true, accurate, and complete indicator of _Homelessness_ is unlikely to exist in any real-world administrative dataset, we we might use a variable indicating whether a person stayed at a shelter as a stand-in for homelessness, as shelter stays are more easily observed in administrative records.
-  
+
 
 
 <br>

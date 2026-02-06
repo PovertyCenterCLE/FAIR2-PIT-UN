@@ -363,10 +363,10 @@ $(document).ready(function () {
   <a href="index.html">Home</a>
 </li>
 <li>
-  <a href="Collider-bias.html">Collider Bias</a>
+  <a href="Labels-bias.html">Module 3: Labels Bias</a>
 </li>
 <li>
-  <a href="Labels-bias.html">Labels Bias</a>
+  <a href="Collider-bias.html">Module 4: Collider Bias</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -399,28 +399,32 @@ $(document).ready(function () {
 </div>
 
 
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co">#install.packages(&quot;DiagrammeR&quot;)</span></span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(DiagrammeR)</span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="fu">library</span>(reactable)</span></code></pre></div>
+<style type="text/css">
+.navbar-default {
+    background-color: #123271;
+    border-color: #123271;
+}
+
+</style>
 <div id="labels-bias" class="section level1">
 <h1>Labels Bias</h1>
 <p>Label bias occurs when an outcome of interest is difficult to observe
 or capture in data, and we use a closely related variable that
-<em>is</em> observable as a stand-in (i.e., label or proxy) (Mhasawade
-et al., 2024). For example, homeless populations are notoriously
-difficult to observe, and thus capture in administrative data.</p>
-<p>On the other hand, service providers keep detailed records on the
-individuals seeking to stay at local shelters. So if we’re interested in
-determining the need for local homeless services, we might decide to use
-shelter stays as stand-in for homelessness. The problem is that many
-homeless individuals never stay at a shelter. As a result, any decisions
-made based on an analysis that uses shelter stays to represent
-homelessness may be biased by the exclusion of an important part of the
-overall homeless population (those without a shelter stay).</p>
+<em>is</em> observable as a stand-in for it (Mhasawade et al., 2024).
+For example, say we’re interested in determining the need for local
+homeless services. A logical first step might be to identify the size of
+the homeless population in the service area.</p>
+<p>This presents an immediate challenge, as homeless populations are
+notoriously difficult to observe. On the other hand, providers of
+homeless services keep detailed records on the individuals seeking to
+stay at local shelters. So if we’re interested in determining the need
+for local homeless services, we might decide to use shelter stays as
+stand-in for homelessness. The problem is that many homeless individuals
+never stay at a shelter. As a result, any decisions made based on an
+analysis that <strong>labels</strong> <em>shelter stays</em> as
+<em>homelessness</em>, may be biased by the exclusion of an important
+part of the overall homeless population: those experiencing housing
+instability or homelessness, who never interact with a shelter.</p>
 <p><br></p>
 <p><em>“If you’re not mentally all the way there, then you’re not going
 to actively seek help to fix the situation that you’re in, you know. So
@@ -429,25 +433,25 @@ people in houses or put them in shelters. But are they actively working
 with the psychiatrist? Are they actively working with the mental health
 [system]?”</em> - Data Chat Participant.</p>
 <p><br></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">grViz</span>(<span class="st">&quot;</span></span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="st">digraph DAG {</span></span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="st">  # Node definitions</span></span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="st">  node [shape = ellipse, style = filled, fillcolor = LightSkyBlue, fontname = Helvetica]</span></span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="st">  Poverty [label = &#39;Poverty&#39;]</span></span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="st">  Health [label = &#39;Health issue&#39;]</span></span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="st">  Homelessness [label = &#39;Homelessness&#39;]</span></span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="st">  Shelter [label = &#39;Shelter&#39;]</span></span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="st">  # Edge definitions with labels</span></span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="st">  Poverty -&gt; Homelessness [label = &#39;+&#39;, fontsize=18]</span></span>
-<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="st">  Poverty -&gt; Health [label = &#39;+&#39;, fontsize=18]</span></span>
-<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="st">  Homelessness -&gt; Shelter [label = &#39;+&#39;, fontsize=18]</span></span>
-<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="st">  Health -&gt; Shelter [label = &#39;-&#39;, fontsize=18]</span></span>
-<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="st">  Health -&gt; Homelessness [label = &#39;+&#39;, fontsize=18]</span></span>
-<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="st">&quot;</span>)</span></code></pre></div>
-<div class="grViz html-widget html-fill-item" id="htmlwidget-4f6ff5cd83c128a07466" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-4f6ff5cd83c128a07466">{"x":{"diagram":"\ndigraph DAG {\n  # Node definitions\n  node [shape = ellipse, style = filled, fillcolor = LightSkyBlue, fontname = Helvetica]\n  Poverty [label = \"Poverty\"]\n  Health [label = \"Health issue\"]\n  Homelessness [label = \"Homelessness\"]\n  Shelter [label = \"Shelter\"]\n\n  # Edge definitions with labels\n  Poverty -> Homelessness [label = \"+\", fontsize=18]\n  Poverty -> Health [label = \"+\", fontsize=18]\n  Homelessness -> Shelter [label = \"+\", fontsize=18]\n  Health -> Shelter [label = \"-\", fontsize=18]\n  Health -> Homelessness [label = \"+\", fontsize=18]\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">grViz</span>(<span class="st">&quot;</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="st">digraph DAG {</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="st">  # Node definitions</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="st">  node [shape = ellipse, style = filled, fillcolor = LightSkyBlue, fontname = Helvetica]</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="st">  Poverty [label = &#39;Poverty&#39;]</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="st">  Health [label = &#39;Health issue&#39;]</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="st">  Homelessness [label = &#39;Homelessness&#39;]</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="st">  Shelter [label = &#39;Shelter&#39;]</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="st">  # Edge definitions with labels</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="st">  Poverty -&gt; Homelessness [label = &#39;+&#39;, fontsize=18]</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="st">  Poverty -&gt; Health [label = &#39;+&#39;, fontsize=18]</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="st">  Homelessness -&gt; Shelter [label = &#39;+&#39;, fontsize=18]</span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="st">  Health -&gt; Shelter [label = &#39;-&#39;, fontsize=18]</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="st">  Health -&gt; Homelessness [label = &#39;+&#39;, fontsize=18]</span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-17674a51f16e9a7d5686" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-17674a51f16e9a7d5686">{"x":{"diagram":"\ndigraph DAG {\n  # Node definitions\n  node [shape = ellipse, style = filled, fillcolor = LightSkyBlue, fontname = Helvetica]\n  Poverty [label = \"Poverty\"]\n  Health [label = \"Health issue\"]\n  Homelessness [label = \"Homelessness\"]\n  Shelter [label = \"Shelter\"]\n\n  # Edge definitions with labels\n  Poverty -> Homelessness [label = \"+\", fontsize=18]\n  Poverty -> Health [label = \"+\", fontsize=18]\n  Homelessness -> Shelter [label = \"+\", fontsize=18]\n  Health -> Shelter [label = \"-\", fontsize=18]\n  Health -> Homelessness [label = \"+\", fontsize=18]\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <div id="simulate-data-based-on-causal-graph" class="section level2">
 <h2>Simulate data based on causal graph</h2>
 <p>To illustrate how label bias can occur, and what it might look like,
@@ -517,92 +521,92 @@ stays are more easily observed in administrative records.</li>
 </ul></li>
 </ul>
 <p><br></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co"># Poverty: exogenous variable (binary for simplicity)</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>Poverty <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(N, <span class="dv">1</span>, <span class="fl">0.6</span>)  <span class="co"># 60% in poverty</span></span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co"># Health issues: affected by Poverty (+), more poverty -&gt; more health issues</span></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>Health <span class="ot">&lt;-</span> <span class="fl">0.6</span> <span class="sc">*</span> Poverty <span class="sc">+</span> <span class="fu">rnorm</span>(N, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>)  <span class="co"># continuous</span></span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co"># Homelessness: affected by Poverty (+) and Health issues (+) plus random shock</span></span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>Homelessness_score <span class="ot">&lt;-</span> <span class="fl">0.7</span> <span class="sc">*</span> Poverty <span class="sc">+</span> <span class="fl">0.5</span> <span class="sc">*</span> Health <span class="sc">+</span> <span class="fu">rnorm</span>(N, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>) <span class="co">#temporary variable used to assign a binary &quot;Homelessness&quot; value</span></span>
-<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>Homelessness <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(Homelessness_score <span class="sc">&gt;</span> <span class="fl">1.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)  <span class="co"># binary outcome; Homeless=1 for any individual with a homelessness_score &gt; 1.5 </span></span>
-<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="co"># Shelter: affected by Homelessness (+) plus random shock and Health (negatively when health issues are high) </span></span>
-<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a></span>
-<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="co"># Calculate mean and SD of Health</span></span>
-<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a>health_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(Health)</span>
-<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a>health_sd <span class="ot">&lt;-</span> <span class="fu">sd</span>(Health)</span>
-<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a></span>
-<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="co"># Indicator for high health issues</span></span>
-<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a>high_health_issue <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(Health <span class="sc">&gt;</span> (health_mean <span class="sc">+</span> <span class="fl">0.5</span><span class="sc">*</span>health_sd), <span class="dv">1</span>, <span class="dv">0</span>)</span>
-<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a></span>
-<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a><span class="co"># Shelter score: negative effect only for high health issues</span></span>
-<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a>Shelter_score <span class="ot">&lt;-</span>  Homelessness_score <span class="sc">-</span> <span class="fl">1.3</span> <span class="sc">*</span> high_health_issue  <span class="sc">+</span> <span class="fu">rnorm</span>(N, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="fl">0.5</span>) <span class="co">#temporary variable used to assign a binary &quot;Shelter&quot; value</span></span>
-<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a>Shelter <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(Shelter_score <span class="sc">&gt;</span> <span class="fl">0.4</span> <span class="sc">&amp;</span> Homelessness <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>) <span class="co"># binary outcome</span></span>
-<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a></span>
-<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a></span>
-<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a><span class="co"># Assemble data frame</span></span>
-<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a>  <span class="at">Poverty =</span> Poverty,</span>
-<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a>  <span class="at">Health =</span> Health,</span>
-<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a>  <span class="at">Homelessness =</span> Homelessness,</span>
-<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a>  <span class="at">Shelter =</span> Shelter</span>
-<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a>)</span>
-<span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a></span>
-<span id="cb3-36"><a href="#cb3-36" tabindex="-1"></a></span>
-<span id="cb3-37"><a href="#cb3-37" tabindex="-1"></a></span>
-<span id="cb3-38"><a href="#cb3-38" tabindex="-1"></a></span>
-<span id="cb3-39"><a href="#cb3-39" tabindex="-1"></a>df_long <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
-<span id="cb3-40"><a href="#cb3-40" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>Health) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-41"><a href="#cb3-41" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">health_bins =</span> <span class="fu">cut</span>(Health, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="fu">min</span>(df<span class="sc">$</span>Health)<span class="sc">-</span>.<span class="dv">5</span>, <span class="fu">max</span>(df<span class="sc">$</span>Health)<span class="sc">+</span>.<span class="dv">5</span>, <span class="at">by =</span> <span class="fl">0.5</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-42"><a href="#cb3-42" tabindex="-1"></a>  <span class="fu">group_by</span>(name, health_bins) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-43"><a href="#cb3-43" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb3-44"><a href="#cb3-44" tabindex="-1"></a>    <span class="at">n1 =</span> <span class="fu">sum</span>(value),</span>
-<span id="cb3-45"><a href="#cb3-45" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(), </span>
-<span id="cb3-46"><a href="#cb3-46" tabindex="-1"></a>    <span class="at">pct =</span> <span class="fu">round</span>(n1 <span class="sc">/</span> n <span class="sc">*</span> <span class="dv">100</span>)</span>
-<span id="cb3-47"><a href="#cb3-47" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-48"><a href="#cb3-48" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co"># Poverty: exogenous variable (binary for simplicity)</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>Poverty <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(N, <span class="dv">1</span>, <span class="fl">0.6</span>)  <span class="co"># 60% in poverty</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co"># Health issues: affected by Poverty (+), more poverty -&gt; more health issues</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>Health <span class="ot">&lt;-</span> <span class="fl">0.6</span> <span class="sc">*</span> Poverty <span class="sc">+</span> <span class="fu">rnorm</span>(N, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>)  <span class="co"># continuous</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co"># Homelessness: affected by Poverty (+) and Health issues (+) plus random shock</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>Homelessness_score <span class="ot">&lt;-</span> <span class="fl">0.7</span> <span class="sc">*</span> Poverty <span class="sc">+</span> <span class="fl">0.5</span> <span class="sc">*</span> Health <span class="sc">+</span> <span class="fu">rnorm</span>(N, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>) <span class="co">#temporary variable used to assign a binary &quot;Homelessness&quot; value</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>Homelessness <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(Homelessness_score <span class="sc">&gt;</span> <span class="fl">1.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)  <span class="co"># binary outcome; Homeless=1 for any individual with a homelessness_score &gt; 1.5 </span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co"># Shelter: affected by Homelessness (+) plus random shock and Health (negatively when health issues are high) </span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co"># Calculate mean and SD of Health</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>health_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(Health)</span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a>health_sd <span class="ot">&lt;-</span> <span class="fu">sd</span>(Health)</span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a><span class="co"># Indicator for high health issues</span></span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a>high_health_issue <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(Health <span class="sc">&gt;</span> (health_mean <span class="sc">+</span> <span class="fl">0.5</span><span class="sc">*</span>health_sd), <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a><span class="co"># Shelter score: negative effect only for high health issues</span></span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a>Shelter_score <span class="ot">&lt;-</span>  Homelessness_score <span class="sc">-</span> <span class="fl">1.3</span> <span class="sc">*</span> high_health_issue  <span class="sc">+</span> <span class="fu">rnorm</span>(N, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="fl">0.5</span>) <span class="co">#temporary variable used to assign a binary &quot;Shelter&quot; value</span></span>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a>Shelter <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(Shelter_score <span class="sc">&gt;</span> <span class="fl">0.4</span> <span class="sc">&amp;</span> Homelessness <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>) <span class="co"># binary outcome</span></span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a><span class="co"># Assemble data frame</span></span>
+<span id="cb2-29"><a href="#cb2-29" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb2-30"><a href="#cb2-30" tabindex="-1"></a>  <span class="at">Poverty =</span> Poverty,</span>
+<span id="cb2-31"><a href="#cb2-31" tabindex="-1"></a>  <span class="at">Health =</span> Health,</span>
+<span id="cb2-32"><a href="#cb2-32" tabindex="-1"></a>  <span class="at">Homelessness =</span> Homelessness,</span>
+<span id="cb2-33"><a href="#cb2-33" tabindex="-1"></a>  <span class="at">Shelter =</span> Shelter</span>
+<span id="cb2-34"><a href="#cb2-34" tabindex="-1"></a>)</span>
+<span id="cb2-35"><a href="#cb2-35" tabindex="-1"></a></span>
+<span id="cb2-36"><a href="#cb2-36" tabindex="-1"></a></span>
+<span id="cb2-37"><a href="#cb2-37" tabindex="-1"></a></span>
+<span id="cb2-38"><a href="#cb2-38" tabindex="-1"></a></span>
+<span id="cb2-39"><a href="#cb2-39" tabindex="-1"></a>df_long <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb2-40"><a href="#cb2-40" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>Health) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-41"><a href="#cb2-41" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">health_bins =</span> <span class="fu">cut</span>(Health, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="fu">min</span>(df<span class="sc">$</span>Health)<span class="sc">-</span>.<span class="dv">5</span>, <span class="fu">max</span>(df<span class="sc">$</span>Health)<span class="sc">+</span>.<span class="dv">5</span>, <span class="at">by =</span> <span class="fl">0.5</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-42"><a href="#cb2-42" tabindex="-1"></a>  <span class="fu">group_by</span>(name, health_bins) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-43"><a href="#cb2-43" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb2-44"><a href="#cb2-44" tabindex="-1"></a>    <span class="at">n1 =</span> <span class="fu">sum</span>(value),</span>
+<span id="cb2-45"><a href="#cb2-45" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(), </span>
+<span id="cb2-46"><a href="#cb2-46" tabindex="-1"></a>    <span class="at">pct =</span> <span class="fu">round</span>(n1 <span class="sc">/</span> n <span class="sc">*</span> <span class="dv">100</span>)</span>
+<span id="cb2-47"><a href="#cb2-47" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-48"><a href="#cb2-48" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div>
 <p><br> <br></p>
 <div id="look-at-the-data" class="section level3">
 <h3>Look at the data</h3>
 <p>Here are the first few records in our simulated dataset</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="fu">head</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Health =</span> <span class="fu">round</span>(Health, <span class="dv">5</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>  <span class="fu">reactable</span>()</span></code></pre></div>
-<div class="reactable html-widget html-fill-item" id="htmlwidget-c0cf0b55d461965716b2" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-c0cf0b55d461965716b2">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Poverty":[0,0,1,0,0,1],"Health":[0.07122,0.97029,0.91004,-0.13955,-0.32631,0.48119],"Homelessness":[0,0,0,0,1,1],"Shelter":[0,0,0,0,1,1]},"columns":[{"id":"Poverty","name":"Poverty","type":"numeric"},{"id":"Health","name":"Health","type":"numeric"},{"id":"Homelessness","name":"Homelessness","type":"numeric"},{"id":"Shelter","name":"Shelter","type":"numeric"}],"dataKey":"7001944bef875c4c761156b26e468f11"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="fu">head</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Health =</span> <span class="fu">round</span>(Health, <span class="dv">5</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  <span class="fu">reactable</span>()</span></code></pre></div>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-41a23825fcf663eb4d7e" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-41a23825fcf663eb4d7e">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Poverty":[0,0,1,0,0,1],"Health":[0.07122,0.97029,0.91004,-0.13955,-0.32631,0.48119],"Homelessness":[0,0,0,0,1,1],"Shelter":[0,0,0,0,1,1]},"columns":[{"id":"Poverty","name":"Poverty","type":"numeric"},{"id":"Health","name":"Health","type":"numeric"},{"id":"Homelessness","name":"Homelessness","type":"numeric"},{"id":"Shelter","name":"Shelter","type":"numeric"}],"dataKey":"7001944bef875c4c761156b26e468f11"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 <p><br></p>
 </div>
 <div id="summarize-the-data" class="section level3">
 <h3>Summarize the data</h3>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># Summary and correlation</span></span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), <span class="fu">list</span>(<span class="at">mean =</span> mean,<span class="at">min =</span> min,<span class="at">max =</span> max))) <span class="sc">%&gt;%</span></span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>  <span class="fu">t</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">V1 =</span> <span class="fu">round</span>(V1, <span class="dv">3</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>  <span class="fu">separate</span>(rowname, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;variable&quot;</span>, <span class="st">&quot;stat&quot;</span>), <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> variable, <span class="at">values_from =</span> V1) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>  reactable<span class="sc">::</span><span class="fu">reactable</span>()</span></code></pre></div>
-<div class="reactable html-widget html-fill-item" id="htmlwidget-1ce6f5c774029d2c353f" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-1ce6f5c774029d2c353f">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"stat":["mean","min","max"],"Poverty":[0.598,0,1],"Health":[0.35,-3.453,4.928],"Homelessness":[0.237,0,1],"Shelter":[0.206,0,1]},"columns":[{"id":"stat","name":"stat","type":"character"},{"id":"Poverty","name":"Poverty","type":"numeric"},{"id":"Health","name":"Health","type":"numeric"},{"id":"Homelessness","name":"Homelessness","type":"numeric"},{"id":"Shelter","name":"Shelter","type":"numeric"}],"dataKey":"5d12cd9596a23004b0c29af3ad007060"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># Summary and correlation</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), <span class="fu">list</span>(<span class="at">mean =</span> mean,<span class="at">min =</span> min,<span class="at">max =</span> max))) <span class="sc">%&gt;%</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  <span class="fu">t</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">V1 =</span> <span class="fu">round</span>(V1, <span class="dv">3</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>  <span class="fu">separate</span>(rowname, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;variable&quot;</span>, <span class="st">&quot;stat&quot;</span>), <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> variable, <span class="at">values_from =</span> V1) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>  reactable<span class="sc">::</span><span class="fu">reactable</span>()</span></code></pre></div>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-c6e054e31cab1326bee7" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-c6e054e31cab1326bee7">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"stat":["mean","min","max"],"Poverty":[0.598,0,1],"Health":[0.35,-3.453,4.928],"Homelessness":[0.237,0,1],"Shelter":[0.206,0,1]},"columns":[{"id":"stat","name":"stat","type":"character"},{"id":"Poverty","name":"Poverty","type":"numeric"},{"id":"Health","name":"Health","type":"numeric"},{"id":"Homelessness","name":"Homelessness","type":"numeric"},{"id":"Shelter","name":"Shelter","type":"numeric"}],"dataKey":"5d12cd9596a23004b0c29af3ad007060"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 <p><br></p>
 </div>
 <div id="correlation-matrix" class="section level3">
 <h3>Correlation matrix</h3>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">cor</span>(df) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), round, <span class="dv">3</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>  <span class="fu">reactable</span>()</span></code></pre></div>
-<div class="reactable html-widget html-fill-item" id="htmlwidget-940522531b03ef94da0c" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-940522531b03ef94da0c">{"x":{"tag":{"name":"Reactable","attribs":{"data":{".rownames":["Poverty","Health","Homelessness","Shelter"],"Poverty":[1,0.286,0.282,0.258],"Health":[0.286,1,0.367,0.297],"Homelessness":[0.282,0.367,1,0.914],"Shelter":[0.258,0.297,0.914,1]},"columns":[{"id":".rownames","name":"","type":"character","sortable":false,"filterable":false,"rowHeader":true},{"id":"Poverty","name":"Poverty","type":"numeric"},{"id":"Health","name":"Health","type":"numeric"},{"id":"Homelessness","name":"Homelessness","type":"numeric"},{"id":"Shelter","name":"Shelter","type":"numeric"}],"dataKey":"bc10b7d33572f95b5417c7abdb03b9c8"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">count</span>(Shelter, Homelessness, Poverty)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">cor</span>(df) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), round, <span class="dv">3</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  <span class="fu">reactable</span>()</span></code></pre></div>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-88e8f324be4d62de838e" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-88e8f324be4d62de838e">{"x":{"tag":{"name":"Reactable","attribs":{"data":{".rownames":["Poverty","Health","Homelessness","Shelter"],"Poverty":[1,0.286,0.282,0.258],"Health":[0.286,1,0.367,0.297],"Homelessness":[0.282,0.367,1,0.914],"Shelter":[0.258,0.297,0.914,1]},"columns":[{"id":".rownames","name":"","type":"character","sortable":false,"filterable":false,"rowHeader":true},{"id":"Poverty","name":"Poverty","type":"numeric"},{"id":"Health","name":"Health","type":"numeric"},{"id":"Homelessness","name":"Homelessness","type":"numeric"},{"id":"Shelter","name":"Shelter","type":"numeric"}],"dataKey":"bc10b7d33572f95b5417c7abdb03b9c8"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">count</span>(Shelter, Homelessness, Poverty)</span></code></pre></div>
 <pre><code>##   Shelter Homelessness Poverty    n
 ## 1       0            0       0 3658
 ## 2       0            0       1 3976
@@ -610,7 +614,7 @@ stays are more easily observed in administrative records.</li>
 ## 4       0            1       1  261
 ## 5       1            1       0  316
 ## 6       1            1       1 1740</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">count</span>(Shelter, Poverty)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">count</span>(Shelter, Poverty)</span></code></pre></div>
 <pre><code>##   Shelter Poverty    n
 ## 1       0       0 3707
 ## 2       0       1 4237
@@ -620,25 +624,25 @@ stays are more easily observed in administrative records.</li>
 </div>
 <div id="differences-in-average-health" class="section level3">
 <h3>Differences in average health</h3>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>by_df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Health) <span class="sc">%&gt;%</span> </span>
-<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>rowname) <span class="sc">%&gt;%</span> </span>
-<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>  <span class="fu">count</span>(name, value) <span class="sc">%&gt;%</span> </span>
-<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">value =</span> <span class="fu">if_else</span>(value <span class="sc">==</span> <span class="dv">0</span>, <span class="st">&quot;Condition = 0&quot;</span>, <span class="st">&quot;Condition = 1&quot;</span>), </span>
-<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>         <span class="at">name =</span> <span class="fu">factor</span>(name, <span class="at">ordered =</span> <span class="cn">TRUE</span>, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Poverty&quot;</span>, <span class="st">&quot;Shelter&quot;</span>, <span class="st">&quot;Homelessness&quot;</span>))) </span>
-<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a></span>
-<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a></span>
-<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a></span>
-<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
-<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a>  <span class="fu">group_by</span>(Homelessness, Shelter) <span class="sc">%&gt;%</span> </span>
-<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a>    <span class="at">n_people =</span> <span class="fu">n</span>(), </span>
-<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a>    <span class="at">mean_poverty =</span> <span class="fu">mean</span>(Poverty), </span>
-<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a>    <span class="at">mean_health =</span> <span class="fu">mean</span>(Health)</span>
-<span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb11-19"><a href="#cb11-19" tabindex="-1"></a>  <span class="fu">ungroup</span>() </span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>by_df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Health) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>rowname) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>  <span class="fu">count</span>(name, value) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">value =</span> <span class="fu">if_else</span>(value <span class="sc">==</span> <span class="dv">0</span>, <span class="st">&quot;Condition = 0&quot;</span>, <span class="st">&quot;Condition = 1&quot;</span>), </span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>         <span class="at">name =</span> <span class="fu">factor</span>(name, <span class="at">ordered =</span> <span class="cn">TRUE</span>, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Poverty&quot;</span>, <span class="st">&quot;Shelter&quot;</span>, <span class="st">&quot;Homelessness&quot;</span>))) </span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a>  <span class="fu">group_by</span>(Homelessness, Shelter) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a>    <span class="at">n_people =</span> <span class="fu">n</span>(), </span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a>    <span class="at">mean_poverty =</span> <span class="fu">mean</span>(Poverty), </span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a>    <span class="at">mean_health =</span> <span class="fu">mean</span>(Health)</span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a>  <span class="fu">ungroup</span>() </span></code></pre></div>
 <pre><code>## # A tibble: 3 × 5
 ##   Homelessness Shelter n_people mean_poverty mean_health
 ##          &lt;dbl&gt;   &lt;dbl&gt;    &lt;int&gt;        &lt;dbl&gt;       &lt;dbl&gt;
@@ -653,51 +657,51 @@ stays are more easily observed in administrative records.</li>
 <h4>Binary counts</h4>
 <p>Counts of individuals within each of the three binary variables
 (Poverty, Shelter, and Homelessness)</p>
-<p><img src="Labels-bias_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="Labels-bias_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 </div>
 <div id="health-score" class="section level4">
 <h4>Health score</h4>
 <p>This figure shows the number of people at different levels of health
 (people with similar health scores are grouped into one of 15 health
 score ‘bins’)</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">health_bins =</span> <span class="fu">cut</span>(Health, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="fu">min</span>(df<span class="sc">$</span>Health)<span class="sc">-</span>.<span class="dv">5</span>, <span class="fu">max</span>(df<span class="sc">$</span>Health)<span class="sc">+</span>.<span class="dv">5</span>, <span class="at">by =</span> <span class="fl">0.5</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>  <span class="fu">count</span>(health_bins) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(<span class="at">x =</span> health_bins, <span class="at">y =</span> n)) <span class="sc">+</span> </span>
-<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>  <span class="fu">geom_col</span>( <span class="at">fill =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">color =</span> <span class="st">&quot;gray30&quot;</span>) <span class="sc">+</span></span>
-<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;←better-----Health Score-----worse→&quot;</span>,</span>
-<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Number of People&quot;</span>) <span class="sc">+</span></span>
-<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">vjust =</span> <span class="fl">1.4</span>, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">colour =</span> <span class="st">&quot;black&quot;</span>)</span>
-<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a>  )</span></code></pre></div>
-<p><img src="Labels-bias_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">health_bins =</span> <span class="fu">cut</span>(Health, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="fu">min</span>(df<span class="sc">$</span>Health)<span class="sc">-</span>.<span class="dv">5</span>, <span class="fu">max</span>(df<span class="sc">$</span>Health)<span class="sc">+</span>.<span class="dv">5</span>, <span class="at">by =</span> <span class="fl">0.5</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>  <span class="fu">count</span>(health_bins) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(<span class="at">x =</span> health_bins, <span class="at">y =</span> n)) <span class="sc">+</span> </span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>  <span class="fu">geom_col</span>( <span class="at">fill =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">color =</span> <span class="st">&quot;gray30&quot;</span>) <span class="sc">+</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;←better-----Health Score-----worse→&quot;</span>,</span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Number of People&quot;</span>) <span class="sc">+</span></span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">vjust =</span> <span class="fl">1.4</span>, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">colour =</span> <span class="st">&quot;black&quot;</span>)</span>
+<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="Labels-bias_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 </div>
 <div id="health-homelessness" class="section level4">
 <h4>Health-Homelessness</h4>
 <p>This figure shows the percent of people within each Health Score bin
 experiencing homelessness (Homelessness = 1)</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>df_long <span class="sc">%&gt;%</span> </span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>  <span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">&quot;Homelessness&quot;</span>)  <span class="sc">%&gt;%</span>  </span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> health_bins, <span class="at">y =</span> n, <span class="at">fill =</span> pct), <span class="at">alpha =</span> .<span class="dv">55</span>) <span class="sc">+</span> </span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>() <span class="sc">+</span></span>
-<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">y =</span> n <span class="sc">+</span> <span class="dv">80</span>, <span class="at">label =</span> <span class="fu">paste0</span>(pct, <span class="st">&quot;%&quot;</span>)), <span class="at">size =</span> <span class="fl">2.5</span>, <span class="at">angle =</span> <span class="dv">45</span>) <span class="sc">+</span></span>
-<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;←better-----Health Score-----worse→&quot;</span>,</span>
-<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Number of People&quot;</span>,</span>
-<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">&quot;Percent</span><span class="sc">\n</span><span class="st">Homeless&quot;</span>) <span class="sc">+</span></span>
-<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">vjust =</span> <span class="fl">1.4</span>, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">colour =</span> <span class="st">&quot;black&quot;</span>), </span>
-<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">&quot;inside&quot;</span>, </span>
-<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a>    <span class="at">legend.justification.inside =</span> <span class="fu">c</span>(<span class="fl">0.93</span>, <span class="fl">0.7</span>), </span>
-<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a>    <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">0.75</span>, <span class="st">&quot;lines&quot;</span>),</span>
-<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a>      <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>),</span>
-<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a>  <span class="at">legend.text  =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">5</span>)</span>
-<span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>df_long <span class="sc">%&gt;%</span> </span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>  <span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">&quot;Homelessness&quot;</span>)  <span class="sc">%&gt;%</span>  </span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> health_bins, <span class="at">y =</span> n, <span class="at">fill =</span> pct), <span class="at">alpha =</span> .<span class="dv">55</span>) <span class="sc">+</span> </span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>() <span class="sc">+</span></span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">y =</span> n <span class="sc">+</span> <span class="dv">80</span>, <span class="at">label =</span> <span class="fu">paste0</span>(pct, <span class="st">&quot;%&quot;</span>)), <span class="at">size =</span> <span class="fl">2.5</span>, <span class="at">angle =</span> <span class="dv">45</span>) <span class="sc">+</span></span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;←better-----Health Score-----worse→&quot;</span>,</span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Number of People&quot;</span>,</span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">&quot;Percent</span><span class="sc">\n</span><span class="st">Homeless&quot;</span>) <span class="sc">+</span></span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">vjust =</span> <span class="fl">1.4</span>, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">colour =</span> <span class="st">&quot;black&quot;</span>), </span>
+<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">&quot;inside&quot;</span>, </span>
+<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a>    <span class="at">legend.justification.inside =</span> <span class="fu">c</span>(<span class="fl">0.93</span>, <span class="fl">0.7</span>), </span>
+<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a>    <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">0.75</span>, <span class="st">&quot;lines&quot;</span>),</span>
+<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a>      <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>),</span>
+<span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a>  <span class="at">legend.text  =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">5</span>)</span>
+<span id="cb13-19"><a href="#cb13-19" tabindex="-1"></a>  )</span></code></pre></div>
 <p><img src="Labels-bias_files/figure-html/dist3-1.png" width="672" /></p>
 </div>
 <div id="health-shelter" class="section level4">
@@ -709,20 +713,20 @@ Comparing this graph with the previous one, the rates of homelessness
 relatively fewer health concerns. As we continue looking further to the
 right, however, we can see some differences between the rates of
 homelessness vs. shelter for people with more health challenges.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>df_long <span class="sc">%&gt;%</span> </span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>  <span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">&quot;Shelter&quot;</span>)  <span class="sc">%&gt;%</span>  </span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> health_bins, <span class="at">y =</span> n, <span class="at">fill =</span> pct), <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span> </span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>() <span class="sc">+</span></span>
-<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">y =</span> n <span class="sc">+</span> <span class="dv">60</span>, <span class="at">label =</span> <span class="fu">paste0</span>(pct, <span class="st">&quot;%&quot;</span>)), <span class="at">size =</span> <span class="fl">2.9</span>, <span class="at">angle =</span> <span class="dv">45</span>) <span class="sc">+</span></span>
-<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;←better-----Health Score-----worse→&quot;</span>,</span>
-<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Number of People&quot;</span>,</span>
-<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">&quot;Percent</span><span class="sc">\n</span><span class="st">    in</span><span class="sc">\n</span><span class="st">Shelter&quot;</span>) <span class="sc">+</span></span>
-<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>)</span>
-<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>df_long <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>  <span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">&quot;Shelter&quot;</span>)  <span class="sc">%&gt;%</span>  </span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> health_bins, <span class="at">y =</span> n, <span class="at">fill =</span> pct), <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span> </span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>() <span class="sc">+</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">y =</span> n <span class="sc">+</span> <span class="dv">60</span>, <span class="at">label =</span> <span class="fu">paste0</span>(pct, <span class="st">&quot;%&quot;</span>)), <span class="at">size =</span> <span class="fl">2.9</span>, <span class="at">angle =</span> <span class="dv">45</span>) <span class="sc">+</span></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;←better-----Health Score-----worse→&quot;</span>,</span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Number of People&quot;</span>,</span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">&quot;Percent</span><span class="sc">\n</span><span class="st">    in</span><span class="sc">\n</span><span class="st">Shelter&quot;</span>) <span class="sc">+</span></span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>)</span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a>  )</span></code></pre></div>
 <p><img src="Labels-bias_files/figure-html/dist2-1.png" width="672" /></p>
 <p><br> <br> <br> <br></p>
 </div>
@@ -734,10 +738,10 @@ id="generate-models-for-homelessness-unobserved-and-shelter-use-observed"
 class="section level1">
 <h1>Generate Models for Homelessness (unobserved) and Shelter use
 (observed)</h1>
-<div class="sourceCode" id="cb16"><pre
-class="sourceCode r fold-show"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="co"># Logistic regression: Homelessness ~ Poverty + Health</span></span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>model_homeless <span class="ot">&lt;-</span> <span class="fu">glm</span>(Homelessness <span class="sc">~</span> Poverty <span class="sc">+</span> Health, <span class="at">data =</span> df, <span class="at">family =</span> binomial)</span>
-<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="fu">summary</span>(model_homeless)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode r fold-show"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="co"># Logistic regression: Homelessness ~ Poverty + Health</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>model_homeless <span class="ot">&lt;-</span> <span class="fu">glm</span>(Homelessness <span class="sc">~</span> Poverty <span class="sc">+</span> Health, <span class="at">data =</span> df, <span class="at">family =</span> binomial)</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="fu">summary</span>(model_homeless)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = Homelessness ~ Poverty + Health, family = binomial, 
@@ -758,10 +762,10 @@ class="sourceCode r fold-show"><code class="sourceCode r"><span id="cb16-1"><a h
 ## AIC: 9045.9
 ## 
 ## Number of Fisher Scoring iterations: 5</code></pre>
-<div class="sourceCode" id="cb18"><pre
-class="sourceCode r fold-show"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="co"># Logistic regression: Shelter ~ Poverty + Health</span></span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>model_shelter <span class="ot">&lt;-</span> <span class="fu">glm</span>(Shelter <span class="sc">~</span> Poverty <span class="sc">+</span> Health, <span class="at">data =</span> df, <span class="at">family =</span> binomial)</span>
-<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a><span class="fu">summary</span>(model_shelter)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode r fold-show"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="co"># Logistic regression: Shelter ~ Poverty + Health</span></span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>model_shelter <span class="ot">&lt;-</span> <span class="fu">glm</span>(Shelter <span class="sc">~</span> Poverty <span class="sc">+</span> Health, <span class="at">data =</span> df, <span class="at">family =</span> binomial)</span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a><span class="fu">summary</span>(model_shelter)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = Shelter ~ Poverty + Health, family = binomial, 
@@ -788,7 +792,7 @@ variables (i.e., “independent”, “upstream”, or “cause” variables.
 Everything after the ~) and the outcome.</p>
 <pre><code>## [1] -3.453357 -3.368696 -3.284035 -3.199373 -3.114712 -3.030051</code></pre>
 <pre><code>## [1] 4.504786 4.589447 4.674108 4.758769 4.843430 4.928091</code></pre>
-<p><img src="Labels-bias_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="Labels-bias_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 </div>
 
 
@@ -826,7 +830,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeCodeFolding("show" === "show");
+  window.initializeCodeFolding("hide" === "show");
 });
 </script>
 

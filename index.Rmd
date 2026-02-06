@@ -4,6 +4,15 @@ output: html_document
 date: "2026-01-30"
 ---
 
+```{css, echo=FALSE}
+.navbar-default {
+    background-color: #123271;
+    border-color: #123271;
+}
+
+```
+
+
 Welcome to **Centering the Public Interest in Integrated Administrative Data Analytics**.
 Integrated Administrative Data Systems (IDS) are among our most powerful tools to guide decision making for social good. By linking records across health, housing, education, and social services we can start to understand the complex challenges that poverty and marginalization carry. But data is not a neutral mirror of reality; it is a product of human systems. Without a framework that accounts for the insights of those represented in the data, even the most sophisticated analytics can inadvertently perpetuate bias and mask systemic inequality.
 This curriculum, supported by the Public Interest Technology University Network (PIT-UN), is designed to bridge the gap between administrative data and lived experience and between those working on data analytics and those working on the ground to drive positive social change. Through the five modules below, you will learn to apply the **FAIR2 framework**, moving beyond technical data standards to **Frame** data with context, **Articulate** assumptions, **Identify** hidden biases, and **Report** back to the communities represented in the data.

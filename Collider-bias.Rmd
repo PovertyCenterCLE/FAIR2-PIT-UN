@@ -5,7 +5,7 @@ output: html_document
 ---
 
 
-```{r setup, include=TRUE,	message = FALSE, warning = FALSE, echo = FALSE}
+```{r setup, include=TRUE, message = FALSE, warning = FALSE, echo = FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 #install.packages("DiagrammeR")
 #if (!requireNamespace("broom", quietly = TRUE)) install.packages("broom")
@@ -23,6 +23,14 @@ library(reactable)
 
 library(patchwork)
 library(knitr)
+```
+
+```{css, echo=FALSE}
+.navbar-default {
+    background-color: #123271;
+    border-color: #123271;
+}
+
 ```
 
 We're interested in estimating the impact of discrimination (referred to as __marginalized__ or __marginalization__ going forward) on educational outcomes (we could look at any number of different education-related outcomes; today, we'll focus on high school graduation, __hs_grad__) in a city where lower-income neighborhoods carry a higher risk of exposure to environmental hazards than higher-income neighborhoods (**low_income_nhood**). We'll focus specifically on the risk of exposure to lead, a toxin associated with cognitive and behavioral impairments, via chipped paint and lead-contaminated dust in older homes that may not have been properly maintained over the years.
