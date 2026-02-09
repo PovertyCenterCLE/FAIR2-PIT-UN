@@ -1,5 +1,5 @@
 ---
-title: "Fair2-PIT-UN Teaching Materials"
+title: "FAIR2-PIT-UN Teaching Materials"
 output: html_document
 ---
 
@@ -14,31 +14,70 @@ output: html_document
 
 Welcome to **Centering the Public Interest in Integrated Administrative Data Analytics**.
 Integrated Administrative Data Systems (IDS) are among our most powerful tools to guide decision making for social good. By linking records across health, housing, education, and social services we can start to understand the complex challenges that poverty and marginalization carry. But data is not a neutral mirror of reality; it is a product of human systems. Without a framework that accounts for the insights of those represented in the data, even the most sophisticated analytics can inadvertently perpetuate bias and mask systemic inequality.
-This curriculum, supported by the Public Interest Technology University Network (PIT-UN), is designed to bridge the gap between administrative data and lived experience and between those working on data analytics and those working on the ground to drive positive social change. Through the five modules below, you will learn to apply the **FAIR2 framework**, moving beyond technical data standards to **Frame** data with context, **Articulate** assumptions, **Identify** hidden biases, and **Report** back to the communities represented in the data.
-Join us in enhancing the power of linked administrative data with community knowledge to serve the public interest.
+This curriculum, supported by the Public Interest Technology University Network (PIT-UN), is designed to bridge the gap between administrative data and lived experience and between those working on data analytics and those working on the ground to drive positive social change. Through the five modules below, you will learn to apply the **FAIR2 framework**, moving beyond technical data standards to **Frame** data with community knowledge, **Articulate** this knowledge as assumptions in a causal map, **Identify** hidden biases, and **Report** back to the communities represented in the data.
+Join us in enhancing the power of linked administrative data with community knowledge to serve the public interest!
 
-•	**Module 1: FAIR2 Framework** An introduction to the Frame-Articulate-Identify-Report framework. Learn how to integrate community knowledge and structural context into the foundation of your data science projects.
+<br>
+
+### Module 1: FAIR2 Framework
+
+* An introduction to the Frame-Articulate-Identify-Report framework. Learn how to integrate community knowledge and structural context into the foundation of your data science projects.
 
   * [Slide presentation](https://cwru.box.com/s/c14ai0h9ebl3k8krt2lxihsqy23c3n8e)
-  * [Voiceover](https://cwru.box.com/s/negvl1mub0zv0ab4d8t76s1cwzs7plhy)
+  * [Slide presentation with audio](https://cwru.box.com/s/negvl1mub0zv0ab4d8t76s1cwzs7plhy)
 
-•	**Module 2: Demographic Data & Data Chats** This module introduces FAIR2 Data Chats as a method to elicit the experiential knowledge necessary to interpret administrative records and guide data analytics. It also explores how race and gender data differences across and within administrative systems can be addressed to reduce discrimination bias. 
+<br>
+
+
+### Module 2: Demographic Data & Data Chats
+
+• This module introduces FAIR2 Data Chats as a method to elicit the experiential knowledge necessary to interpret administrative records and guide data analytics. It also explores how race and gender data differences across and within administrative systems can be addressed to reduce discrimination bias. 
 
   * [Slide presentation](https://cwru.box.com/s/4yhqf6b89c76xfiwcszyzynzeqvwycgh)
   * [Slide presentation with audio](https://cwru.box.com/s/q7ow3u7zovkba38p3jrrqvmxfcaovs2n)
-  * [Student Feedback](https://cwru.box.com/s/9wrwj5bsqfbg2xuth3e4b0o984apahd6)
+
+<iframe src="https://cwru.box.com/s/vaovcwys48xqw0822igwa7056o068yxz" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="Module 3_Label Bias_VIDEO.mov"></iframe>
 
 
-•	**Module 3: Label Bias in IDS Analytics** Not everything that matters is measured. Learn to identify Label Bias, where administrative proxies (like shelter use) are used to represent complex human outcomes (like homelessness).
+<br>
+
+
+### Module 3: Label Bias in IDS Analytics
+
+• Not everything that matters is measured. Learn to identify Label Bias, where administrative proxies (like shelter use) are used to represent complex human outcomes (like homelessness).
+
 
   * [Slide presentation](https://cwru.box.com/s/3q1dn93nvpgm7h33qipn55i4d8y7lqr7)
-  * [R code](https://github.com/PovertyCenterCLE/FAIR2-PIT-UN/blob/main/Labels-bias.Rmd)
+  * [Simulation example](https://github.com/PovertyCenterCLE/FAIR2-PIT-UN/blob/main/Labels-bias.Rmd)
 
-•	**Module 4: Collider Bias** Here we see how administrative data is prone to what is called collider bias and how ignoring the selection process of people represented in administrative data can create statistical illusions that mask discrimination.
+<iframe src="https://cwru.box.com/s/fig4w25bv5cpzvzis1pawnxe2z3738zn" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="Module 3_Label Bias_VIDEO.mov"></iframe>
+
+
+<br>
+
+
+### Module 4: Collider Bias
+
+• Here we see how administrative data is prone to what is called collider bias and how ignoring the selection process of people represented in administrative data can create statistical illusions that mask discrimination.
 
   * [Slide presentation](https://cwru.box.com/s/gq0aio4xoyywqsk0a2bkyhco7rsj4ns2)
-  * [R code](https://github.com/PovertyCenterCLE/FAIR2-PIT-UN/blob/main/Collider-bias.Rmd)
+  * [Simulation example](https://github.com/PovertyCenterCLE/FAIR2-PIT-UN/blob/main/Collider-bias.Rmd)
 
-•	**Module 5: Recommendations for Social Change** This final module provides strategies for social workers and data practitioners to advocate for better data intake, more precise research questions, and the ethical dissemination of findings. 
+<br>
+
+
+### Module 5: Recommendations for Social Change
+
+• This final module provides strategies for social workers and data practitioners to advocate for better data intake, more precise research questions, and the ethical dissemination of findings. 
 
   * [Slide presentation](https://cwru.box.com/s/4y28irzq5onz99gupddmd22fksuxjmsj)
+
+<iframe src="https://cwru.box.com/s/zdonjxsdl1xht56huqkqqmfxd134eiv1" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="Module 3_Label Bias_VIDEO.mov"></iframe>
+
+  
+
+<br>
+<br>
+<br>
+
+
