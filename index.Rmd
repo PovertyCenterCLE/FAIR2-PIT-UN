@@ -13,8 +13,15 @@ output: html_document
 
 
 Welcome to **Centering the Public Interest in Integrated Administrative Data Analytics**.
-Integrated Administrative Data Systems (IDS) are among our most powerful tools to guide decision making for social good. By linking records across health, housing, education, and social services we can start to understand the complex challenges that poverty and marginalization carry. But data is not a neutral mirror of reality; it is a product of human systems. Without a framework that accounts for the insights of those represented in the data, even the most sophisticated analytics can inadvertently perpetuate bias and mask systemic inequality.
-This curriculum, supported by the Public Interest Technology University Network (PIT-UN), is designed to bridge the gap between administrative data and lived experience and between those working on data analytics and those working on the ground to drive positive social change. Through the five modules below, you will learn to apply the **FAIR2 framework**, moving beyond technical data standards to **Frame** data with community knowledge, **Articulate** this knowledge as assumptions in a causal map, **Identify** hidden biases, and **Report** back to the communities represented in the data.
+Integrated Administrative Data Systems (IDS) are among our most powerful tools to guide decision making for social good. By linking records across health, housing, education, and social services we can start to understand the complex challenges that poverty and marginalization carry.
+
+But data is not a neutral mirror of reality; it is a product of human systems. Without a framework that accounts for the insights of those represented in the data, even the most sophisticated analytics can inadvertently perpetuate bias and mask systemic inequality.
+
+
+This curriculum, supported by the Public Interest Technology University Network (PIT-UN), is designed to bridge the gap between administrative data and lived experience and between those working on data analytics and those working on the ground to drive positive social change. 
+
+Through the five modules below, you will learn to apply the **FAIR2 framework**, moving beyond technical data standards to **Frame** data with community knowledge, **Articulate** this knowledge as assumptions in a causal map, **Identify** hidden biases, and **Report** back to the communities represented in the data.
+
 Join us in enhancing the power of linked administrative data with community knowledge to serve the public interest!
 
 <br>
@@ -36,7 +43,7 @@ Join us in enhancing the power of linked administrative data with community know
   * [Slide presentation](https://cwru.box.com/s/4yhqf6b89c76xfiwcszyzynzeqvwycgh)
   * [Slide presentation with audio](https://cwru.box.com/s/q7ow3u7zovkba38p3jrrqvmxfcaovs2n)
 
-<iframe src="https://cwru.box.com/s/vaovcwys48xqw0822igwa7056o068yxz" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="Module 3_Label Bias_VIDEO.mov"></iframe>
+<iframe width="711" height="400" src="https://www.youtube.com/embed/ddugtHeTh68" title="Module 2: Race and Gender Data Chat Findings" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 
 <br>
@@ -50,7 +57,7 @@ Join us in enhancing the power of linked administrative data with community know
   * [Slide presentation](https://cwru.box.com/s/3q1dn93nvpgm7h33qipn55i4d8y7lqr7)
   * [Simulation example](https://github.com/PovertyCenterCLE/FAIR2-PIT-UN/blob/main/Labels-bias.Rmd)
 
-<iframe src="https://cwru.box.com/s/fig4w25bv5cpzvzis1pawnxe2z3738zn" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="Module 3_Label Bias_VIDEO.mov"></iframe>
+<iframe width="711" height="400" src="https://www.youtube.com/embed/K60RDF-VhuE" title="Module 3: Label Bias" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 
 <br>
@@ -72,7 +79,7 @@ Join us in enhancing the power of linked administrative data with community know
 
   * [Slide presentation](https://cwru.box.com/s/4y28irzq5onz99gupddmd22fksuxjmsj)
 
-<iframe src="https://cwru.box.com/s/zdonjxsdl1xht56huqkqqmfxd134eiv1" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="Module 3_Label Bias_VIDEO.mov"></iframe>
+<iframe width="711" height="400" src="https://www.youtube.com/embed/MazHZUf4MIQ" title="Module 5: Recommendations" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
   
 

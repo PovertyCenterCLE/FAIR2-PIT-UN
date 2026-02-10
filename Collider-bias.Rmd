@@ -142,10 +142,10 @@ digraph DAG {
   # Node definitions
   node [shape = ellipse, style = filled, fillcolor = '#EAF2F8', fontsize = 11]
 
-  hs_grad           [label = 'hs_grad', pos = '2,0!']
+  hs_grad           [label = 'hs_grad', pos = '2,1!']
   Marginalization [label = 'Marginalization', pos = '1,2!']
   low_income_nhood [pos = '-1, 1!', shape = rectangule, style = filled, fillcolor = pink, fontsize = 11]
-  Vulnerabilities [pos = '-1.2, 0.5!', style = 'dotted']
+  Vulnerabilities [pos = '1, 0!', style = 'dotted']
   
   # Directed edges
        
