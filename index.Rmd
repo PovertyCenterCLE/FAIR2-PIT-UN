@@ -3,13 +3,7 @@ title: "FAIR2-PIT-UN Teaching Materials"
 output: html_document
 ---
 
-```{css, echo=FALSE}
-.navbar-default {
-    background-color: #123271;
-    border-color: #123271;
-}
 
-```
 
 
 Welcome to **Centering the Public Interest in Integrated Administrative Data Analytics**.

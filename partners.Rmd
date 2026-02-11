@@ -1,0 +1,33 @@
+---
+title: "Our Partners"
+output: html_document
+date: "2026-02-11"
+---
+Our research team consisted of members with an academic focus, those with practical field experience, and those with lived experience. These experts all came together to create a diverse and vibrant team.
+
+
+#### Research Team
+
+
+* Francisca García-Cobián Richter - contact us at ![Francisca email](fxr_email.png)  
+
+* Alice Jackson, ThinkingCapp
+
+* Emily Nelson, CWRU
+
+* Nicole Coury, CWRU
+
+
+
+
+<br>
+<br>
+<br>
+
+This work was generously funded by grant #015865 from the Public Interest Technology University Network – New America Foundation.
+
+
+<br>
+<br>
+<br>
+<br>

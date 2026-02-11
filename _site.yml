@@ -1,23 +1,23 @@
 name: "FAIR2-PIT-UN"
 output_dir: "."
 navbar:
-  title: '<a class="navbar-brand" href="https://cwru-dsci.org/" target="_blank">FAIR2-PIT-UN</a>'
-  left:
+  title: '<a class="navbar-brand" href="https://cwru-dsci.org/" target="_blank">FAIR2-PIT-UN(main site)</a>'
+  right:
     - text: "Home"
       href: index.html
     - text: "Module 3: Labels Bias"
       href: Labels-bias.html
     - text: "Module 4: Collider Bias"
       href: Collider-bias.html
-  right:
+    - text: "Our Partners"
+      href: partners.html
     - icon: fa-github
       href: https://github.com/PovertyCenterCLE/FAIR2-PIT-UN
 output:
   html_document:
     theme: cosmo
     highlight: tango
-    include: 
-      after_body: footer.html
     toc: false
     toc_float: false
     code_folding: hide
+    css: styles.css
