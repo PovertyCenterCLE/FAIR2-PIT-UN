@@ -1,10 +1,10 @@
 /* Main navbar styling */.navbar-default {
-    background-color: #123271;
-    border-color: #123271;
+    background-color: #003071;
+    border-color: #003071;
 }
 
 /* Active/selected tab */.navbar-default.navbar-nav > li.active > a,.navbar-default.navbar-nav > li.active > a:hover,.navbar-default.navbar-nav > li.active > a:focus {
-    background-color: #123271;
+    background-color: #003071;
     color: #ffffff;
 }
 
@@ -13,7 +13,7 @@
 }
 
 /* Hover effect for non-active tabs */.navbar-default.navbar-nav > li > a:hover {
-    background-color: #0d2350;
+    background-color: #09143A;
     color: #ffffff;
 }
 
@@ -21,4 +21,35 @@
     color: #ffffff;
 }.navbar-default.navbar-brand:hover {
     color: #e0e0e0;
+}
+
+
+/* Footer styling */
+footer {
+    margin-top: 100px;
+    padding: 20px 0;
+    border-top: 2px solid #003071;
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+}
+
+footer p {
+    margin: 0;
+}
+
+footer a {
+    color: #003071;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+footer a:hover {
+    color: #09143A;
+    text-decoration: underline;
+}
+
+
+#research-team > ul > li:nth-child(1) > p > img {
+  font-size: ;
 }

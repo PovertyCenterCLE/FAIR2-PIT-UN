@@ -17,6 +17,8 @@ output:
   html_document:
     theme: cosmo
     highlight: tango
+    include: 
+      after_body: footer.html
     toc: false
     toc_float: false
     code_folding: hide
