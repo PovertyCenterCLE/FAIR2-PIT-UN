@@ -1,7 +1,7 @@
 name: "FAIR2-PIT-UN"
 output_dir: "."
 navbar:
-  title: "FAIR2-PIT-UN"
+  title: '<a class="navbar-brand" href="https://cwru-dsci.org/" target="_blank">FAIR2-PIT-UN</a>'
   left:
     - text: "Home"
       href: index.html
