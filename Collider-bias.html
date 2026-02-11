@@ -10,7 +10,6 @@
 
 
 
-<meta name="date" content="2026-01-30" />
 
 <title>PIT-IDS: Collider Bias</title>
 
@@ -385,6 +384,10 @@ $(document).ready(function () {
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
+<div class="draft-notice">
+    <p><strong>⚠️ DRAFT - WORK IN PROGRESS</strong></p>
+    <p>This site is currently under development and being shared for review purposes only. Content is subject to change.</p>
+</div>
 
 <div id="header">
 
@@ -399,7 +402,6 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">PIT-IDS: Collider Bias</h1>
-<h4 class="date">2026-01-30</h4>
 
 </div>
 
@@ -455,12 +457,12 @@ outcomes. Do you think this model does a good job of explaining why
 different people have different educational experiences (whether
 <strong>hs_grad</strong> or educational outcomes more broadly)?</p></li>
 </ol>
-<div class="grViz html-widget html-fill-item" id="htmlwidget-e2ba24c180da8e8e17ec" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-e2ba24c180da8e8e17ec">{"x":{"diagram":"\ndigraph DAG {\n  graph [layout = neato, overlap = false, splines = true]\n\n  # Node definitions\n  node [shape = ellipse, style = filled, fillcolor = \"#EAF2F8\", fontsize = 11]\n\n  hs_grad           [label = \"hs_grad\", pos = \"2, 1!\"]\n  Marginalized [label = \"Marginalized\", pos = \"1,2!\"]\n  low_income_nhood [pos = \"-1, 1!\"]\n\n  # Directed edges\n     Marginalized -> low_income_nhood [color = blue, penwidth = 2]\n      low_income_nhood -> hs_grad [color = blue, penwidth = 2]\n    Marginalized -> hs_grad [color = blue, penwidth = 2]\n\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-0995982d6704e15a2bec" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-0995982d6704e15a2bec">{"x":{"diagram":"\ndigraph DAG {\n  graph [layout = neato, overlap = false, splines = true]\n\n  # Node definitions\n  node [shape = ellipse, style = filled, fillcolor = \"#EAF2F8\", fontsize = 11]\n\n  hs_grad           [label = \"hs_grad\", pos = \"2, 1!\"]\n  Marginalized [label = \"Marginalized\", pos = \"1,2!\"]\n  low_income_nhood [pos = \"-1, 1!\"]\n\n  # Directed edges\n     Marginalized -> low_income_nhood [color = blue, penwidth = 2]\n      low_income_nhood -> hs_grad [color = blue, penwidth = 2]\n    Marginalized -> hs_grad [color = blue, penwidth = 2]\n\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p><br></p>
 <p>A more realistic DAG recognizes that factors <em>other than</em>
-discrimination may lead to living in poor neighborhoods. We’ll refer to
-these factors as vulnerabilities (<strong>V</strong>).</p>
+discrimination may lead to living in low-income neighborhoods. We’ll
+refer to these factors as vulnerabilities (<strong>V</strong>).</p>
 <p>What are some possible examples of <strong>V</strong>?</p>
 <p>Once included as a variable in the model, we notice that while
 <strong>V</strong> does influence <strong>low_income_nhood</strong>, it
@@ -470,13 +472,13 @@ we connect these variables with a causal edge. These Vulnerabilities are
 often difficult to observe, and thus difficult to identify in data,
 which we note using a dotted contour.</p>
 <p>The updated DAG looks like this:</p>
-<div class="grViz html-widget html-fill-item" id="htmlwidget-2078adfaacb524f9569c" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-2078adfaacb524f9569c">{"x":{"diagram":"\ndigraph DAG {\n  graph [layout = neato, overlap = false, splines = true]\n\n  # Node definitions\n  node [shape = ellipse, style = filled, fillcolor = \"#EAF2F8\", fontsize = 11]\n\n  hs_grad [label = \"hs_grad\", pos = \"2,1!\"]\n  Marginalization [ pos = \"1,2!\"]\n  low_income_nhood [pos = \"-1, 1!\"]\n  Vulnerabilities [pos = \"1, 0!\", style = dotted]\n  \n  # Directed edges\n     Marginalization -> low_income_nhood [color = blue, penwidth = 2]\n      low_income_nhood -> hs_grad [color = blue, penwidth = 2]\n    Marginalization -> hs_grad [color = blue, penwidth = 2]\n \n  Vulnerabilities -> low_income_nhood [color = darkgreen, penwidth = 2]\n    Vulnerabilities -> hs_grad [color = darkgreen, penwidth = 2]\n      \n  # Optional styling\n  edge [color = \"#555555\", arrowsize = 0.8]\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-b3fd53d34133211aa814" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-b3fd53d34133211aa814">{"x":{"diagram":"\ndigraph DAG {\n  graph [layout = neato, overlap = false, splines = true]\n\n  # Node definitions\n  node [shape = ellipse, style = filled, fillcolor = \"#EAF2F8\", fontsize = 11]\n\n  hs_grad [label = \"hs_grad\", pos = \"2,1!\"]\n  Marginalization [ pos = \"1,2!\"]\n  low_income_nhood [pos = \"-1, 1!\"]\n  Vulnerabilities [pos = \"1, 0!\", style = dotted]\n  \n  # Directed edges\n     Marginalization -> low_income_nhood [color = blue, penwidth = 2]\n      low_income_nhood -> hs_grad [color = blue, penwidth = 2]\n    Marginalization -> hs_grad [color = blue, penwidth = 2]\n \n  Vulnerabilities -> low_income_nhood [color = darkgreen, penwidth = 2]\n    Vulnerabilities -> hs_grad [color = darkgreen, penwidth = 2]\n      \n  # Optional styling\n  edge [color = \"#555555\", arrowsize = 0.8]\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p><br></p>
 <p>Now, let’s say our data was restricted to a school district where the
 majority of students face poverty. In other words, if, in our data,
-<strong>low_income_nhood</strong> is a binary variable where 1 == “poor
-neighborhood” and 0 == “non-poor neighborhood”,
+<strong>low_income_nhood</strong> is a binary variable where 1 ==
+“low-income neighborhood” and 0 == “higher-income neighborhood”,
 <strong>low_income_nhood</strong> is fixed at 1 (and no longer a
 variable, as it doesn’t vary).</p>
 <p>In this scenario, we are “selecting” on
@@ -484,8 +486,8 @@ variable, as it doesn’t vary).</p>
 non-causal pathway between <strong>marginalization</strong> and
 <strong>hs_grad</strong>.</p>
 <p>The updated DAG looks like this:</p>
-<div class="grViz html-widget html-fill-item" id="htmlwidget-3bc60c0fd79e45b07443" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-3bc60c0fd79e45b07443">{"x":{"diagram":"\ndigraph DAG {\n  graph [layout = neato, overlap = false, splines = true]\n\n  # Node definitions\n  node [shape = ellipse, style = filled, fillcolor = \"#EAF2F8\", fontsize = 11]\n\n  hs_grad           [label = \"hs_grad\", pos = \"2,1!\"]\n  Marginalization [label = \"Marginalization\", pos = \"1,2!\"]\n  low_income_nhood [pos = \"-1, 1!\", shape = rectangule, style = filled, fillcolor = pink, fontsize = 11]\n  Vulnerabilities [pos = \"1, 0!\", style = \"dotted\"]\n  \n  # Directed edges\n       \n    Marginalization -> low_income_nhood [color = red, penwidth = 2]\n    low_income_nhood -> hs_grad [color = blue, penwidth = 2]\n    Marginalization -> hs_grad [color = blue, penwidth = 2]\n \n  Vulnerabilities -> low_income_nhood [color = red, penwidth = 2]\n    Vulnerabilities -> hs_grad [color = blue, penwidth = 2]\n\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-abaff627cdea3f5e923e" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-abaff627cdea3f5e923e">{"x":{"diagram":"\ndigraph DAG {\n  graph [layout = neato, overlap = false, splines = true]\n\n  # Node definitions\n  node [shape = ellipse, style = filled, fillcolor = \"#EAF2F8\", fontsize = 11]\n\n  hs_grad           [label = \"hs_grad\", pos = \"2,1!\"]\n  Marginalization [label = \"Marginalization\", pos = \"1,2!\"]\n  low_income_nhood [pos = \"-1, 1!\", shape = rectangule, style = filled, fillcolor = pink, fontsize = 11]\n  Vulnerabilities [pos = \"1, 0!\", style = \"dotted\"]\n  \n  # Directed edges\n       \n    Marginalization -> low_income_nhood [color = red, penwidth = 2]\n    low_income_nhood -> hs_grad [color = blue, penwidth = 2]\n    Marginalization -> hs_grad [color = blue, penwidth = 2]\n \n  Vulnerabilities -> low_income_nhood [color = red, penwidth = 2]\n    Vulnerabilities -> hs_grad [color = blue, penwidth = 2]\n\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p>How does selection on a collider bias our estimates on the causal
 effect of discrimination on high school graduation?</p>
 <p>To explore this question, we will simulate data that mirrors the
@@ -500,76 +502,77 @@ compare to those estimated when bias is present.</p>
 class="section level3 tabset">
 <h3 class="tabset">Simulated data descriptive statistics</h3>
 <p>Let’s examine the data we just created. What do you notice when
-comparing all students vs. those living in poor neighborhood vs. those
-living in non-poor neighborhoods?</p>
+comparing all students vs. those living in low-income neighborhood
+vs. those living in non-low-income neighborhoods?</p>
 <div id="full-data" class="section level4">
 <h4>Full data</h4>
 <p>In this table, the mean values for <strong>Marginalization</strong>
 and <strong>low_income_nhood</strong> can be interpreted as ‘the
 probability that a student belongs to a marginalized group’ and ‘the
-probability that a student lives in a poor neighborhood’,
+probability that a student lives in a low-income neighborhood’,
 respectively.</p>
 <p>These probability statements can also be written as:</p>
 <p><em>P(Marginalization)</em> and</p>
 <p><em>P(low_income_nhood)</em></p>
-<div class="reactable html-widget html-fill-item" id="htmlwidget-3fa9ec7f17abf8e5d427" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-3fa9ec7f17abf8e5d427">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"var":["Marginalization","Vulnerabilities","low_income_nhood","hs_grad"],"n_distinct":[2,10000,2,10000],"mean":[0.2992,-0.00485,0.402,0.50549],"min":[0,-4.03282,0,0],"max":[1,3.55658,1,1]},"columns":[{"id":"var","name":"var","type":"character"},{"id":"n_distinct","name":"n_distinct","type":"numeric"},{"id":"mean","name":"mean","type":"numeric"},{"id":"min","name":"min","type":"numeric"},{"id":"max","name":"max","type":"numeric"}],"dataKey":"e9666770bb8e7af757d0963be6368e7a"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-e7920a53ba39f18a83e4" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-e7920a53ba39f18a83e4">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"var":["Marginalization","Vulnerabilities","low_income_nhood","hs_grad"],"n_distinct":[2,10000,2,10000],"mean":[0.2992,-0.00485,0.402,0.50549],"min":[0,-4.03282,0,0],"max":[1,3.55658,1,1]},"columns":[{"id":"var","name":"var","type":"character"},{"id":"n_distinct","name":"n_distinct","type":"numeric"},{"id":"mean","name":"mean","type":"numeric"},{"id":"min","name":"min","type":"numeric"},{"id":"max","name":"max","type":"numeric"}],"dataKey":"e9666770bb8e7af757d0963be6368e7a"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="low_income_nhood-1" class="section level4">
 <h4>low_income_nhood == 1</h4>
 <p>If we look only at the subset of students living in a <em>low-income
 neighborhood</em>, the mean value of <strong>Marginalization</strong>
 can be interpreted as ‘the probability that a student belongs to a
-marginalized group, given that they live in a poor neighborhood’, or</p>
+marginalized group, given that they live in a low-income neighborhood’,
+or</p>
 <p><em>P(Marginalization|low_income_nhood == 1)</em></p>
-<div class="reactable html-widget html-fill-item" id="htmlwidget-bd1131cfef63e665b2f9" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-bd1131cfef63e665b2f9">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"var":["Marginalization","Vulnerabilities","hs_grad"],"n_distinct":[2,4020,4020],"mean":[0.37065,0.87859,0.3347],"min":[0,-1.44245,0],"max":[1,3.55658,0.54223]},"columns":[{"id":"var","name":"var","type":"character"},{"id":"n_distinct","name":"n_distinct","type":"numeric"},{"id":"mean","name":"mean","type":"numeric"},{"id":"min","name":"min","type":"numeric"},{"id":"max","name":"max","type":"numeric"}],"dataKey":"eabb470eb203c1c38c1fa563f278b7ce"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-e2208625f719574b070e" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-e2208625f719574b070e">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"var":["Marginalization","Vulnerabilities","hs_grad"],"n_distinct":[2,4020,4020],"mean":[0.37065,0.87859,0.3347],"min":[0,-1.44245,0],"max":[1,3.55658,0.54223]},"columns":[{"id":"var","name":"var","type":"character"},{"id":"n_distinct","name":"n_distinct","type":"numeric"},{"id":"mean","name":"mean","type":"numeric"},{"id":"min","name":"min","type":"numeric"},{"id":"max","name":"max","type":"numeric"}],"dataKey":"eabb470eb203c1c38c1fa563f278b7ce"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="low_income_nhood-0" class="section level4">
 <h4>low_income_nhood == 0</h4>
-<p>And if we focus only on students living in <em>non-poor</em>
+<p>And if we focus only on students living in <em>non-low-income</em>
 neighborhoods, the mean value of <strong>Marginalization</strong> can be
 interpreted as ‘the probability that a student belongs to a marginalized
-group, given that they live in a non-poor neighborhood’, or</p>
+group, given that they live in a higher-resourced neighborhood’, or</p>
 <p><em>P(Marginalization|low_income_nhood == 0)</em></p>
-<div class="reactable html-widget html-fill-item" id="htmlwidget-aca5b52ac57fc7569ed7" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-aca5b52ac57fc7569ed7">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"var":["Marginalization","Vulnerabilities","hs_grad"],"n_distinct":[2,5980,5980],"mean":[0.25117,-0.59874,0.6203],"min":[0,-4.03282,0.33618],"max":[1,1.61086,1]},"columns":[{"id":"var","name":"var","type":"character"},{"id":"n_distinct","name":"n_distinct","type":"numeric"},{"id":"mean","name":"mean","type":"numeric"},{"id":"min","name":"min","type":"numeric"},{"id":"max","name":"max","type":"numeric"}],"dataKey":"08993161ad0e335f808b153611da7abd"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-e46b6c09d7b89a28e8a9" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-e46b6c09d7b89a28e8a9">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"var":["Marginalization","Vulnerabilities","hs_grad"],"n_distinct":[2,5980,5980],"mean":[0.25117,-0.59874,0.6203],"min":[0,-4.03282,0.33618],"max":[1,1.61086,1]},"columns":[{"id":"var","name":"var","type":"character"},{"id":"n_distinct","name":"n_distinct","type":"numeric"},{"id":"mean","name":"mean","type":"numeric"},{"id":"min","name":"min","type":"numeric"},{"id":"max","name":"max","type":"numeric"}],"dataKey":"08993161ad0e335f808b153611da7abd"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 <p><br> <br></p>
 </div>
 </div>
 <div id="correlations" class="section level3 tabset">
 <h3 class="tabset">Correlations</h3>
 <p>Next let’s see how the variables in our simulated data are correlated
-with one another overall, and among the subset of student living in poor
-neighborhoods.</p>
+with one another overall, and among the subset of student living in
+low-income neighborhoods.</p>
 <p>What is the correlation coefficient on
 <strong>marginalization</strong> and <strong>vulnerabilities</strong> in
 the full sample? Do they have a strong relationship?</p>
-<p>What about when we restrict our data to students living in poor
+<p>What about when we restrict our data to students living in low-income
 neighborhoods? What is the nature of the relationship between
 <strong>marginalization</strong> and <strong>vulnerabilities</strong>
 now?</p>
 <div id="full-sample" class="section level4">
 <h4>Full sample</h4>
-<div class="reactable html-widget html-fill-item" id="htmlwidget-692254cb11c36a457eea" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-692254cb11c36a457eea">{"x":{"tag":{"name":"Reactable","attribs":{"data":{".rownames":["Marginalization","Vulnerabilities","prob_poor","hs_grad"],"Marginalization":[1,0.009,0.135,-0.285],"Vulnerabilities":[0.009,1,0.856,-0.905],"prob_poor":[0.135,0.856,1,-0.891],"hs_grad":[-0.285,-0.905,-0.891,1]},"columns":[{"id":".rownames","name":"","type":"character","sortable":false,"filterable":false,"rowHeader":true},{"id":"Marginalization","name":"Marginalization","type":"numeric"},{"id":"Vulnerabilities","name":"Vulnerabilities","type":"numeric"},{"id":"prob_poor","name":"prob_poor","type":"numeric"},{"id":"hs_grad","name":"hs_grad","type":"numeric"}],"dataKey":"de8e3d9a04350746349aa48ddc5c44a2"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-bf6e71b4aaf3849e431a" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-bf6e71b4aaf3849e431a">{"x":{"tag":{"name":"Reactable","attribs":{"data":{".rownames":["Marginalization","Vulnerabilities","prob_low_income","hs_grad"],"Marginalization":[1,0.009,0.135,-0.285],"Vulnerabilities":[0.009,1,0.856,-0.905],"prob_low_income":[0.135,0.856,1,-0.891],"hs_grad":[-0.285,-0.905,-0.891,1]},"columns":[{"id":".rownames","name":"","type":"character","sortable":false,"filterable":false,"rowHeader":true},{"id":"Marginalization","name":"Marginalization","type":"numeric"},{"id":"Vulnerabilities","name":"Vulnerabilities","type":"numeric"},{"id":"prob_low_income","name":"prob_low_income","type":"numeric"},{"id":"hs_grad","name":"hs_grad","type":"numeric"}],"dataKey":"9f4807038e07031f40467c2b333c9c20"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="low_income_nhood-1-1" class="section level4">
 <h4>low_income_nhood == 1</h4>
-<div class="reactable html-widget html-fill-item" id="htmlwidget-1a7596fa21b11db0a6c0" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-1a7596fa21b11db0a6c0">{"x":{"tag":{"name":"Reactable","attribs":{"data":{".rownames":["Marginalization","Vulnerabilities","prob_poor","hs_grad"],"Marginalization":[1,-0.236,-0.28,-0.321],"Vulnerabilities":[-0.236,1,0.764,-0.742],"prob_poor":[-0.28,0.764,1,-0.514],"hs_grad":[-0.321,-0.742,-0.514,1]},"columns":[{"id":".rownames","name":"","type":"character","sortable":false,"filterable":false,"rowHeader":true},{"id":"Marginalization","name":"Marginalization","type":"numeric"},{"id":"Vulnerabilities","name":"Vulnerabilities","type":"numeric"},{"id":"prob_poor","name":"prob_poor","type":"numeric"},{"id":"hs_grad","name":"hs_grad","type":"numeric"}],"dataKey":"3e7ac377309e943577ec4524fd3e1274"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-2510dea16094d6a390e8" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-2510dea16094d6a390e8">{"x":{"tag":{"name":"Reactable","attribs":{"data":{".rownames":["Marginalization","Vulnerabilities","prob_low_income","hs_grad"],"Marginalization":[1,-0.236,-0.28,-0.321],"Vulnerabilities":[-0.236,1,0.764,-0.742],"prob_low_income":[-0.28,0.764,1,-0.514],"hs_grad":[-0.321,-0.742,-0.514,1]},"columns":[{"id":".rownames","name":"","type":"character","sortable":false,"filterable":false,"rowHeader":true},{"id":"Marginalization","name":"Marginalization","type":"numeric"},{"id":"Vulnerabilities","name":"Vulnerabilities","type":"numeric"},{"id":"prob_low_income","name":"prob_low_income","type":"numeric"},{"id":"hs_grad","name":"hs_grad","type":"numeric"}],"dataKey":"573bcf6020c058315f64f563109d1ea1"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="low_income_nhood-0-1" class="section level4">
 <h4>low_income_nhood == 0</h4>
-<div class="reactable html-widget html-fill-item" id="htmlwidget-0fabddcbdacab4bcc35a" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-0fabddcbdacab4bcc35a">{"x":{"tag":{"name":"Reactable","attribs":{"data":{".rownames":["Marginalization","Vulnerabilities","prob_poor","hs_grad"],"Marginalization":[1,-0.05,0.347,-0.372],"Vulnerabilities":[-0.05,1,0.581,-0.826],"prob_poor":[0.347,0.581,1,-0.635],"hs_grad":[-0.372,-0.826,-0.635,1]},"columns":[{"id":".rownames","name":"","type":"character","sortable":false,"filterable":false,"rowHeader":true},{"id":"Marginalization","name":"Marginalization","type":"numeric"},{"id":"Vulnerabilities","name":"Vulnerabilities","type":"numeric"},{"id":"prob_poor","name":"prob_poor","type":"numeric"},{"id":"hs_grad","name":"hs_grad","type":"numeric"}],"dataKey":"b9fe8b4105594f3a0069367906c4f618"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-1c671e518242c91a5018" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-1c671e518242c91a5018">{"x":{"tag":{"name":"Reactable","attribs":{"data":{".rownames":["Marginalization","Vulnerabilities","prob_low_income","hs_grad"],"Marginalization":[1,-0.05,0.347,-0.372],"Vulnerabilities":[-0.05,1,0.581,-0.826],"prob_low_income":[0.347,0.581,1,-0.635],"hs_grad":[-0.372,-0.826,-0.635,1]},"columns":[{"id":".rownames","name":"","type":"character","sortable":false,"filterable":false,"rowHeader":true},{"id":"Marginalization","name":"Marginalization","type":"numeric"},{"id":"Vulnerabilities","name":"Vulnerabilities","type":"numeric"},{"id":"prob_low_income","name":"prob_low_income","type":"numeric"},{"id":"hs_grad","name":"hs_grad","type":"numeric"}],"dataKey":"950fa8b3db79585ba56f8f267499f1d1"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div id="section" class="section level1">
 <h1></h1>
 <p>See how <strong>marginalization</strong> and
 <strong>vulnerabilities</strong> are NOT correlated in the entire
-sample, but for the data on students in poor neighborhoods only,
+sample, but for the data on students in low-income neighborhoods only,
 <strong>marginalization</strong> and <strong>vulnerabilities</strong>
 appear to be negatively correlated.</p>
 <p>This is a product of selecting on a collider and leads to bias in our
@@ -581,13 +584,14 @@ id="estimating-the-effect-of-marginalization-on-high-school-graduation-under-col
 class="section level3 tabset">
 <h3 class="tabset">Estimating the effect of marginalization on High
 school graduation under collider bias.</h3>
-<div id="model-1" class="section level4">
-<h4>Model 1</h4>
-<p>We first estimate parameters in linear regressions for all data (poor
-and non-poor neighborhoods) to see if we can recover the causal effect
+<div id="model-1-full-no-v" class="section level4">
+<h4>Model 1: Full (no V)</h4>
+<p>We first estimate parameters in linear regressions <strong>using
+student data in all neighborhoods (low-income and
+well-resourced)</strong> to see if we can recover the causal effect
 estimates of <strong>marginalization</strong> on
-<strong>hs_grad</strong>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># Estimate parameters in linear regressions for all data (poor and non-poor neighborhoods) to see if we can recover the causal effect estimates of Marginalization on hs_grad</span></span>
+<strong>hs_grad.</strong></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># Estimate parameters in linear regressions for all data (low-income and higher-resourced neighborhoods) to see if we can recover the causal effect estimates of Marginalization on hs_grad</span></span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>lm_full <span class="ot">&lt;-</span> <span class="fu">lm</span>(hs_grad <span class="sc">~</span> Marginalization, <span class="at">data =</span> df)                <span class="co"># Observational realistic model (V unobserved)</span></span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">summary</span>(lm_full)</span></code></pre></div>
 <pre><code>## 
@@ -609,46 +613,16 @@ estimates of <strong>marginalization</strong> on
 ## Multiple R-squared:  0.08115,    Adjusted R-squared:  0.08106 
 ## F-statistic: 883.1 on 1 and 9998 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
-<div id="model-2" class="section level4">
-<h4>Model 2</h4>
-<p>Then we assume we only have data for students living in poor
-neighborhoods (selection on collider) and run the regression for this
-data.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Now assume we only have data for students living in poor neighborhoods (selection on collider) and run the regression for this data.</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>lm_sel  <span class="ot">&lt;-</span> <span class="fu">lm</span>(hs_grad <span class="sc">~</span> Marginalization, <span class="at">data =</span> df[df<span class="sc">$</span>low_income_nhood <span class="sc">==</span> <span class="dv">1</span>,])                       <span class="co"># selected-only</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="fu">summary</span>(lm_sel)</span></code></pre></div>
-<pre><code>## 
-## Call:
-## lm(formula = hs_grad ~ Marginalization, data = df[df$low_income_nhood == 
-##     1, ])
-## 
-## Residuals:
-##       Min        1Q    Median        3Q       Max 
-## -0.302692 -0.044936  0.006984  0.049444  0.221835 
-## 
-## Coefficients:
-##                  Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)      0.353558   0.001440  245.53   &lt;2e-16 ***
-## Marginalization -0.050867   0.002365  -21.51   &lt;2e-16 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 0.07243 on 4018 degrees of freedom
-## Multiple R-squared:  0.1032, Adjusted R-squared:  0.103 
-## F-statistic: 462.5 on 1 and 4018 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
-<div id="model-3" class="section level4">
-<h4>Model 3</h4>
-<p>Finally assume we do not take into account neighborhood
-poverty/income, but can observe Vulnerabilities (unfeasible in
-practice), so we are able to control for this confounder. This model
-should give better estimates of the causal effect of
+<div id="model-2-full-with-v" class="section level4">
+<h4>Model 2: Full (with V)</h4>
+<p>If our data also captured Vulnerabilities (unfeasible in practice),
+we would be able to control for this confounder. This model should give
+a more precise estimate of the causal effect of
 <strong>marginalization</strong> on <strong>hs_grad</strong>.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># Finally assume we observed Vulnerabilities so we could control for this confounder</span></span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>lm_ref <span class="ot">&lt;-</span> <span class="fu">lm</span>(hs_grad <span class="sc">~</span> Marginalization <span class="sc">+</span>  Vulnerabilities, <span class="at">data =</span> df)  <span class="co"># reference (unfeasible in practice)</span></span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="fu">summary</span>(lm_ref)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Finally assume we observed Vulnerabilities so we could control for this confounder</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>lm_ref <span class="ot">&lt;-</span> <span class="fu">lm</span>(hs_grad <span class="sc">~</span> Marginalization <span class="sc">+</span>  Vulnerabilities, <span class="at">data =</span> df)  <span class="co"># reference (unfeasible in practice)</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="fu">summary</span>(lm_ref)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = hs_grad ~ Marginalization + Vulnerabilities, data = df)
@@ -669,6 +643,35 @@ should give better estimates of the causal effect of
 ## Multiple R-squared:  0.8961, Adjusted R-squared:  0.8961 
 ## F-statistic: 4.312e+04 on 2 and 9997 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
+<div id="model-3-selected-low_income1" class="section level4">
+<h4>Model 3: Selected (low_income==1)</h4>
+<p>Here we assume <strong>we only have data for students living in
+low-income neighborhoods (selection on collider)</strong> and run the
+regression for this data.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># Now assume we only have data for students living in low-income neighborhoods (selection on collider) and run the regression for this data.</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>lm_sel  <span class="ot">&lt;-</span> <span class="fu">lm</span>(hs_grad <span class="sc">~</span> Marginalization, <span class="at">data =</span> df[df<span class="sc">$</span>low_income_nhood <span class="sc">==</span> <span class="dv">1</span>,])                       <span class="co"># selected-only</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="fu">summary</span>(lm_sel)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = hs_grad ~ Marginalization, data = df[df$low_income_nhood == 
+##     1, ])
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.302692 -0.044936  0.006984  0.049444  0.221835 
+## 
+## Coefficients:
+##                  Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)      0.353558   0.001440  245.53   &lt;2e-16 ***
+## Marginalization -0.050867   0.002365  -21.51   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.07243 on 4018 degrees of freedom
+## Multiple R-squared:  0.1032, Adjusted R-squared:  0.103 
+## F-statistic: 462.5 on 1 and 4018 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
 <div id="compare-models" class="section level4">
 <h4>Compare models</h4>
 <p>We see, in fact, that this negative effect is the strongest in the
@@ -677,8 +680,8 @@ collider bias is present.</p>
 <p>This is an example of how, even when we have population data (meaning
 data from all students in a school district), our estimates may carry
 bias.</p>
-<div class="reactable html-widget html-fill-item" id="htmlwidget-8b97f0d4571a25a06166" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-8b97f0d4571a25a06166">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"model":["Full (no V)","Full (no V)","Selected (Poor==1)","Selected (Poor==1)","Full (with V)","Full (with V)","Full (with V)"],"term":["(Intercept)","Marginalization","(Intercept)","Marginalization","(Intercept)","Marginalization","Vulnerabilities"],"estimate":[0.5356,-0.1008,0.3536,-0.0509,0.5341,-0.0979,-0.1477],"std.error":[0.0019,0.0034,0.0014,0.0024,0.0006,0.0011,0.0005],"statistic":[288.7284,-29.7162,245.5322,-21.5061,856.0997,-85.8598,-280.0491],"p.value":[0,0,0,0,0,0,0]},"columns":[{"id":"model","name":"model","type":"character"},{"id":"term","name":"term","type":"character"},{"id":"estimate","name":"estimate","type":"numeric"},{"id":"std.error","name":"std.error","type":"numeric"},{"id":"statistic","name":"statistic","type":"numeric"},{"id":"p.value","name":"p.value","type":"numeric"}],"dataKey":"bf24c5000aa60842fd17be1db9022fc5"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-494de2f722f95047b23a" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-494de2f722f95047b23a">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"model":["Full (no V)","Full (no V)","Selected (low_income==1)","Selected (low_income==1)","Full (with V)","Full (with V)","Full (with V)"],"term":["(Intercept)","Marginalization","(Intercept)","Marginalization","(Intercept)","Marginalization","Vulnerabilities"],"estimate":[0.5356,-0.1008,0.3536,-0.0509,0.5341,-0.0979,-0.1477],"std.error":[0.0019,0.0034,0.0014,0.0024,0.0006,0.0011,0.0005],"statistic":[288.7284,-29.7162,245.5322,-21.5061,856.0997,-85.8598,-280.0491],"p.value":[0,0,0,0,0,0,0]},"columns":[{"id":"model","name":"model","type":"character"},{"id":"term","name":"term","type":"character"},{"id":"estimate","name":"estimate","type":"numeric"},{"id":"std.error","name":"std.error","type":"numeric"},{"id":"statistic","name":"statistic","type":"numeric"},{"id":"p.value","name":"p.value","type":"numeric"}],"dataKey":"f64fe593c1263b350f5c2bb31c425b87"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 <p><br> <br></p>
 <p><img src="Collider-bias_files/figure-html/plot1-1.png" width="672" /></p>
 <p><br></p>
@@ -702,6 +705,8 @@ welfare to become familiar with this type of bias and its potential
 impact on social policy. <a
 href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6452862/"
 class="uri">https://pmc.ncbi.nlm.nih.gov/articles/PMC6452862/</a></p>
+<p><br> <br></p>
+<p>Last updated on 11 February, 2026</p>
 </div>
 </div>
 

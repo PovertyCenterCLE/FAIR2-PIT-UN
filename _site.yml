@@ -18,6 +18,7 @@ output:
     theme: cosmo
     highlight: tango
     include: 
+      before_body: header.html
       after_body: footer.html
     toc: false
     toc_float: false

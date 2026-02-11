@@ -1,6 +1,5 @@
 ---
 title: "PIT-IDS: Collider Bias"
-date: "2026-01-30"
 output: html_document
 ---
 
@@ -85,7 +84,7 @@ digraph DAG {
 
 <br>
 
-A more realistic DAG recognizes that factors _other than_ discrimination may lead to living in poor neighborhoods. We'll refer to these factors as vulnerabilities (**V**).
+A more realistic DAG recognizes that factors _other than_ discrimination may lead to living in low-income neighborhoods. We'll refer to these factors as vulnerabilities (**V**).
 
 What are some possible examples of __V__?
 
@@ -125,7 +124,7 @@ digraph DAG {
 
 <br>
 
-Now, let's say our data was restricted to a school district where the majority of students face poverty. In other words, if, in our data, __low_income_nhood__ is a binary variable where 1 == "poor neighborhood" and 0 == "non-poor neighborhood", __low_income_nhood__ is fixed at 1 (and no longer a variable, as it doesn't vary).
+Now, let's say our data was restricted to a school district where the majority of students face poverty. In other words, if, in our data, __low_income_nhood__ is a binary variable where 1 == "low-income neighborhood" and 0 == "higher-income neighborhood", __low_income_nhood__ is fixed at 1 (and no longer a variable, as it doesn't vary).
 
 In this scenario, we are "selecting" on __low_income_nhood__ (a collider), which opens up a non-causal pathway between __marginalization__ and __hs_grad__. 
 
@@ -172,7 +171,7 @@ To explore this question, we will simulate data that mirrors the relationships s
 #set a seed to generate random numbers
 set.seed(2025)
 
-# We will assume living in a poor nbhd and Marginalization are binary variables, while Vulnerabilities is a standardized scores (normal(0,1)), where higher values reflect higher levels of Vulnerabilities.
+# We will assume living in a low-income nbhd and Marginalization are binary variables, while Vulnerabilities is a standardized scores (normal(0,1)), where higher values reflect higher levels of Vulnerabilities.
 
 # ### Simulation parameters 
 
@@ -184,27 +183,27 @@ bV <- 3.0
 bInt <- 6.0
 # calibrated intercept from prior run (replace with your a_guess if you calibrated)
 # For reproducibility here we solve intercept so prevalence ~ 0.40
-target_prev_poor <- 0.40
+target_prev_low_income <- 0.40
 calib_n <- 200000
 M_calib <- rbinom(calib_n, 1, p_M)
 V_calib <- rnorm(calib_n)
 expected_prev <- function(a) mean(plogis(a + bM*M_calib + bV*V_calib + bInt*(1-M_calib)*V_calib))
-a_guess <- uniroot(function(a) expected_prev(a) - target_prev_poor, c(-10,10))$root
+a_guess <- uniroot(function(a) expected_prev(a) - target_prev_low_income, c(-10,10))$root
 
 # hs_grad DGP
 beta_M_to_hs_grad <- -2.0
 beta_V_to_hs_grad <- -2.5
-beta_Poor_to_hs_grad <- -3.0
+beta_low_income_to_hs_grad <- -3.0
 sigma_hs_grad <- 0.8
 
 # Simulate final
 M <- rbinom(n, 1, p_M)
 V <- rnorm(n)
 lp_final <- a_guess + bM*M + bV*V + bInt*(1 - M) * V
-prob_poor <- plogis(lp_final)
-Poor <- rbinom(n, 1, prob_poor)
+prob_low_income <- plogis(lp_final)
+low_income <- rbinom(n, 1, prob_low_income)
 
-hs_grad_raw <- beta_M_to_hs_grad * M + beta_V_to_hs_grad * V + beta_Poor_to_hs_grad * Poor + rnorm(n, 0, sigma_hs_grad)
+hs_grad_raw <- beta_M_to_hs_grad * M + beta_V_to_hs_grad * V + beta_low_income_to_hs_grad * low_income + rnorm(n, 0, sigma_hs_grad)
 
 # Rescale hs_grad to 0-1 (min-max)
 hs_grad_01 <- (hs_grad_raw - min(hs_grad_raw)) / (max(hs_grad_raw) - min(hs_grad_raw))
@@ -213,8 +212,8 @@ hs_grad_01 <- (hs_grad_raw - min(hs_grad_raw)) / (max(hs_grad_raw) - min(hs_grad
 df <- tibble::tibble(
   Marginalization = M,
   Vulnerabilities = V,
-  low_income_nhood = factor(Poor,ordered = TRUE, levels = c(0,1)),
-  prob_poor = prob_poor,
+  low_income_nhood = factor(low_income,ordered = TRUE, levels = c(0,1)),
+  prob_low_income = prob_low_income,
   hs_grad_raw = hs_grad_raw,
   hs_grad = hs_grad_01
 )
@@ -225,11 +224,11 @@ df <- tibble::tibble(
 
 ### Simulated data descriptive statistics{.tabset}
 
-Let's examine the data we just created. What do you notice when comparing all students vs. those living in poor neighborhood vs. those living in non-poor neighborhoods?
+Let's examine the data we just created. What do you notice when comparing all students vs. those living in low-income neighborhood vs. those living in non-low-income neighborhoods?
 
 #### Full data
 
-In this table, the mean values for __Marginalization__ and __low_income_nhood__ can be interpreted as 'the probability that a student belongs to a marginalized group' and 'the probability that a student lives in a poor neighborhood', respectively.
+In this table, the mean values for __Marginalization__ and __low_income_nhood__ can be interpreted as 'the probability that a student belongs to a marginalized group' and 'the probability that a student lives in a low-income neighborhood', respectively.
 
 These probability statements can also be written as: 
 
@@ -267,7 +266,7 @@ df %>%
 
 #### low_income_nhood == 1
 
-If we look only at the subset of students living in a _low-income neighborhood_, the mean value of __Marginalization__ can be interpreted as 'the probability that a student belongs to a marginalized group, given that they live in a poor neighborhood', or
+If we look only at the subset of students living in a _low-income neighborhood_, the mean value of __Marginalization__ can be interpreted as 'the probability that a student belongs to a marginalized group, given that they live in a low-income neighborhood', or
 
 _P(Marginalization|low_income_nhood == 1)_
 
@@ -302,7 +301,7 @@ df %>%
 #### low_income_nhood == 0
 
 
-And if we focus only on students living in _non-poor_ neighborhoods, the mean value of __Marginalization__ can be interpreted as 'the probability that a student belongs to a marginalized group, given that they live in a non-poor neighborhood', or
+And if we focus only on students living in _non-low-income_ neighborhoods, the mean value of __Marginalization__ can be interpreted as 'the probability that a student belongs to a marginalized group, given that they live in a higher-resourced neighborhood', or
 
 _P(Marginalization|low_income_nhood == 0)_
 
@@ -342,18 +341,18 @@ df %>%
 ### Correlations{.tabset}
 
 
-Next let's see how the variables in our simulated data are correlated with one another overall, and among the subset of student living in poor neighborhoods.
+Next let's see how the variables in our simulated data are correlated with one another overall, and among the subset of student living in low-income neighborhoods.
 
 What is the correlation coefficient on __marginalization__ and __vulnerabilities__ in the full sample? Do they have a strong relationship?
 
-What about when we restrict our data to students living in poor neighborhoods? What is the nature of the relationship between __marginalization__ and __vulnerabilities__ now? 
+What about when we restrict our data to students living in low-income neighborhoods? What is the nature of the relationship between __marginalization__ and __vulnerabilities__ now? 
 
 #### Full sample
 
 ```{r corr1, echo=FALSE, message=FALSE, warning=FALSE}
 
 
-round(cor(df %>% select(Marginalization, Vulnerabilities, prob_poor, hs_grad)), 3) %>% reactable()
+round(cor(df %>% select(Marginalization, Vulnerabilities, prob_low_income, hs_grad)), 3) %>% reactable()
 
 ```
 
@@ -361,20 +360,20 @@ round(cor(df %>% select(Marginalization, Vulnerabilities, prob_poor, hs_grad)), 
 
 ```{r corr2, echo=FALSE, message=FALSE, warning=FALSE}
 
-round(cor(df %>% filter(low_income_nhood=="1") %>% select(Marginalization, Vulnerabilities, prob_poor, hs_grad)), 3) %>% 
+round(cor(df %>% filter(low_income_nhood=="1") %>% select(Marginalization, Vulnerabilities, prob_low_income, hs_grad)), 3) %>% 
   reactable()
 ```
 #### low_income_nhood == 0
 
 ```{r corr3, echo=FALSE, message=FALSE, warning=FALSE}
 
-round(cor(df %>% filter(low_income_nhood=="0") %>% select(Marginalization, Vulnerabilities, prob_poor, hs_grad)), 3) %>% 
+round(cor(df %>% filter(low_income_nhood=="0") %>% select(Marginalization, Vulnerabilities, prob_low_income, hs_grad)), 3) %>% 
   reactable()
 ```
 # 
 
 
-See how __marginalization__ and __vulnerabilities__ are NOT correlated in the entire sample, but for the data on students in poor neighborhoods only, __marginalization__ and __vulnerabilities__ appear to be negatively correlated. 
+See how __marginalization__ and __vulnerabilities__ are NOT correlated in the entire sample, but for the data on students in low-income neighborhoods only, __marginalization__ and __vulnerabilities__ appear to be negatively correlated. 
 
 This is a product of selecting on a collider and leads to bias in our estimation of causal effects of __marginalization__ on high school graduation.
 
@@ -382,34 +381,22 @@ This is a product of selecting on a collider and leads to bias in our estimation
 
 ### Estimating the effect of marginalization on High school graduation under collider bias.{.tabset}
 
-#### Model 1
+#### Model 1: Full (no V)
 
-We first estimate parameters in linear regressions for all data (poor and non-poor neighborhoods) to see if we can recover the causal effect estimates of __marginalization__ on __hs_grad__.
+We first estimate parameters in linear regressions **using student data in all neighborhoods (low-income and well-resourced)** to see if we can recover the causal effect estimates of **marginalization** on **hs_grad.**
 
 ```{r regression1, echo=TRUE, message=FALSE, warning=FALSE}
-# Estimate parameters in linear regressions for all data (poor and non-poor neighborhoods) to see if we can recover the causal effect estimates of Marginalization on hs_grad
+# Estimate parameters in linear regressions for all data (low-income and higher-resourced neighborhoods) to see if we can recover the causal effect estimates of Marginalization on hs_grad
 lm_full <- lm(hs_grad ~ Marginalization, data = df)                # Observational realistic model (V unobserved)
 summary(lm_full)
 ```
 
-#### Model 2
 
-Then we assume we only have data for students living in poor neighborhoods (selection on collider) and run the regression for this data.
+#### Model 2: Full (with V)
+
+If our data also captured Vulnerabilities (unfeasible in practice), we would be able to control for this confounder. This model should give a more precise estimate of the causal effect of __marginalization__ on __hs_grad__.
 
 ```{r regression2, echo=TRUE, message=FALSE, warning=FALSE}
-
-# Now assume we only have data for students living in poor neighborhoods (selection on collider) and run the regression for this data.
-
-lm_sel  <- lm(hs_grad ~ Marginalization, data = df[df$low_income_nhood == 1,])                       # selected-only
-summary(lm_sel)
-```
-
-
-#### Model 3
-
-Finally assume we do not take into account neighborhood poverty/income, but can observe Vulnerabilities (unfeasible in practice), so we are able to control for this confounder. This model should give better estimates of the causal effect of __marginalization__ on __hs_grad__.
-
-```{r regression4, echo=TRUE, message=FALSE, warning=FALSE}
 
 # Finally assume we observed Vulnerabilities so we could control for this confounder
 lm_ref <- lm(hs_grad ~ Marginalization +  Vulnerabilities, data = df)  # reference (unfeasible in practice)
@@ -417,6 +404,21 @@ lm_ref <- lm(hs_grad ~ Marginalization +  Vulnerabilities, data = df)  # referen
 summary(lm_ref)
 
 ```
+
+
+#### Model 3: Selected (low_income==1)
+
+Here we assume **we only have data for students living in low-income neighborhoods (selection on collider)** and run the regression for this data.
+
+```{r regression3, echo=TRUE, message=FALSE, warning=FALSE}
+
+# Now assume we only have data for students living in low-income neighborhoods (selection on collider) and run the regression for this data.
+
+lm_sel  <- lm(hs_grad ~ Marginalization, data = df[df$low_income_nhood == 1,])                       # selected-only
+summary(lm_sel)
+```
+
+
 
 
 #### Compare models
@@ -429,7 +431,7 @@ This is an example of how, even when we have population data (meaning data from 
 
 # Print tidy regression outputs
 tab_full <- tidy(lm_full) %>% mutate(model = "Full (no V)")
-tab_sel  <- tidy(lm_sel)  %>% mutate(model = "Selected (Poor==1)")
+tab_sel  <- tidy(lm_sel)  %>% mutate(model = "Selected (low_income==1)")
 tab_ref  <- tidy(lm_ref) %>% mutate(model = "Full (with V)")
 reg_table <- bind_rows(tab_full, tab_sel, tab_ref) %>%
   select(model, term, estimate, std.error, statistic, p.value) %>%
@@ -456,7 +458,7 @@ get_coef_ci <- function(mod, term = "Marginalization") {
 }
 
 coef_full <- get_coef_ci(lm_full) %>% mutate(model = "Full (no V)")
-coef_sel  <- get_coef_ci(lm_sel)  %>% mutate(model = "Selected (Poor==1)")
+coef_sel  <- get_coef_ci(lm_sel)  %>% mutate(model = "Selected (low_income==1)")
 coef_ref    <- get_coef_ci(lm_ref)%>% mutate(model = "Full (with V)")
 
 coef_all <- bind_rows(coef_full, coef_sel, coef_ref) %>%
@@ -498,3 +500,11 @@ ggplot(coef_all, aes(x = model, y = estimate)) +
 A salient example of collider bias was featured in a study that used police records (selected sample) to estimate the effects of segregation on use of force by police and erroneously found minimal effects. https://jmummolo.scholar.princeton.edu/publications/bias-built-how-administrative-records-mask-racially-biased-policing
 
 Look for other cases of collider bias in public health and social welfare to become familiar with this type of bias and its potential impact on social policy. https://pmc.ncbi.nlm.nih.gov/articles/PMC6452862/ 
+
+
+
+
+<br>
+<br>
+
+Last updated on `r format(Sys.time(), '%d %B, %Y')`

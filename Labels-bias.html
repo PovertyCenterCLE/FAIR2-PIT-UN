@@ -10,7 +10,6 @@
 
 
 
-<meta name="date" content="2026-01-30" />
 
 <title>PIT-IDS: Labels Bias</title>
 
@@ -385,6 +384,10 @@ $(document).ready(function () {
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
+<div class="draft-notice">
+    <p><strong>⚠️ DRAFT - WORK IN PROGRESS</strong></p>
+    <p>This site is currently under development and being shared for review purposes only. Content is subject to change.</p>
+</div>
 
 <div id="header">
 
@@ -399,7 +402,6 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">PIT-IDS: Labels Bias</h1>
-<h4 class="date">2026-01-30</h4>
 
 </div>
 
@@ -455,8 +457,8 @@ with the psychiatrist? Are they actively working with the mental health
 <span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="st">  Health -&gt; Homelessness [label = &#39;+&#39;, fontsize=18]</span></span>
 <span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="st">}</span></span>
 <span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="st">&quot;</span>)</span></code></pre></div>
-<div class="grViz html-widget html-fill-item" id="htmlwidget-c920b12bff0bbc35db6b" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-c920b12bff0bbc35db6b">{"x":{"diagram":"\ndigraph DAG {\n  # Node definitions\n  node [shape = ellipse, style = filled, fillcolor = LightSkyBlue, fontname = Helvetica]\n  Poverty [label = \"Poverty\"]\n  Health [label = \"Health issue\"]\n  Homelessness [label = \"Homelessness\"]\n  Shelter [label = \"Shelter\"]\n\n  # Edge definitions with labels\n  Poverty -> Homelessness [label = \"+\", fontsize=18]\n  Poverty -> Health [label = \"+\", fontsize=18]\n  Homelessness -> Shelter [label = \"+\", fontsize=18]\n  Health -> Shelter [label = \"-\", fontsize=18]\n  Health -> Homelessness [label = \"+\", fontsize=18]\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-01e2bbb06fc23d72511c" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-01e2bbb06fc23d72511c">{"x":{"diagram":"\ndigraph DAG {\n  # Node definitions\n  node [shape = ellipse, style = filled, fillcolor = LightSkyBlue, fontname = Helvetica]\n  Poverty [label = \"Poverty\"]\n  Health [label = \"Health issue\"]\n  Homelessness [label = \"Homelessness\"]\n  Shelter [label = \"Shelter\"]\n\n  # Edge definitions with labels\n  Poverty -> Homelessness [label = \"+\", fontsize=18]\n  Poverty -> Health [label = \"+\", fontsize=18]\n  Homelessness -> Shelter [label = \"+\", fontsize=18]\n  Health -> Shelter [label = \"-\", fontsize=18]\n  Health -> Homelessness [label = \"+\", fontsize=18]\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <div id="simulate-data-based-on-causal-graph" class="section level2">
 <h2>Simulate data based on causal graph</h2>
 <p>To illustrate how label bias can occur, and what it might look like,
@@ -582,8 +584,8 @@ stays are more easily observed in administrative records.</li>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="fu">head</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Health =</span> <span class="fu">round</span>(Health, <span class="dv">5</span>)) <span class="sc">%&gt;%</span> </span>
 <span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  <span class="fu">reactable</span>()</span></code></pre></div>
-<div class="reactable html-widget html-fill-item" id="htmlwidget-2a13234c86c1d2ddb498" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-2a13234c86c1d2ddb498">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Poverty":[0,0,1,0,0,1],"Health":[0.07122,0.97029,0.91004,-0.13955,-0.32631,0.48119],"Homelessness":[0,0,0,0,1,1],"Shelter":[0,0,0,0,1,1]},"columns":[{"id":"Poverty","name":"Poverty","type":"numeric"},{"id":"Health","name":"Health","type":"numeric"},{"id":"Homelessness","name":"Homelessness","type":"numeric"},{"id":"Shelter","name":"Shelter","type":"numeric"}],"dataKey":"7001944bef875c4c761156b26e468f11"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-170e2e2025780b15932e" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-170e2e2025780b15932e">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Poverty":[0,0,1,0,0,1],"Health":[0.07122,0.97029,0.91004,-0.13955,-0.32631,0.48119],"Homelessness":[0,0,0,0,1,1],"Shelter":[0,0,0,0,1,1]},"columns":[{"id":"Poverty","name":"Poverty","type":"numeric"},{"id":"Health","name":"Health","type":"numeric"},{"id":"Homelessness","name":"Homelessness","type":"numeric"},{"id":"Shelter","name":"Shelter","type":"numeric"}],"dataKey":"7001944bef875c4c761156b26e468f11"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 <p><br></p>
 </div>
 <div id="summarize-the-data" class="section level3">
@@ -599,8 +601,8 @@ stays are more easily observed in administrative records.</li>
 <span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>  <span class="fu">separate</span>(rowname, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;variable&quot;</span>, <span class="st">&quot;stat&quot;</span>), <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> variable, <span class="at">values_from =</span> V1) <span class="sc">%&gt;%</span> </span>
 <span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>  reactable<span class="sc">::</span><span class="fu">reactable</span>()</span></code></pre></div>
-<div class="reactable html-widget html-fill-item" id="htmlwidget-6b16c20a52d29a129eaa" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-6b16c20a52d29a129eaa">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"stat":["mean","min","max"],"Poverty":[0.598,0,1],"Health":[0.35,-3.453,4.928],"Homelessness":[0.237,0,1],"Shelter":[0.206,0,1]},"columns":[{"id":"stat","name":"stat","type":"character"},{"id":"Poverty","name":"Poverty","type":"numeric"},{"id":"Health","name":"Health","type":"numeric"},{"id":"Homelessness","name":"Homelessness","type":"numeric"},{"id":"Shelter","name":"Shelter","type":"numeric"}],"dataKey":"5d12cd9596a23004b0c29af3ad007060"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-db71d03f8d6175f32894" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-db71d03f8d6175f32894">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"stat":["mean","min","max"],"Poverty":[0.598,0,1],"Health":[0.35,-3.453,4.928],"Homelessness":[0.237,0,1],"Shelter":[0.206,0,1]},"columns":[{"id":"stat","name":"stat","type":"character"},{"id":"Poverty","name":"Poverty","type":"numeric"},{"id":"Health","name":"Health","type":"numeric"},{"id":"Homelessness","name":"Homelessness","type":"numeric"},{"id":"Shelter","name":"Shelter","type":"numeric"}],"dataKey":"5d12cd9596a23004b0c29af3ad007060"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 <p><br></p>
 </div>
 <div id="correlation-matrix" class="section level3">
@@ -609,8 +611,8 @@ stays are more easily observed in administrative records.</li>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), round, <span class="dv">3</span>)) <span class="sc">%&gt;%</span> </span>
 <span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  <span class="fu">reactable</span>()</span></code></pre></div>
-<div class="reactable html-widget html-fill-item" id="htmlwidget-6a96a15728383a3a0811" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-6a96a15728383a3a0811">{"x":{"tag":{"name":"Reactable","attribs":{"data":{".rownames":["Poverty","Health","Homelessness","Shelter"],"Poverty":[1,0.286,0.282,0.258],"Health":[0.286,1,0.367,0.297],"Homelessness":[0.282,0.367,1,0.914],"Shelter":[0.258,0.297,0.914,1]},"columns":[{"id":".rownames","name":"","type":"character","sortable":false,"filterable":false,"rowHeader":true},{"id":"Poverty","name":"Poverty","type":"numeric"},{"id":"Health","name":"Health","type":"numeric"},{"id":"Homelessness","name":"Homelessness","type":"numeric"},{"id":"Shelter","name":"Shelter","type":"numeric"}],"dataKey":"bc10b7d33572f95b5417c7abdb03b9c8"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-7fdde57fd82b8c4bd0fd" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-7fdde57fd82b8c4bd0fd">{"x":{"tag":{"name":"Reactable","attribs":{"data":{".rownames":["Poverty","Health","Homelessness","Shelter"],"Poverty":[1,0.286,0.282,0.258],"Health":[0.286,1,0.367,0.297],"Homelessness":[0.282,0.367,1,0.914],"Shelter":[0.258,0.297,0.914,1]},"columns":[{"id":".rownames","name":"","type":"character","sortable":false,"filterable":false,"rowHeader":true},{"id":"Poverty","name":"Poverty","type":"numeric"},{"id":"Health","name":"Health","type":"numeric"},{"id":"Homelessness","name":"Homelessness","type":"numeric"},{"id":"Shelter","name":"Shelter","type":"numeric"}],"dataKey":"bc10b7d33572f95b5417c7abdb03b9c8"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">count</span>(Shelter, Homelessness, Poverty)</span></code></pre></div>
 <pre><code>##   Shelter Homelessness Poverty    n
 ## 1       0            0       0 3658
@@ -797,6 +799,8 @@ Everything after the ~) and the outcome.</p>
 <pre><code>## [1] -3.453357 -3.368696 -3.284035 -3.199373 -3.114712 -3.030051</code></pre>
 <pre><code>## [1] 4.504786 4.589447 4.674108 4.758769 4.843430 4.928091</code></pre>
 <p><img src="Labels-bias_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><br></p>
+<p>Last updated on 11 February, 2026</p>
 </div>
 
 <footer>

@@ -50,6 +50,21 @@ footer a:hover {
 }
 
 
-#research-team > ul > li:nth-child(1) > p > img {
-  font-size: ;
+
+
+
+
+/* Draft notice banner */.draft-notice {
+    background-color: #fff3cd;
+    border-left: 5px solid #ffc107;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    border-radius: 4px;
+}.draft-notice p {
+    margin: 5px 0;
+    color: #856404;
+}.draft-notice strong {
+    font-size: 1.1em;
+    color: #856404;
 }

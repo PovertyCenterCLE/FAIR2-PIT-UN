@@ -1,36 +1,61 @@
 ---
 title: "Our Partners"
 output: html_document
-date: "2026-02-11"
 ---
 Our research team consisted of members with an academic focus, those with practical field experience, and those with lived experience. These experts all came together to create a diverse and vibrant team.
 
 
-#### Research Team
+### Research Team
 
 
-* Francisca García-Cobián Richter, CWRU 
+* Francisca García-Cobián Richter, PI, CWRU 
+
+* Patty Stoddard Dare, Co-PI, Cleveland State University
+
+* Christine Marlow, CWRU
+
+* Michael Henderson, CWRU
 
 
-* Alice Jackson, ThinkingCapp
 
+<br>
 
-* Emily Nelson, CWRU
+### Community Collaborators:
 
+* Kay Love
 
-* Nicole Coury, CWRU
+* Anastasia Blake
 
+* and other anonymous contributors
 
+<br>
+
+### Advisory team: 
+
+* Nathan Alexander, Howard University
+
+* Robert L. Fischer, Center, Center on Poverty and Community Development, CWRU  
+
+* Kathryn Pettit, National Neighborhood Indicators Partnership
+
+* Brandy Phipps, Central State University
+
+* Stephen Steh, Center on Poverty and Community Development, CWRU
+
+* Meagan Ray-Novak, Center on Poverty and Community Development, CWRU
 
 
 <br>
 <br>
 <br>
 
-This work was generously funded by grant #015865 from the Public Interest Technology University Network – New America Foundation.
+This work was generously funded by New Ventures Fund Public Interest Technology - University Network, Grant #026062-2024-10-01
 
 
 <br>
 <br>
 <br>
 <br>
+
+
+Last updated on `r format(Sys.time(), '%d %B, %Y')`
