@@ -233,7 +233,7 @@ $(document).ready(function () {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html"><a class="navbar-brand" href="https://cwru-dsci.org/" target="_blank">FAIR2-PIT-UN- main site</a></a>
+      <a class="navbar-brand" href="index.html"><a class="navbar-brand" href="https://cwru-dsci.org/" target="_blank">FAIR2-PIT-UN (main site)</a></a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -322,15 +322,31 @@ CWRU</p></li>
 <li><p>Meagan Ray-Novak, Center on Poverty and Community Development,
 CWRU</p></li>
 </ul>
-<p><br> <br> <br></p>
+<p><br> <br></p>
+<p>We thank our students, AISP colleagues, and NNIP partners who
+provided feedback on the teaching modules, including Kira Morin, Carter
+Shannon, Casey Mullins, Paul Sorenson, Sydney Idzikowski, Rebecca
+Bulotsky Shearer, Cynthia Willner, Michelle Smirnova, Jennifer Ulysse,
+and Amy Carroll-Scott.</p>
+<p><br> <br></p>
 <p>This work was generously funded by New Ventures Fund Public Interest
 Technology - University Network, Grant #026062-2024-10-01</p>
-<p><br> <br> <br> <br></p>
-<p>Last updated on 18 March, 2026</p>
+<p><br></p>
 </div>
 
 <footer>
     <p>Questions? Contact <a href="https://case.edu/socialwork/about/directory-faculty-and-staff/francisca-garcia-cobian-richter">Francisca García-Cobián Richter at <img src="fxr_email.png" alt="Francisca email" style="height: 2em; vertical-align: middle;"> </a></p>
+    
+<div class="footer">
+  <p>Last updated on <span id="build-date"></span></p>
+
+  <script>
+    const options = { day: '2-digit', month: 'long', year: 'numeric' };
+    const date = new Date().toLocaleDateString('en-GB', options);
+    document.getElementById('build-date').textContent = date;
+  </script>
+</div>
+
 </footer>
 
 

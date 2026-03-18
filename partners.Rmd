@@ -48,15 +48,15 @@ Our research team consisted of members with an academic focus, those with practi
 
 <br>
 <br>
+
+We thank our students, AISP colleagues, and NNIP partners who provided feedback on the teaching modules, including Kira Morin, Carter Shannon, Casey Mullins, Paul Sorenson, Sydney Idzikowski, Rebecca Bulotsky Shearer, Cynthia Willner, Michelle Smirnova, Jennifer Ulysse, and Amy Carroll-Scott.
+
+<br>
 <br>
 
 This work was generously funded by New Ventures Fund Public Interest Technology - University Network, Grant #026062-2024-10-01
 
 
 <br>
-<br>
-<br>
-<br>
 
 
-Last updated on `r format(Sys.time(), '%d %B, %Y')`
