@@ -11,6 +11,8 @@ navbar:
       href: Collider-bias.html
     - text: "Our Partners"
       href: partners.html
+    - text: "Module References & Resources"
+      href: references_and_resources.html
     - icon: fa-github
       href: https://github.com/PovertyCenterCLE/FAIR2-PIT-UN
 output:
@@ -18,7 +20,6 @@ output:
     theme: cosmo
     highlight: tango
     include: 
-      before_body: header.html
       after_body: footer.html
     toc: false
     toc_float: false

@@ -1,0 +1,101 @@
+---
+title: "References & Resources"
+output: html_document
+date: "2026-03-18"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<br>
+
+## __References__
+
+
+
+#### _Module 1_
+
+Gawronski, Q. (2019). Racial bias found in widely used health care algorithm. NBC News. https://www.nbcnews.com/news/nbcblk/racial-bias-found-widely-used-health-care-algorithm-n1076436
+
+Goldstein, M. (2023). An AI algorithm designed for child welfare could have the potential for discrimination — and now the Justice Department is looking into it. Fortune. https://fortune.com/2023/01/31/ai-algorithm-child-welfare-pitsburgh-justice-department/
+
+Howe, C. J., Bailey, Z. D., Raifman, J. R., & Jackson, J. W. (2022). Recommendations for Using Causal Diagrams to Study Racial Health Disparities. American journal of epidemiology, 191(12), 1981–1989. https://doi.org/10.1093/aje/kwac140
+
+Kleinberg, J., Ludwig, J., Mullainathan, S., & Sunstein, C. R. (2018). Discrimination in the Age of Algorithms. Journal of Legal Analysis, 10, 113–174.
+
+Muhammad, K. G. (2019). The Condemnation of Blackness: Race, Crime, and the Making of Modern Urban America, With a New Preface. Cambridge, MA: Harvard University Press.
+
+Obermeyer, Z., Powers, B., Vogeli, C., & Mullainathan, S. (2019). Dissecting racial bias in an algorithm used to manage the health of populations. Science (New York, N.Y.), 366(6464), 447–453. https://doi.org/10.1126/science.aax2342
+
+Pearl, J., & Mackenzie, D. (2018). The Book of Why: The New Science of Cause and Effect (1st ed.). USA: Basic Books, Inc.
+
+Wilkinson, M., et al. (2016). The FAIR Guiding Principles for scientific data management and stewardship. Scientific data, 3, 160018. https://doi.org/10.1038/sdata.2016.18
+
+Richter, F. et al. (2023). FAIR2: A framework for addressing discrimination bias in social data science. Editorial Universitat Politècnica de València. 327-335. https://doi.org/10.4995/CARMA2023.2023.16400
+
+Robinson, W. R., Renson, A., & Naimi, A. I. (2020). Teaching yourself about structural racism will improve your machine learning. Biostatistics, 21(2), 339–344.
+
+Tajo, M., et al. (2024). Could machine learning help reduce inequities in the homelessness response system? Urban Institute. https://www.urban.org/urban-wire/could-machine-learning-help-reduce-inequities-homelessness-response-system
+
+<br>
+
+
+#### _Module 2_
+
+Shaw, R. J., Harron, K. L., Pescarini, J. M., Pinto Junior, E. P., Allik, M., Siroky, A. N., Campbell, D., Dundas, R., Ichihara, M. Y., Leyland, A. H., Barreto, M. L., & Katikireddi, S. V. (2022). Biases arising from linked administrative data for epidemiological research: a conceptual framework from registration to analyses. European journal of epidemiology, 37(12), 1215–1224. https://doi.org/10.1007/s10654-022-00934-w
+
+Richter, F.; Nelson, E.; Coury, N.; Bruckman, L.; Knighton, S. (2023). FAIR2: A framework for addressing discrimination bias in social data science. Editorial Universitat Politècnica de València. 327-335. https://doi.org/10.4995/CARMA2023.2023.16400
+
+<br>
+
+
+#### _Module 3_
+
+Banks, G.C., Tonidandel, S., Dou, W. et al. (2025). How to Reduce Bias in the Life Cycle of a Data Science Project. J Bus Psychol. https://doi.org/10.1007/s10869-025-10022-x
+
+Ceccon, M., Cornacchia, G., Pezze, D., Fabris, A., Susto, G… (2025). Underrepresentation, label bias, and proxies: Towards Data Bias Profiles for the EU AI act and beyond. Expert Systems with Applications. https://doi.org/10.1016/j.eswa.2025.128266
+
+Mhasawade, V., D’Amour, A., & Pfohl, S. R. (2024). A Causal Perspective on Label Bias. In Proceedings of the 2024 ACM Conference on Fairness, Accountability, and Transparency (pp. 1282‑1294). ACM. https://doi.org/10.1145/3630106.3658972 
+
+Suen, L. W., Lunn, M. R., Katuzny, K., Finn, S., Duncan, L., Sevelius, J., Flentje, A., Capriotti, M. R., Lubensky, M. E., Hunt, C., Weber, S., Bibbins-Domingo, K., & Obedin-Maliver, J. (2020). What Sexual and Gender Minority People Want Researchers to Know About Sexual Orientation and Gender Identity Questions: A Qualitative Study. Archives of sexual behavior, 49(7), 2301–2318. https://doi.org/10.1007/s10508-020-01810-y
+
+Patterson, J. G., Jabson, J. M., & Bowen, D. J. (2017). Measuring Sexual and Gender Minority Populations in Health Surveillance. LGBT health, 4(2), 82–105. https://doi.org/10.1089/lgbt.2016.0026
+
+<br>
+
+#### _Module 4_ 
+
+Elwert, F., & Winship, C. (2014). Endogenous Selection Bias: The Problem of Conditioning on a Collider Variable. Annual review of sociology, 40, 31–53. https://doi.org/10.1146/annurev-soc-071913-043455
+
+Hernández-Díaz, S., Schisterman, E. F., & Hernán, M. A. (2006). The birth weight "paradox" uncovered?. American journal of epidemiology, 164(11), 1115–1120. https://doi.org/10.1093/aje/kwj275
+
+Richter, F. G. C., Coulton, C., Urban, A., & Steh, S. (2021). An Integrated Data System Lens Into Evictions and Their Effects. Housing Policy Debate, 31(3–5), 762–784. https://doi.org/10.1080/10511482.2021.1879201
+
+Pearl, J., & Mackenzie, D. (2018). The book of why: The new science of cause and effect. Basic Books.
+
+Knox, D., Lowe, W., & Mummolo, J. (2020). Administrative Records Mask Racially Biased Policing. American Political Science Review, 114(3), 619–637. doi:10.1017/S0003055420000039
+
+Bui, Q., & Cox, A. (2016, July 11). Surprising new evidence shows bias in police use of force but not in shootings. The New York Times. https://www.nytimes.com/2016/07/12/upshot/surprising-new-evidence-shows-bias-in-police-use-of-force-but-not-in-shootings.html
+
+
+<br>
+
+
+
+## __Resources & Recommended Reading__
+
+* *Data Feminism* by Catherine D'Ignazio and Lauren Klein
+
+* *Normal Life* by Dean Spade
+
+* *The Book of Why* by Judea Pearl and Dana Mackenzie
+
+* *The Tech that Comes Next* by Afua Bruce and Amy Sample Ward
+
+* *LGBTQ+ Glossary of Terms*
+
+* *Public Interest Technology University Network (PIT-UN)*
+
+* *The Center on Poverty and Community Development at the Jack, Joseph and Morton Mandel School of Applied Social Sciences, Case Western Reserve University*
+
