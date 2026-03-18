@@ -47,6 +47,9 @@ Shaw, R. J., Harron, K. L., Pescarini, J. M., Pinto Junior, E. P., Allik, M., Si
 
 Richter, F.; Nelson, E.; Coury, N.; Bruckman, L.; Knighton, S. (2023). FAIR2: A framework for addressing discrimination bias in social data science. Editorial Universitat Politècnica de València. 327-335. https://doi.org/10.4995/CARMA2023.2023.16400
 
+Richter, F. G.-C., Nelson, E., Coury, N., & Jackson, A. (2026). FAIR2 Data Chats: Advancing Public-Interest Data Science through Participatory Research. Journal of Participatory Research Methods.(doi forthcoming) https://jprm.scholasticahq.com/article/158338-fair2-data-chats-advancing-public-interest-data-science-through-participatory-research?auth_token=BTCC3oAgDnVfvmA8uJzM
+
+
 <br>
 
 
