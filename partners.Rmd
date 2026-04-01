@@ -35,6 +35,15 @@ Our research team consisted of members with an academic focus, those with practi
 
 * Nathan Alexander, Howard University
 
+    * Bayowa Onabajo
+    
+    * Jibek Gupta
+    
+    * Lyrric Jackson
+    
+    * And all students at Dr. Nathan Alexander's Quantitative Histories Workshop
+    
+
 * Robert L. Fischer, Center on Poverty and Community Development, CWRU  
 
 * Kathryn Pettit, National Neighborhood Indicators Partnership
@@ -55,6 +64,13 @@ We thank our students, AISP colleagues, and NNIP partners who provided feedback 
 <br>
 
 This work was generously funded by New Ventures Fund Public Interest Technology - University Network, Grant #026062-2024-10-01
+
+<br>
+<br>
+
+<div style="text-align: center;">
+  <img src="PIT-UN_black.png" alt="Description" width="30%"/>
+</div>
 
 
 <br>
