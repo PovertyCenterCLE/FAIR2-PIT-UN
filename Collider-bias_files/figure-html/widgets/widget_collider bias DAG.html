@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<style>body{background-color:white;}</style>
+<script src="grViz_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="grViz_libs/viz-1.8.2/viz.js"></script>
+<link href="grViz_libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="grViz_libs/grViz-binding-1.0.11/grViz.js"></script>
+<script src="grViz_libs/pymjs-1.3.2/pym.v1.min.js"></script>
+  <title>grViz</title>
+</head>
+<body>
+<div id="htmlwidget_container">
+  <div id="htmlwidget-facd2a2826209a44063e" style="width:100%;height:500px;" class="grViz html-widget"></div>
+  <script>HTMLWidgets.pymChild = new pym.Child();HTMLWidgets.addPostRenderHandler(function(){
+                                setTimeout(function(){HTMLWidgets.pymChild.sendHeight();},100);
+                            });</script>
+</div>
+<script type="application/json" data-for="htmlwidget-facd2a2826209a44063e">{"x":{"diagram":"\ndigraph DAG {\n  graph [layout = neato, overlap = false, splines = true]\n\n  # Node definitions\n  node [shape = ellipse, style = filled, fillcolor = \"#EAF2F8\", fontsize = 11]\n\n  hs_grad           [label = \"hs_grad\", pos = \"2, 1!\"]\n  Marginalized [label = \"Marginalized\", pos = \"1,2!\"]\n  low_income_nhood [pos = \"-1, 1!\"]\n\n  # Directed edges\n     Marginalized -> low_income_nhood [color = blue, penwidth = 2]\n      low_income_nhood -> hs_grad [color = blue, penwidth = 2]\n    Marginalized -> hs_grad [color = blue, penwidth = 2]\n\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<script type="application/htmlwidget-sizing" data-for="htmlwidget-facd2a2826209a44063e">{"viewer":{"width":"100%","height":350,"padding":0,"fill":false},"browser":{"width":"100%","height":500,"padding":0,"fill":false}}</script>
+</body>
+</html>

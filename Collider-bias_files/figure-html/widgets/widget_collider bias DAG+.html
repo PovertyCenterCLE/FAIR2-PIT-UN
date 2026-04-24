@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<style>body{background-color:white;}</style>
+<script src="grViz_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="grViz_libs/viz-1.8.2/viz.js"></script>
+<link href="grViz_libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="grViz_libs/grViz-binding-1.0.11/grViz.js"></script>
+<script src="grViz_libs/pymjs-1.3.2/pym.v1.min.js"></script>
+  <title>grViz</title>
+</head>
+<body>
+<div id="htmlwidget_container">
+  <div id="htmlwidget-88d2899b70dc1cf743e2" style="width:100%;height:500px;" class="grViz html-widget"></div>
+  <script>HTMLWidgets.pymChild = new pym.Child();HTMLWidgets.addPostRenderHandler(function(){
+                                setTimeout(function(){HTMLWidgets.pymChild.sendHeight();},100);
+                            });</script>
+</div>
+<script type="application/json" data-for="htmlwidget-88d2899b70dc1cf743e2">{"x":{"diagram":"\ndigraph DAG {\n  graph [layout = neato, overlap = false, splines = true]\n\n  # Node definitions\n  node [shape = ellipse, style = filled, fillcolor = \"#EAF2F8\", fontsize = 11]\n\n  hs_grad [label = \"hs_grad\", pos = \"2,1!\"]\n  Marginalization [ pos = \"1,2!\"]\n  low_income_nhood [pos = \"-1, 1!\"]\n  Vulnerabilities [pos = \"1, 0!\", style = dotted]\n  \n  # Directed edges\n     Marginalization -> low_income_nhood [color = blue, penwidth = 2]\n      low_income_nhood -> hs_grad [color = blue, penwidth = 2]\n    Marginalization -> hs_grad [color = blue, penwidth = 2]\n \n  Vulnerabilities -> low_income_nhood [color = darkgreen, penwidth = 2]\n    Vulnerabilities -> hs_grad [color = darkgreen, penwidth = 2]\n      \n  # Optional styling\n  edge [color = \"#555555\", arrowsize = 0.8]\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<script type="application/htmlwidget-sizing" data-for="htmlwidget-88d2899b70dc1cf743e2">{"viewer":{"width":"100%","height":350,"padding":0,"fill":false},"browser":{"width":"100%","height":500,"padding":0,"fill":false}}</script>
+</body>
+</html>

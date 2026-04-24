@@ -1,6 +1,7 @@
 ---
 title: "PIT-IDS: Collider Bias"
 output: html_document
+self_contained: false
 ---
 
 
@@ -19,7 +20,7 @@ library(ggrepel)
 library(tidyverse)
 library(broom)
 library(reactable)
-
+library(widgetframe)
 library(patchwork)
 library(knitr)
 ```
@@ -78,7 +79,8 @@ digraph DAG {
     Marginalized -> hs_grad [color = blue, penwidth = 2]
 
 }
-")
+") %>% 
+  frameWidget()
 
 ```
 
@@ -118,7 +120,8 @@ digraph DAG {
   # Optional styling
   edge [color = '#555555', arrowsize = 0.8]
 }
-")
+") %>% 
+  frameWidget()
 
 ```
 
@@ -156,7 +159,8 @@ digraph DAG {
     Vulnerabilities -> hs_grad [color = blue, penwidth = 2]
 
 }
-")
+") %>% 
+  frameWidget()
 
 ```
 
