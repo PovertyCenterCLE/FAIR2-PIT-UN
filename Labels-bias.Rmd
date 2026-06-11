@@ -7,8 +7,13 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 #install.packages("DiagrammeR")
 library(DiagrammeR)
+# library(DiagrammeRsvg)
+# library(rsvg)
+# library(htmltools)
 library(plotly)
 library(corrplot)
+library(widgetframe)
+
 library(tidyverse)
 library(reactable)
 ```
@@ -52,8 +57,16 @@ digraph DAG {
   Health -> Shelter [label = '-', fontsize=18]
   Health -> Homelessness [label = '+', fontsize=18]
 }
-")
+")%>% 
+  frameWidget()
+
+# svg_content <- export_svg(dag)
+# HTML(svg_content)
+
 ```
+
+
+
 ## Simulate data based on causal graph
 
 To illustrate how label bias can occur, and what it might look like, we'll create an example dataset, _df_, consisting of 10,000 administrative records for 10,000 made up people.
