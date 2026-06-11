@@ -455,8 +455,8 @@ outcomes. Do you think this model does a good job of explaining why
 different people have different educational experiences (whether
 <strong>hs_grad</strong> or educational outcomes more broadly)?</p></li>
 </ol>
-<div id="htmlwidget-911edea4d3b81c6c430d" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
-<script type="application/json" data-for="htmlwidget-911edea4d3b81c6c430d">{"x":{"url":"Collider-bias_files/figure-html//widgets/widget_collider bias DAG.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-66cde4cb0194ab19e2c8" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-66cde4cb0194ab19e2c8">{"x":{"url":"Collider-bias_files/figure-html//widgets/widget_collider bias DAG.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
 <p><br></p>
 <p>A more realistic DAG recognizes that factors <em>other than</em>
 discrimination may lead to living in low-income neighborhoods. We’ll
@@ -470,8 +470,8 @@ we connect these variables with a causal edge. These Vulnerabilities are
 often difficult to observe, and thus difficult to identify in data,
 which we note using a dotted contour.</p>
 <p>The updated DAG looks like this:</p>
-<div id="htmlwidget-1ced7b4d8110533a57a2" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1ced7b4d8110533a57a2">{"x":{"url":"Collider-bias_files/figure-html//widgets/widget_collider bias DAG+.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-9c7b73085e15608ee79f" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9c7b73085e15608ee79f">{"x":{"url":"Collider-bias_files/figure-html//widgets/widget_collider bias DAG+.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
 <p><br></p>
 <p>Now, let’s say our data was restricted to a school district where the
 majority of students face poverty. In other words, if, in our data,
@@ -484,8 +484,8 @@ variable, as it doesn’t vary).</p>
 non-causal pathway between <strong>marginalization</strong> and
 <strong>hs_grad</strong>.</p>
 <p>The updated DAG looks like this:</p>
-<div id="htmlwidget-50f5dae020c351623d1f" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
-<script type="application/json" data-for="htmlwidget-50f5dae020c351623d1f">{"x":{"url":"Collider-bias_files/figure-html//widgets/widget_collider bias DAG++.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-1fc5dcd4cb2c140444d6" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1fc5dcd4cb2c140444d6">{"x":{"url":"Collider-bias_files/figure-html//widgets/widget_collider bias DAG++.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
 <p>How does selection on a collider bias our estimates on the causal
 effect of discrimination on high school graduation?</p>
 <p>To explore this question, we will simulate data that mirrors the
@@ -512,8 +512,8 @@ respectively.</p>
 <p>These probability statements can also be written as:</p>
 <p><em>P(Marginalization)</em> and</p>
 <p><em>P(low_income_nhood)</em></p>
-<div class="reactable html-widget html-fill-item" id="htmlwidget-930456f0f180262ef703" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-930456f0f180262ef703">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"var":["Marginalization","Vulnerabilities","low_income_nhood","hs_grad"],"n_distinct":[2,10000,2,10000],"mean":[0.2992,-0.00485,0.402,0.50549],"min":[0,-4.03282,0,0],"max":[1,3.55658,1,1]},"columns":[{"id":"var","name":"var","type":"character"},{"id":"n_distinct","name":"n_distinct","type":"numeric"},{"id":"mean","name":"mean","type":"numeric"},{"id":"min","name":"min","type":"numeric"},{"id":"max","name":"max","type":"numeric"}],"dataKey":"e9666770bb8e7af757d0963be6368e7a"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-4f21cfa6873ccdcdeae4" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-4f21cfa6873ccdcdeae4">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"var":["Marginalization","Vulnerabilities","low_income_nhood","hs_grad"],"n_distinct":[2,10000,2,10000],"mean":[0.2992,-0.00485,0.402,0.50549],"min":[0,-4.03282,0,0],"max":[1,3.55658,1,1]},"columns":[{"id":"var","name":"var","type":"character"},{"id":"n_distinct","name":"n_distinct","type":"numeric"},{"id":"mean","name":"mean","type":"numeric"},{"id":"min","name":"min","type":"numeric"},{"id":"max","name":"max","type":"numeric"}],"dataKey":"e9666770bb8e7af757d0963be6368e7a"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="low_income_nhood-1" class="section level4">
 <h4>low_income_nhood == 1</h4>
@@ -523,8 +523,8 @@ can be interpreted as ‘the probability that a student belongs to a
 marginalized group, given that they live in a low-income neighborhood’,
 or</p>
 <p><em>P(Marginalization|low_income_nhood == 1)</em></p>
-<div class="reactable html-widget html-fill-item" id="htmlwidget-4211861c5844b24023be" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-4211861c5844b24023be">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"var":["Marginalization","Vulnerabilities","hs_grad"],"n_distinct":[2,4020,4020],"mean":[0.37065,0.87859,0.3347],"min":[0,-1.44245,0],"max":[1,3.55658,0.54223]},"columns":[{"id":"var","name":"var","type":"character"},{"id":"n_distinct","name":"n_distinct","type":"numeric"},{"id":"mean","name":"mean","type":"numeric"},{"id":"min","name":"min","type":"numeric"},{"id":"max","name":"max","type":"numeric"}],"dataKey":"eabb470eb203c1c38c1fa563f278b7ce"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-5e858457e705f37377d1" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-5e858457e705f37377d1">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"var":["Marginalization","Vulnerabilities","hs_grad"],"n_distinct":[2,4020,4020],"mean":[0.37065,0.87859,0.3347],"min":[0,-1.44245,0],"max":[1,3.55658,0.54223]},"columns":[{"id":"var","name":"var","type":"character"},{"id":"n_distinct","name":"n_distinct","type":"numeric"},{"id":"mean","name":"mean","type":"numeric"},{"id":"min","name":"min","type":"numeric"},{"id":"max","name":"max","type":"numeric"}],"dataKey":"eabb470eb203c1c38c1fa563f278b7ce"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="low_income_nhood-0" class="section level4">
 <h4>low_income_nhood == 0</h4>
@@ -533,8 +533,8 @@ neighborhoods, the mean value of <strong>Marginalization</strong> can be
 interpreted as ‘the probability that a student belongs to a marginalized
 group, given that they live in a higher-resourced neighborhood’, or</p>
 <p><em>P(Marginalization|low_income_nhood == 0)</em></p>
-<div class="reactable html-widget html-fill-item" id="htmlwidget-ca9a34565b77e4f59600" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-ca9a34565b77e4f59600">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"var":["Marginalization","Vulnerabilities","hs_grad"],"n_distinct":[2,5980,5980],"mean":[0.25117,-0.59874,0.6203],"min":[0,-4.03282,0.33618],"max":[1,1.61086,1]},"columns":[{"id":"var","name":"var","type":"character"},{"id":"n_distinct","name":"n_distinct","type":"numeric"},{"id":"mean","name":"mean","type":"numeric"},{"id":"min","name":"min","type":"numeric"},{"id":"max","name":"max","type":"numeric"}],"dataKey":"08993161ad0e335f808b153611da7abd"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-847efad0de2f0d8408e3" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-847efad0de2f0d8408e3">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"var":["Marginalization","Vulnerabilities","hs_grad"],"n_distinct":[2,5980,5980],"mean":[0.25117,-0.59874,0.6203],"min":[0,-4.03282,0.33618],"max":[1,1.61086,1]},"columns":[{"id":"var","name":"var","type":"character"},{"id":"n_distinct","name":"n_distinct","type":"numeric"},{"id":"mean","name":"mean","type":"numeric"},{"id":"min","name":"min","type":"numeric"},{"id":"max","name":"max","type":"numeric"}],"dataKey":"08993161ad0e335f808b153611da7abd"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 <p><br> <br></p>
 </div>
 </div>
@@ -552,18 +552,18 @@ neighborhoods? What is the nature of the relationship between
 now?</p>
 <div id="full-sample" class="section level4">
 <h4>Full sample</h4>
-<div class="reactable html-widget html-fill-item" id="htmlwidget-62c6fc040f289a905a9e" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-62c6fc040f289a905a9e">{"x":{"tag":{"name":"Reactable","attribs":{"data":{".rownames":["Marginalization","Vulnerabilities","prob_low_income","hs_grad"],"Marginalization":[1,0.009,0.135,-0.285],"Vulnerabilities":[0.009,1,0.856,-0.905],"prob_low_income":[0.135,0.856,1,-0.891],"hs_grad":[-0.285,-0.905,-0.891,1]},"columns":[{"id":".rownames","name":"","type":"character","sortable":false,"filterable":false,"rowHeader":true},{"id":"Marginalization","name":"Marginalization","type":"numeric"},{"id":"Vulnerabilities","name":"Vulnerabilities","type":"numeric"},{"id":"prob_low_income","name":"prob_low_income","type":"numeric"},{"id":"hs_grad","name":"hs_grad","type":"numeric"}],"dataKey":"9f4807038e07031f40467c2b333c9c20"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-93d2090cb5023767c1e6" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-93d2090cb5023767c1e6">{"x":{"tag":{"name":"Reactable","attribs":{"data":{".rownames":["Marginalization","Vulnerabilities","prob_low_income","hs_grad"],"Marginalization":[1,0.009,0.135,-0.285],"Vulnerabilities":[0.009,1,0.856,-0.905],"prob_low_income":[0.135,0.856,1,-0.891],"hs_grad":[-0.285,-0.905,-0.891,1]},"columns":[{"id":".rownames","name":"","type":"character","sortable":false,"filterable":false,"rowHeader":true},{"id":"Marginalization","name":"Marginalization","type":"numeric"},{"id":"Vulnerabilities","name":"Vulnerabilities","type":"numeric"},{"id":"prob_low_income","name":"prob_low_income","type":"numeric"},{"id":"hs_grad","name":"hs_grad","type":"numeric"}],"dataKey":"9f4807038e07031f40467c2b333c9c20"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="low_income_nhood-1-1" class="section level4">
 <h4>low_income_nhood == 1</h4>
-<div class="reactable html-widget html-fill-item" id="htmlwidget-17e8cf3865890aa91b44" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-17e8cf3865890aa91b44">{"x":{"tag":{"name":"Reactable","attribs":{"data":{".rownames":["Marginalization","Vulnerabilities","prob_low_income","hs_grad"],"Marginalization":[1,-0.236,-0.28,-0.321],"Vulnerabilities":[-0.236,1,0.764,-0.742],"prob_low_income":[-0.28,0.764,1,-0.514],"hs_grad":[-0.321,-0.742,-0.514,1]},"columns":[{"id":".rownames","name":"","type":"character","sortable":false,"filterable":false,"rowHeader":true},{"id":"Marginalization","name":"Marginalization","type":"numeric"},{"id":"Vulnerabilities","name":"Vulnerabilities","type":"numeric"},{"id":"prob_low_income","name":"prob_low_income","type":"numeric"},{"id":"hs_grad","name":"hs_grad","type":"numeric"}],"dataKey":"573bcf6020c058315f64f563109d1ea1"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-9a0453b38541954228ed" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-9a0453b38541954228ed">{"x":{"tag":{"name":"Reactable","attribs":{"data":{".rownames":["Marginalization","Vulnerabilities","prob_low_income","hs_grad"],"Marginalization":[1,-0.236,-0.28,-0.321],"Vulnerabilities":[-0.236,1,0.764,-0.742],"prob_low_income":[-0.28,0.764,1,-0.514],"hs_grad":[-0.321,-0.742,-0.514,1]},"columns":[{"id":".rownames","name":"","type":"character","sortable":false,"filterable":false,"rowHeader":true},{"id":"Marginalization","name":"Marginalization","type":"numeric"},{"id":"Vulnerabilities","name":"Vulnerabilities","type":"numeric"},{"id":"prob_low_income","name":"prob_low_income","type":"numeric"},{"id":"hs_grad","name":"hs_grad","type":"numeric"}],"dataKey":"573bcf6020c058315f64f563109d1ea1"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="low_income_nhood-0-1" class="section level4">
 <h4>low_income_nhood == 0</h4>
-<div class="reactable html-widget html-fill-item" id="htmlwidget-797ec36915f73e479964" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-797ec36915f73e479964">{"x":{"tag":{"name":"Reactable","attribs":{"data":{".rownames":["Marginalization","Vulnerabilities","prob_low_income","hs_grad"],"Marginalization":[1,-0.05,0.347,-0.372],"Vulnerabilities":[-0.05,1,0.581,-0.826],"prob_low_income":[0.347,0.581,1,-0.635],"hs_grad":[-0.372,-0.826,-0.635,1]},"columns":[{"id":".rownames","name":"","type":"character","sortable":false,"filterable":false,"rowHeader":true},{"id":"Marginalization","name":"Marginalization","type":"numeric"},{"id":"Vulnerabilities","name":"Vulnerabilities","type":"numeric"},{"id":"prob_low_income","name":"prob_low_income","type":"numeric"},{"id":"hs_grad","name":"hs_grad","type":"numeric"}],"dataKey":"950fa8b3db79585ba56f8f267499f1d1"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-80fac3e25916c20a1eb6" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-80fac3e25916c20a1eb6">{"x":{"tag":{"name":"Reactable","attribs":{"data":{".rownames":["Marginalization","Vulnerabilities","prob_low_income","hs_grad"],"Marginalization":[1,-0.05,0.347,-0.372],"Vulnerabilities":[-0.05,1,0.581,-0.826],"prob_low_income":[0.347,0.581,1,-0.635],"hs_grad":[-0.372,-0.826,-0.635,1]},"columns":[{"id":".rownames","name":"","type":"character","sortable":false,"filterable":false,"rowHeader":true},{"id":"Marginalization","name":"Marginalization","type":"numeric"},{"id":"Vulnerabilities","name":"Vulnerabilities","type":"numeric"},{"id":"prob_low_income","name":"prob_low_income","type":"numeric"},{"id":"hs_grad","name":"hs_grad","type":"numeric"}],"dataKey":"950fa8b3db79585ba56f8f267499f1d1"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div id="section" class="section level1">
@@ -678,8 +678,8 @@ collider bias is present.</p>
 <p>This is an example of how, even when we have population data (meaning
 data from all students in a school district), our estimates may carry
 bias.</p>
-<div class="reactable html-widget html-fill-item" id="htmlwidget-f30d02e7833c84e52c68" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-f30d02e7833c84e52c68">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"model":["Full (no V)","Full (no V)","Selected (low_income==1)","Selected (low_income==1)","Full (with V)","Full (with V)","Full (with V)"],"term":["(Intercept)","Marginalization","(Intercept)","Marginalization","(Intercept)","Marginalization","Vulnerabilities"],"estimate":[0.5356,-0.1008,0.3536,-0.0509,0.5341,-0.0979,-0.1477],"std.error":[0.0019,0.0034,0.0014,0.0024,0.0006,0.0011,0.0005],"statistic":[288.7284,-29.7162,245.5322,-21.5061,856.0997,-85.8598,-280.0491],"p.value":[0,0,0,0,0,0,0]},"columns":[{"id":"model","name":"model","type":"character"},{"id":"term","name":"term","type":"character"},{"id":"estimate","name":"estimate","type":"numeric"},{"id":"std.error","name":"std.error","type":"numeric"},{"id":"statistic","name":"statistic","type":"numeric"},{"id":"p.value","name":"p.value","type":"numeric"}],"dataKey":"f64fe593c1263b350f5c2bb31c425b87"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-2c892a941ffe10951746" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-2c892a941ffe10951746">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"model":["Full (no V)","Full (no V)","Selected (low_income==1)","Selected (low_income==1)","Full (with V)","Full (with V)","Full (with V)"],"term":["(Intercept)","Marginalization","(Intercept)","Marginalization","(Intercept)","Marginalization","Vulnerabilities"],"estimate":[0.5356,-0.1008,0.3536,-0.0509,0.5341,-0.0979,-0.1477],"std.error":[0.0019,0.0034,0.0014,0.0024,0.0006,0.0011,0.0005],"statistic":[288.7284,-29.7162,245.5322,-21.5061,856.0997,-85.8598,-280.0491],"p.value":[0,0,0,0,0,0,0]},"columns":[{"id":"model","name":"model","type":"character"},{"id":"term","name":"term","type":"character"},{"id":"estimate","name":"estimate","type":"numeric"},{"id":"std.error","name":"std.error","type":"numeric"},{"id":"statistic","name":"statistic","type":"numeric"},{"id":"p.value","name":"p.value","type":"numeric"}],"dataKey":"f64fe593c1263b350f5c2bb31c425b87"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 <p><br> <br></p>
 <p><img src="Collider-bias_files/figure-html/plot1-1.png" width="672" /></p>
 <p><br></p>
