@@ -20,6 +20,7 @@ output:
     theme: cosmo
     highlight: tango
     include: 
+      in_header: analytics.html
       after_body: footer.html
     toc: false
     toc_float: false

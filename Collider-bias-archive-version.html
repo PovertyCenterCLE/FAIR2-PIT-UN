@@ -31,12 +31,14 @@
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="site_libs/pymjs-1.3.2/pym.v1.js"></script>
+<script src="site_libs/widgetframe-binding-0.3.1/widgetframe.js"></script>
 <script src="site_libs/core-js-2.5.3/shim.min.js"></script>
 <script src="site_libs/react-18.2.0/react.min.js"></script>
 <script src="site_libs/react-18.2.0/react-dom.min.js"></script>
 <script src="site_libs/reactwidget-2.0.0/react-tools.js"></script>
 <link href="site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
-<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <link href="site_libs/reactable-0.4.4/reactable.css" rel="stylesheet" />
 <script src="site_libs/reactable-binding-0.4.4/reactable.js"></script>
 <link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
@@ -423,81 +425,76 @@ href="https://github.com/PovertyCenterCLE/FAIR2-PIT-UN/blob/main/Collider-bias.R
 <p>We’re interested in estimating the impact of discrimination (referred
 to as <strong>marginalized</strong> or <strong>marginalization</strong>
 going forward) on educational outcomes (we could look at any number of
-different education-related outcomes; today, we’ll focus on <strong>high
-school graduation</strong> in a city where <strong>lower-income
-neighborhoods</strong> carry a higher risk of exposure to environmental
-hazards than higher-income neighborhoods. We’ll focus specifically on
-the risk of exposure to lead, a toxin associated with cognitive and
-behavioral impairments, via chipped paint and lead-contaminated dust in
-older homes that may not have been properly maintained over the
-years.</p>
+different education-related outcomes; today, we’ll focus on high school
+graduation, <strong>hs_grad</strong>) in a city where lower-income
+neighborhoods carry a higher risk of exposure to environmental hazards
+than higher-income neighborhoods (<strong>low_income_nhood</strong>).
+We’ll focus specifically on the risk of exposure to lead, a toxin
+associated with cognitive and behavioral impairments, via chipped paint
+and lead-contaminated dust in older homes that may not have been
+properly maintained over the years.</p>
 <p>We start by sketching a simple graphical model (a Directed Acyclic
 Graph or DAG) representing a hypothesized explanation of the ways in
-which <strong>marginalization</strong> impacts <strong>high school
-graduation</strong>. Each variable in the DAG is represented by a node,
-while an edge or arrow between two nodes indicates a causal relationship
-in the direction of the arrow.</p>
+which <strong>marginalization</strong> impacts <strong>hs_grad</strong>.
+Each variable in the DAG is represented by a node, while an edge or
+arrow between two nodes indicates a causal relationship in the direction
+of the arrow.</p>
 <p>This model proposes two pathways through which
-<strong>marginalization</strong> can shape <strong>high school
-graduation</strong></p>
+<strong>marginalization</strong> can shape <strong>hs_grad</strong></p>
 <ul>
 <li>First, there is the direct pathway from
-<strong>marginalization</strong> to <strong>high school
-graduation</strong>,</li>
+<strong>marginalization</strong> to <strong>hs_grad</strong>,</li>
 <li>There is also an indirect pathway from <em>marginalization</em> to
-<strong>high school graduation</strong>, via <strong>low-income
-neighborhood</strong>.</li>
+<strong>hs_grad</strong>, via <strong>low_income_nhood</strong>.</li>
 </ul>
-<p><img src="dag1.png" width="1052" style="display: block; margin: auto;" /></p>
 <p><em>Questions:</em></p>
 <ol style="list-style-type: decimal">
 <li><p>Can you identify the direct and indirect pathways connecting
-<strong>marginalization</strong> to <strong>high school
-graduation</strong>?</p></li>
+<strong>marginalization</strong> to <strong>hs_grad</strong>?</p></li>
 <li><p>In addition to the direct &amp; indirect pathways connecting
-<strong>marginalization</strong> to <strong>high school
-graduation</strong>, there is one more causal pathway shown in this
-model. What is it? (i.e., <em>‘X has a direct/indirect impact
-Y’</em>)</p></li>
+<strong>marginalization</strong> to <strong>hs_grad</strong>, there is
+one more causal pathway shown in this model. What is it? (i.e., <em>‘X
+has a direct/indirect impact Y’</em>)</p></li>
 <li><p>Can you think of a plausible reason (or reasons) for the
 hypothesized relationships between <strong>marginalization</strong>,
-<strong>low-income neighborhood</strong>, and <strong>high school
-graduation</strong> that are shown in the DAG below?</p></li>
+<strong>low_income_nhood</strong>, and <strong>hs_grad</strong> that are
+shown in the DAG below?</p></li>
 <li><p>We know that not everyone experiences identical educational
 outcomes. Do you think this model does a good job of explaining why
 different people have different educational experiences (whether
-<strong>high school graduation</strong> or educational outcomes more
-broadly)?</p></li>
+<strong>hs_grad</strong> or educational outcomes more broadly)?</p></li>
 </ol>
+<div id="htmlwidget-517198fb5e1fa097f651" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-517198fb5e1fa097f651">{"x":{"url":"Collider-bias-archive-version_files/figure-html//widgets/widget_collider bias DAG.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
 <p><br></p>
 <p>A more realistic DAG recognizes that factors <em>other than</em>
 discrimination may lead to living in low-income neighborhoods. We’ll
 refer to these factors as vulnerabilities (<strong>V</strong>).</p>
 <p>What are some possible examples of <strong>V</strong>?</p>
 <p>Once included as a variable in the model, we notice that while
-<strong>V</strong> does influence <strong>low-income
-neighborhood</strong>, it doesn’t <em>only</em> influence
-<strong>low-income neighborhood</strong>. It may <em>also</em> influence
-<strong>high school graduation</strong>; to reflect this, we connect
-these variables with a causal edge. These Vulnerabilities are often
-difficult to observe, and thus difficult to identify in data, which we
-note using a dotted contour.</p>
+<strong>V</strong> does influence <strong>low_income_nhood</strong>, it
+doesn’t <em>only</em> influence <strong>low_income_nhood</strong>. It
+may <em>also</em> influence <strong>hs_grad</strong>; to reflect this,
+we connect these variables with a causal edge. These Vulnerabilities are
+often difficult to observe, and thus difficult to identify in data,
+which we note using a dotted contour.</p>
 <p>The updated DAG looks like this:</p>
-<p><img src="dag2.png" width="876" style="display: block; margin: auto;" /></p>
+<div id="htmlwidget-d63b08bc2a6a450dcf71" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d63b08bc2a6a450dcf71">{"x":{"url":"Collider-bias-archive-version_files/figure-html//widgets/widget_collider bias DAG+.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
 <p><br></p>
 <p>Now, let’s say our data was restricted to a school district where the
 majority of students face poverty. In other words, if, in our data,
-<strong>low-income neighborhood</strong> is a binary variable where 1 ==
+<strong>low_income_nhood</strong> is a binary variable where 1 ==
 “low-income neighborhood” and 0 == “higher-income neighborhood”,
-<strong>low-income neighborhood</strong> is fixed at 1 (and no longer a
+<strong>low_income_nhood</strong> is fixed at 1 (and no longer a
 variable, as it doesn’t vary).</p>
-<p>In this scenario, we are “selecting” on <strong>low-income
-neighborhood</strong> (a collider), which opens up a non-causal pathway
-between <strong>marginalization</strong> and <strong>high school
-graduation</strong>.</p>
-<p>The updated DAG looks like this:
-<img src="dag3.png" width="846" style="display: block; margin: auto;" /></p>
-<p><br></p>
+<p>In this scenario, we are “selecting” on
+<strong>low_income_nhood</strong> (a collider), which opens up a
+non-causal pathway between <strong>marginalization</strong> and
+<strong>hs_grad</strong>.</p>
+<p>The updated DAG looks like this:</p>
+<div id="htmlwidget-0f7736bd08218367ca4d" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0f7736bd08218367ca4d">{"x":{"url":"Collider-bias-archive-version_files/figure-html//widgets/widget_collider bias DAG++.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
 <p>How does selection on a collider bias our estimates on the causal
 effect of discrimination on high school graduation?</p>
 <p>To explore this question, we will simulate data that mirrors the
@@ -508,62 +505,45 @@ real data, make distributional assumption and estimate parameters under
 those assumptions. However, simulated data works well to illustrate
 collider bias as we can see how the “real” (simulated) parameters
 compare to those estimated when bias is present.</p>
-<p><br></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>tb <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>  <span class="at">Marginalization =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">size =</span> <span class="dv">100000</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">c</span>(.<span class="dv">65</span>, .<span class="dv">35</span>)), </span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>  <span class="at">Vulnerabilities =</span> <span class="fu">rnorm</span>(<span class="dv">100000</span>), </span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>    <span class="at">Poor_Nbhd =</span> <span class="fu">ifelse</span>(</span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>    (Vulnerabilities <span class="sc">&gt;</span> <span class="fl">1.5</span>   <span class="sc">&amp;</span> Marginalization <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">|</span></span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>    (Vulnerabilities <span class="sc">&gt;</span> <span class="fl">0.842</span> <span class="sc">&amp;</span> Marginalization <span class="sc">==</span> <span class="dv">1</span>), <span class="dv">1</span>, <span class="dv">0</span>), </span>
-<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>  <span class="at">HSG_01  =</span> <span class="fu">plogis</span>(<span class="fl">1.99</span> <span class="sc">-</span> Marginalization <span class="sc">-</span> Vulnerabilities <span class="sc">-</span> <span class="fl">0.5</span> <span class="sc">*</span> Poor_Nbhd <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">100000</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>))</span>
-<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>  )</span></code></pre></div>
-<p><br></p>
 <div id="simulated-data-descriptive-statistics"
 class="section level3 tabset">
 <h3 class="tabset">Simulated data descriptive statistics</h3>
 <p>Let’s examine the data we just created. What do you notice when
-comparing:</p>
-<ul>
-<li>all students vs. </li>
-<li>those living in low-income neighborhood (Poor_Nbhd == 1) vs. </li>
-<li>those living in non-low-income neighborhoods (Poor_Nbhd == 0)?</li>
-</ul>
+comparing all students vs. those living in low-income neighborhood
+vs. those living in non-low-income neighborhoods?</p>
 <div id="full-data" class="section level4">
 <h4>Full data</h4>
 <p>In this table, the mean values for <strong>Marginalization</strong>
-and <strong>Poor_Nbhd</strong> can be interpreted as ‘the probability
-that a student belongs to a marginalized group’ and ‘the probability
-that a student lives in a low-income neighborhood’, respectively.</p>
+and <strong>low_income_nhood</strong> can be interpreted as ‘the
+probability that a student belongs to a marginalized group’ and ‘the
+probability that a student lives in a low-income neighborhood’,
+respectively.</p>
 <p>These probability statements can also be written as:</p>
 <p><em>P(Marginalization)</em> and</p>
-<p><em>P(Poor_Nbhd)</em></p>
-<div class="reactable html-widget html-fill-item" id="htmlwidget-65571415cc741698661f" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-65571415cc741698661f">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"var":["Marginalization","Vulnerabilities","Poor_Nbhd","HSG_01"],"n_distinct":[2,100000,2,100000],"mean":[0.34899,0.00357,-0.88593,0.75425],"min":[0,-4.3821,-1,0.00562],"max":[1,4.20609,0,0.99975]},"columns":[{"id":"var","name":"var","type":"character"},{"id":"n_distinct","name":"n_distinct","type":"numeric"},{"id":"mean","name":"mean","type":"numeric"},{"id":"min","name":"min","type":"numeric"},{"id":"max","name":"max","type":"numeric"}],"dataKey":"6dda836a651701fc28e75180a0271e47"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<p><em>P(low_income_nhood)</em></p>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-3ab9f0f5e7a720dff61f" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-3ab9f0f5e7a720dff61f">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"var":["Marginalization","Vulnerabilities","low_income_nhood","hs_grad"],"n_distinct":[2,10000,2,10000],"mean":[0.2992,-0.00485,0.402,0.50549],"min":[0,-4.03282,0,0],"max":[1,3.55658,1,1]},"columns":[{"id":"var","name":"var","type":"character"},{"id":"n_distinct","name":"n_distinct","type":"numeric"},{"id":"mean","name":"mean","type":"numeric"},{"id":"min","name":"min","type":"numeric"},{"id":"max","name":"max","type":"numeric"}],"dataKey":"e9666770bb8e7af757d0963be6368e7a"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
-<div id="poor_nbhd-1" class="section level4">
-<h4>Poor_Nbhd == 1</h4>
+<div id="low_income_nhood-1" class="section level4">
+<h4>low_income_nhood == 1</h4>
 <p>If we look only at the subset of students living in a <em>low-income
 neighborhood</em>, the mean value of <strong>Marginalization</strong>
 can be interpreted as ‘the probability that a student belongs to a
 marginalized group, given that they live in a low-income neighborhood’,
 or</p>
-<p><em>P(Marginalization|Poor_Nbhd == 1)</em></p>
-<div class="reactable html-widget html-fill-item" id="htmlwidget-3d07882cda621b4cdce7" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-3d07882cda621b4cdce7">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"var":["Marginalization","Vulnerabilities","HSG_01"],"n_distinct":[2,11407,11407],"mean":[0.60533,1.61499,0.35835],"min":[0,0.84202,0.00562],"max":[1,4.20609,0.97886]},"columns":[{"id":"var","name":"var","type":"character"},{"id":"n_distinct","name":"n_distinct","type":"numeric"},{"id":"mean","name":"mean","type":"numeric"},{"id":"min","name":"min","type":"numeric"},{"id":"max","name":"max","type":"numeric"}],"dataKey":"da1af7402a30b63cf8b17907df7388cc"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<p><em>P(Marginalization|low_income_nhood == 1)</em></p>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-feaf258447a27f1bd854" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-feaf258447a27f1bd854">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"var":["Marginalization","Vulnerabilities","hs_grad"],"n_distinct":[2,4020,4020],"mean":[0.37065,0.87859,0.3347],"min":[0,-1.44245,0],"max":[1,3.55658,0.54223]},"columns":[{"id":"var","name":"var","type":"character"},{"id":"n_distinct","name":"n_distinct","type":"numeric"},{"id":"mean","name":"mean","type":"numeric"},{"id":"min","name":"min","type":"numeric"},{"id":"max","name":"max","type":"numeric"}],"dataKey":"eabb470eb203c1c38c1fa563f278b7ce"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
-<div id="poor_nbhd-0" class="section level4">
-<h4>Poor_Nbhd == 0</h4>
+<div id="low_income_nhood-0" class="section level4">
+<h4>low_income_nhood == 0</h4>
 <p>And if we focus only on students living in <em>non-low-income</em>
 neighborhoods, the mean value of <strong>Marginalization</strong> can be
 interpreted as ‘the probability that a student belongs to a marginalized
 group, given that they live in a higher-resourced neighborhood’, or</p>
-<p><em>P(Marginalization|Poor_Nbhd == 0)</em></p>
-<div class="reactable html-widget html-fill-item" id="htmlwidget-1d30ef60c1b3e492701e" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-1d30ef60c1b3e492701e">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"var":["Marginalization","Vulnerabilities","HSG_01"],"n_distinct":[2,88593,88593],"mean":[0.31598,-0.20391,0.80523],"min":[0,-4.3821,0.02372],"max":[1,1.49987,0.99975]},"columns":[{"id":"var","name":"var","type":"character"},{"id":"n_distinct","name":"n_distinct","type":"numeric"},{"id":"mean","name":"mean","type":"numeric"},{"id":"min","name":"min","type":"numeric"},{"id":"max","name":"max","type":"numeric"}],"dataKey":"a67609083bb01d36ca276642a72672fd"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<p><em>P(Marginalization|low_income_nhood == 0)</em></p>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-c74a1d025ff155b35dca" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-c74a1d025ff155b35dca">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"var":["Marginalization","Vulnerabilities","hs_grad"],"n_distinct":[2,5980,5980],"mean":[0.25117,-0.59874,0.6203],"min":[0,-4.03282,0.33618],"max":[1,1.61086,1]},"columns":[{"id":"var","name":"var","type":"character"},{"id":"n_distinct","name":"n_distinct","type":"numeric"},{"id":"mean","name":"mean","type":"numeric"},{"id":"min","name":"min","type":"numeric"},{"id":"max","name":"max","type":"numeric"}],"dataKey":"08993161ad0e335f808b153611da7abd"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 <p><br> <br></p>
 </div>
 </div>
@@ -581,18 +561,18 @@ neighborhoods? What is the nature of the relationship between
 now?</p>
 <div id="full-sample" class="section level4">
 <h4>Full sample</h4>
-<div class="reactable html-widget html-fill-item" id="htmlwidget-f68c70af4e35b233afee" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-f68c70af4e35b233afee">{"x":{"tag":{"name":"Reactable","attribs":{"data":{".rownames":["Marginalization","Vulnerabilities","Poor_Nbhd","HSG_01"],"Marginalization":[1,-0.004,0.193,-0.315],"Vulnerabilities":[-0.004,1,0.577,-0.654],"Poor_Nbhd":[0.193,0.577,1,-0.614],"HSG_01":[-0.315,-0.654,-0.614,1]},"columns":[{"id":".rownames","name":"","type":"character","sortable":false,"filterable":false,"rowHeader":true},{"id":"Marginalization","name":"Marginalization","type":"numeric"},{"id":"Vulnerabilities","name":"Vulnerabilities","type":"numeric"},{"id":"Poor_Nbhd","name":"Poor_Nbhd","type":"numeric"},{"id":"HSG_01","name":"HSG_01","type":"numeric"}],"dataKey":"31e2a1b08356143b62a9cfcaa07da9a1"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-1b4504a66c9c7ccfef26" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-1b4504a66c9c7ccfef26">{"x":{"tag":{"name":"Reactable","attribs":{"data":{".rownames":["Marginalization","Vulnerabilities","prob_low_income","hs_grad"],"Marginalization":[1,0.009,0.135,-0.285],"Vulnerabilities":[0.009,1,0.856,-0.905],"prob_low_income":[0.135,0.856,1,-0.891],"hs_grad":[-0.285,-0.905,-0.891,1]},"columns":[{"id":".rownames","name":"","type":"character","sortable":false,"filterable":false,"rowHeader":true},{"id":"Marginalization","name":"Marginalization","type":"numeric"},{"id":"Vulnerabilities","name":"Vulnerabilities","type":"numeric"},{"id":"prob_low_income","name":"prob_low_income","type":"numeric"},{"id":"hs_grad","name":"hs_grad","type":"numeric"}],"dataKey":"9f4807038e07031f40467c2b333c9c20"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
-<div id="poor_nbhd-1-1" class="section level4">
-<h4>Poor_Nbhd == 1</h4>
-<div class="reactable html-widget html-fill-item" id="htmlwidget-23f229bd148189f4e362" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-23f229bd148189f4e362">{"x":{"tag":{"name":"Reactable","attribs":{"data":{".rownames":["Marginalization","Vulnerabilities","HSG_01"],"Marginalization":[1,-0.518,-0.211],"Vulnerabilities":[-0.518,1,-0.2],"HSG_01":[-0.211,-0.2,1]},"columns":[{"id":".rownames","name":"","type":"character","sortable":false,"filterable":false,"rowHeader":true},{"id":"Marginalization","name":"Marginalization","type":"numeric"},{"id":"Vulnerabilities","name":"Vulnerabilities","type":"numeric"},{"id":"HSG_01","name":"HSG_01","type":"numeric"}],"dataKey":"0c09adbb8aa68b6db60fe14d9fdc9577"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div id="low_income_nhood-1-1" class="section level4">
+<h4>low_income_nhood == 1</h4>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-035c2094b6feaa53aa3f" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-035c2094b6feaa53aa3f">{"x":{"tag":{"name":"Reactable","attribs":{"data":{".rownames":["Marginalization","Vulnerabilities","prob_low_income","hs_grad"],"Marginalization":[1,-0.236,-0.28,-0.321],"Vulnerabilities":[-0.236,1,0.764,-0.742],"prob_low_income":[-0.28,0.764,1,-0.514],"hs_grad":[-0.321,-0.742,-0.514,1]},"columns":[{"id":".rownames","name":"","type":"character","sortable":false,"filterable":false,"rowHeader":true},{"id":"Marginalization","name":"Marginalization","type":"numeric"},{"id":"Vulnerabilities","name":"Vulnerabilities","type":"numeric"},{"id":"prob_low_income","name":"prob_low_income","type":"numeric"},{"id":"hs_grad","name":"hs_grad","type":"numeric"}],"dataKey":"573bcf6020c058315f64f563109d1ea1"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
-<div id="poor_nbhd-0-1" class="section level4">
-<h4>Poor_Nbhd == 0</h4>
-<div class="reactable html-widget html-fill-item" id="htmlwidget-dc6ec7958263a702e7ea" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-dc6ec7958263a702e7ea">{"x":{"tag":{"name":"Reactable","attribs":{"data":{".rownames":["Marginalization","Vulnerabilities","HSG_01"],"Marginalization":[1,-0.116,-0.261],"Vulnerabilities":[-0.116,1,-0.498],"HSG_01":[-0.261,-0.498,1]},"columns":[{"id":".rownames","name":"","type":"character","sortable":false,"filterable":false,"rowHeader":true},{"id":"Marginalization","name":"Marginalization","type":"numeric"},{"id":"Vulnerabilities","name":"Vulnerabilities","type":"numeric"},{"id":"HSG_01","name":"HSG_01","type":"numeric"}],"dataKey":"55945ba69a678a2bc2ff4e4db99a2339"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div id="low_income_nhood-0-1" class="section level4">
+<h4>low_income_nhood == 0</h4>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-ace51387a4ff70a8e2c0" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-ace51387a4ff70a8e2c0">{"x":{"tag":{"name":"Reactable","attribs":{"data":{".rownames":["Marginalization","Vulnerabilities","prob_low_income","hs_grad"],"Marginalization":[1,-0.05,0.347,-0.372],"Vulnerabilities":[-0.05,1,0.581,-0.826],"prob_low_income":[0.347,0.581,1,-0.635],"hs_grad":[-0.372,-0.826,-0.635,1]},"columns":[{"id":".rownames","name":"","type":"character","sortable":false,"filterable":false,"rowHeader":true},{"id":"Marginalization","name":"Marginalization","type":"numeric"},{"id":"Vulnerabilities","name":"Vulnerabilities","type":"numeric"},{"id":"prob_low_income","name":"prob_low_income","type":"numeric"},{"id":"hs_grad","name":"hs_grad","type":"numeric"}],"dataKey":"950fa8b3db79585ba56f8f267499f1d1"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div id="section" class="section level1">
@@ -611,113 +591,93 @@ id="estimating-the-effect-of-marginalization-on-high-school-graduation-under-col
 class="section level3 tabset">
 <h3 class="tabset">Estimating the effect of marginalization on High
 school graduation under collider bias.</h3>
-<div id="model-1-total-effect-with-full-data" class="section level4">
-<h4>Model 1: Total effect with full data</h4>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>lm_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(HSG_01 <span class="sc">~</span> Marginalization, <span class="at">data =</span> tb) <span class="co"># Total effect of Marginalization on HSG - </span></span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">summary</span>(lm_1)</span></code></pre></div>
+<div id="model-1-full-no-v" class="section level4">
+<h4>Model 1: Full (no V)</h4>
+<p>We first estimate parameters in linear regressions <strong>using
+student data in all neighborhoods (low-income and
+well-resourced)</strong> to see if we can recover the causal effect
+estimates of <strong>marginalization</strong> on
+<strong>hs_grad.</strong></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># Estimate parameters in linear regressions for all data (low-income and higher-resourced neighborhoods) to see if we can recover the causal effect estimates of Marginalization on hs_grad</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>lm_full <span class="ot">&lt;-</span> <span class="fu">lm</span>(hs_grad <span class="sc">~</span> Marginalization, <span class="at">data =</span> df)                <span class="co"># Observational realistic model (V unobserved)</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">summary</span>(lm_full)</span></code></pre></div>
 <pre><code>## 
 ## Call:
-## lm(formula = HSG_01 ~ Marginalization, data = tb)
+## lm(formula = hs_grad ~ Marginalization, data = df)
 ## 
 ## Residuals:
 ##      Min       1Q   Median       3Q      Max 
-## -0.79177 -0.10909  0.07004  0.15514  0.34431 
-## 
-## Coefficients:
-##                   Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)      0.8076057  0.0008612   937.8   &lt;2e-16 ***
-## Marginalization -0.1528826  0.0014578  -104.9   &lt;2e-16 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 0.2197 on 99998 degrees of freedom
-## Multiple R-squared:  0.09909,    Adjusted R-squared:  0.09908 
-## F-statistic: 1.1e+04 on 1 and 99998 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
-<div
-id="model-2-direct-effect-with-full-data-assuming-vulnerabilities-are-observed"
-class="section level4">
-<h4>Model 2: Direct effect with full data, assuming vulnerabilities are
-observed</h4>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>lm_2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(HSG_01 <span class="sc">~</span> Marginalization <span class="sc">+</span> Poor_Nbhd <span class="sc">+</span> Vulnerabilities, <span class="at">data =</span> tb)   <span class="co"># Direct Effect of Marginalization on HSG - Unbiased</span></span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="fu">summary</span>(lm_2)</span></code></pre></div>
-<pre><code>## 
-## Call:
-## lm(formula = HSG_01 ~ Marginalization + Poor_Nbhd + Vulnerabilities, 
-##     data = tb)
-## 
-## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -0.70530 -0.07972  0.02094  0.09927  0.62752 
-## 
-## Coefficients:
-##                   Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)      0.8223337  0.0006044  1360.7   &lt;2e-16 ***
-## Marginalization -0.1278791  0.0010295  -124.2   &lt;2e-16 ***
-## Poor_Nbhd       -0.2020323  0.0018901  -106.9   &lt;2e-16 ***
-## Vulnerabilities -0.1142652  0.0005884  -194.2   &lt;2e-16 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 0.1507 on 99996 degrees of freedom
-## Multiple R-squared:  0.5764, Adjusted R-squared:  0.5764 
-## F-statistic: 4.535e+04 on 3 and 99996 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
-<div
-id="model-3-direct-effect-with-full-data-on-neighborhoods-but-realistically-assuming-vulnerabilities-are-not-observed"
-class="section level4">
-<h4>Model 3: Direct effect with full data on neighborhoods but
-realistically assuming vulnerabilities are NOT observed</h4>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>lm_3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(HSG_01 <span class="sc">~</span> Marginalization <span class="sc">+</span> Poor_Nbhd, <span class="at">data =</span> tb) <span class="co"># Conditioning on poor neighborhoods, Direct effect of Marginalization on HSG is biased - controlling on a collider</span></span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">summary</span>(lm_3)</span></code></pre></div>
-<pre><code>## 
-## Call:
-## lm(formula = HSG_01 ~ Marginalization + Poor_Nbhd, data = tb)
-## 
-## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -0.78676 -0.09549  0.04817  0.12551  0.64084 
+## -0.46270 -0.13776  0.03409  0.11927  0.46435 
 ## 
 ## Coefficients:
 ##                  Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)      0.836527   0.000704 1188.24   &lt;2e-16 ***
-## Marginalization -0.099058   0.001196  -82.86   &lt;2e-16 ***
-## Poor_Nbhd       -0.418209   0.001793 -233.30   &lt;2e-16 ***
+## (Intercept)      0.535645   0.001855  288.73   &lt;2e-16 ***
+## Marginalization -0.100786   0.003392  -29.72   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 0.1768 on 99997 degrees of freedom
-## Multiple R-squared:  0.4166, Adjusted R-squared:  0.4166 
-## F-statistic: 3.571e+04 on 2 and 99997 DF,  p-value: &lt; 2.2e-16</code></pre>
+## Residual standard error: 0.1553 on 9998 degrees of freedom
+## Multiple R-squared:  0.08115,    Adjusted R-squared:  0.08106 
+## F-statistic: 883.1 on 1 and 9998 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
-<div
-id="model-4-direct-effect-with-data-on-low-income-neighborhoods-only-assuming-vulnerabilities-are-not-observed"
-class="section level4">
-<h4>Model 4: Direct effect with data on low-income neighborhoods only;
-assuming vulnerabilities are NOT observed</h4>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>lm_4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(HSG_01 <span class="sc">~</span> Marginalization, <span class="at">data =</span> tb[tb<span class="sc">$</span>Poor_Nbhd <span class="sc">==</span> <span class="dv">1</span>,]) <span class="co"># Conditional, Direct effect of Marginalization on HSG is biased</span></span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="fu">summary</span>(lm_4)</span></code></pre></div>
+<div id="model-2-full-with-v" class="section level4">
+<h4>Model 2: Full (with V)</h4>
+<p>If our data also captured Vulnerabilities (unfeasible in practice),
+we would be able to control for this confounder. This model should give
+a more precise estimate of the causal effect of
+<strong>marginalization</strong> on <strong>hs_grad</strong>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Finally assume we observed Vulnerabilities so we could control for this confounder</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>lm_ref <span class="ot">&lt;-</span> <span class="fu">lm</span>(hs_grad <span class="sc">~</span> Marginalization <span class="sc">+</span>  Vulnerabilities, <span class="at">data =</span> df)  <span class="co"># reference (unfeasible in practice)</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="fu">summary</span>(lm_ref)</span></code></pre></div>
 <pre><code>## 
 ## Call:
-## lm(formula = HSG_01 ~ Marginalization, data = tb[tb$Poor_Nbhd == 
+## lm(formula = hs_grad ~ Marginalization + Vulnerabilities, data = df)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.171132 -0.037177  0.000694  0.037447  0.189894 
+## 
+## Coefficients:
+##                   Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)      0.5340722  0.0006238  856.10   &lt;2e-16 ***
+## Marginalization -0.0979229  0.0011405  -85.86   &lt;2e-16 ***
+## Vulnerabilities -0.1476752  0.0005273 -280.05   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.05222 on 9997 degrees of freedom
+## Multiple R-squared:  0.8961, Adjusted R-squared:  0.8961 
+## F-statistic: 4.312e+04 on 2 and 9997 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div id="model-3-selected-low_income1" class="section level4">
+<h4>Model 3: Selected (low_income==1)</h4>
+<p>Here we assume <strong>we only have data for students living in
+low-income neighborhoods (selection on collider)</strong> and run the
+regression for this data.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># Now assume we only have data for students living in low-income neighborhoods (selection on collider) and run the regression for this data.</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>lm_sel  <span class="ot">&lt;-</span> <span class="fu">lm</span>(hs_grad <span class="sc">~</span> Marginalization, <span class="at">data =</span> df[df<span class="sc">$</span>low_income_nhood <span class="sc">==</span> <span class="dv">1</span>,])                       <span class="co"># selected-only</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="fu">summary</span>(lm_sel)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = hs_grad ~ Marginalization, data = df[df$low_income_nhood == 
 ##     1, ])
 ## 
 ## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -0.39761 -0.16724 -0.02854  0.14277  0.63766 
+##       Min        1Q    Median        3Q       Max 
+## -0.302692 -0.044936  0.006984  0.049444  0.221835 
 ## 
 ## Coefficients:
 ##                  Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)      0.413441   0.003077  134.38   &lt;2e-16 ***
-## Marginalization -0.091002   0.003954  -23.01   &lt;2e-16 ***
+## (Intercept)      0.353558   0.001440  245.53   &lt;2e-16 ***
+## Marginalization -0.050867   0.002365  -21.51   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 0.2064 on 11405 degrees of freedom
-## Multiple R-squared:  0.04438,    Adjusted R-squared:  0.04429 
-## F-statistic: 529.6 on 1 and 11405 DF,  p-value: &lt; 2.2e-16</code></pre>
+## Residual standard error: 0.07243 on 4018 degrees of freedom
+## Multiple R-squared:  0.1032, Adjusted R-squared:  0.103 
+## F-statistic: 462.5 on 1 and 4018 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <div id="compare-models" class="section level4">
 <h4>Compare models</h4>
@@ -727,34 +687,10 @@ collider bias is present.</p>
 <p>This is an example of how, even when we have population data (meaning
 data from all students in a school district), our estimates may carry
 bias.</p>
-<pre><code>## 
-## ==========================================================================
-##                      Dependent variable: High School Grad Probability     
-##                 ----------------------------------------------------------
-##                                           HSG_01                          
-##                 Total Effect Direct Effect Total Effect -V  Direct Biased 
-##                     (1)           (2)            (3)             (4)      
-## --------------------------------------------------------------------------
-## Marginalization  -0.153***     -0.128***      -0.099***       -0.091***   
-##                   (0.001)       (0.001)        (0.001)         (0.004)    
-##                                                                           
-## Poor_Nbhd                      -0.202***      -0.418***                   
-##                                 (0.002)        (0.002)                    
-##                                                                           
-## Vulnerabilities                -0.114***                                  
-##                                 (0.001)                                   
-##                                                                           
-## Constant          0.808***     0.822***       0.837***        0.413***    
-##                   (0.001)       (0.001)        (0.001)         (0.003)    
-##                                                                           
-## --------------------------------------------------------------------------
-## Spec details:     Unbiased     Unbiased     V unobs.total  V unobs. direct
-## Observations      100,000       100,000        100,000         11,407     
-## R2                 0.099         0.576          0.417           0.044     
-## ==========================================================================
-## Note:                                          *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-be6d53b5b4fef2f2c4f0" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-be6d53b5b4fef2f2c4f0">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"model":["Full (no V)","Full (no V)","Selected (low_income==1)","Selected (low_income==1)","Full (with V)","Full (with V)","Full (with V)"],"term":["(Intercept)","Marginalization","(Intercept)","Marginalization","(Intercept)","Marginalization","Vulnerabilities"],"estimate":[0.5356,-0.1008,0.3536,-0.0509,0.5341,-0.0979,-0.1477],"std.error":[0.0019,0.0034,0.0014,0.0024,0.0006,0.0011,0.0005],"statistic":[288.7284,-29.7162,245.5322,-21.5061,856.0997,-85.8598,-280.0491],"p.value":[0,0,0,0,0,0,0]},"columns":[{"id":"model","name":"model","type":"character"},{"id":"term","name":"term","type":"character"},{"id":"estimate","name":"estimate","type":"numeric"},{"id":"std.error","name":"std.error","type":"numeric"},{"id":"statistic","name":"statistic","type":"numeric"},{"id":"p.value","name":"p.value","type":"numeric"}],"dataKey":"f64fe593c1263b350f5c2bb31c425b87"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 <p><br> <br></p>
-<p><img src="Collider-bias_files/figure-html/plot1-1.png" width="672" /></p>
+<p><img src="Collider-bias-archive-version_files/figure-html/plot1-1.png" width="672" /></p>
 <p><br></p>
 <p><br></p>
 </div>
