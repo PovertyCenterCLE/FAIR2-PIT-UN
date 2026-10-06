@@ -1,6 +1,8 @@
 ---
 title: "PIT-IDS: Collider Bias"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 self_contained: false
 ---
 
@@ -21,7 +23,7 @@ library(ggrepel)
 library(tidyverse)
 library(broom)
 library(reactable)
-library(widgetframe)
+# library(widgetframe)
 library(patchwork)
 library(knitr)
 ```
@@ -181,8 +183,8 @@ tb %>%
     )
   ) %>% 
   pivot_wider(names_from = stat, values_from = V1) %>% 
-  mutate(across(c(mean, min, max), ~round(., 5))) %>% 
-  reactable()
+  mutate(across(c(mean, min, max), ~round(., 5))) #%>% 
+  # reactable()
 
 ```
 
@@ -214,8 +216,8 @@ tb %>%
     )
   ) %>% 
   pivot_wider(names_from = stat, values_from = V1) %>% 
-  mutate(across(c(mean, min, max), ~round(., 5))) %>% 
-  reactable()
+  mutate(across(c(mean, min, max), ~round(., 5))) #%>% 
+  # reactable()
 ```
 
 
@@ -248,8 +250,8 @@ tb %>%
     )
   ) %>% 
   pivot_wider(names_from = stat, values_from = V1) %>% 
-  mutate(across(c(mean, min, max), ~round(., 5))) %>% 
-  reactable()
+  mutate(across(c(mean, min, max), ~round(., 5))) #%>% 
+  # reactable()
 ```
 
 
@@ -272,7 +274,7 @@ What about when we restrict our data to students living in low-income neighborho
 ```{r corr1, echo=FALSE, message=FALSE, warning=FALSE}
 
 
-round(cor(tb %>% select(Marginalization, Vulnerabilities, Poor_Nbhd, HSG_01)), 3) %>% reactable()
+round(cor(tb %>% select(Marginalization, Vulnerabilities, Poor_Nbhd, HSG_01)), 3) #%>% reactable()
 
 ```
 
@@ -280,15 +282,13 @@ round(cor(tb %>% select(Marginalization, Vulnerabilities, Poor_Nbhd, HSG_01)), 3
 
 ```{r corr2, echo=FALSE, message=FALSE, warning=FALSE}
 
-round(cor(tb %>% filter(Poor_Nbhd=="1") %>% select(Marginalization, Vulnerabilities,  HSG_01)), 3) %>% 
-  reactable()
+round(cor(tb %>% filter(Poor_Nbhd=="1") %>% select(Marginalization, Vulnerabilities,  HSG_01)), 3) #%>% reactable()
 ```
 #### Poor_Nbhd == 0
 
 ```{r corr3, echo=FALSE, message=FALSE, warning=FALSE}
 
-round(cor(tb %>% filter(Poor_Nbhd=="0") %>% select(Marginalization, Vulnerabilities, HSG_01)), 3) %>% 
-  reactable()
+round(cor(tb %>% filter(Poor_Nbhd=="0") %>% select(Marginalization, Vulnerabilities, HSG_01)), 3) #%>% reactable()
 ```
 # 
 
@@ -409,21 +409,15 @@ get_coef_ci <- function(mod, term = "Marginalization") {
 }
 
 
-x1 <- get_coef_ci(lm_1) %>% mutate(model = "Model 1")
-x2 <- get_coef_ci(lm_2) %>% mutate(model = "Model 2")
-x3 <- get_coef_ci(lm_3) %>% mutate(model = "Model 3")
-x4 <- get_coef_ci(lm_4) %>% mutate(model = "Model 4")
+x1 <- get_coef_ci(lm_1) %>% mutate(model = "lm_1")
+x2 <- get_coef_ci(lm_2) %>% mutate(model = "lm_2")
+x3 <- get_coef_ci(lm_3) %>% mutate(model = "lm_3")
+x4 <- get_coef_ci(lm_4) %>% mutate(model = "lm_4")
 
 
 coef_all <- bind_rows(x1,  x2, x3, x4) %>% 
   mutate(across(where(is.numeric), ~round(.,4)))
 
-# coef_all <- coef_all %>% 
-#   mutate(
-#     model = case_when(
-#       
-#     )
-#   )
 
 
 
@@ -444,8 +438,6 @@ ggplot(coef_all, aes(x = model, y = estimate)) +
   labs(title = "Marginalization coefficient (95% CI) across models",
        y = "Estimate (difference in HSG, 0-1 scale)", x = "") +
   theme_minimal()
-
-
 
 ```
 
