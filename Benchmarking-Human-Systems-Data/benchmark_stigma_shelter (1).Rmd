@@ -1,0 +1,267 @@
+---
+title: "From Admissible Perturbation to Perturbation Interval"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+library(tidyverse)
+library(dagitty)
+set.seed(1111)
+
+```
+# Benchmark simulation: stigma, shelter use, and prioritization
+
+This R Markdown file reproduces the simulation in Section IV-C of the paper Technical Veracity is Not Representational Veracity: Community-Grounded Perturbation for Benchmarking Human-Systems Data. It generates two-period data from the DAG in Figure 1 using logistic equations for latent housing need ($Y_1$, $Y_2$) and a binomial model for shelter nights ($X_1$).
+The algorithm is a fixed rule, score = $X_1$, and the top 20% of scores are placed. No model is trained, and $Y_2$ is used only to evaluate who is placed.
+
+The code applies two perturbations: more cold nights ($c$, the admissible perturbation, which changes shelter use but not need) and random noise ($q$,the share of shelter counts replaced with another person's). It reports recall
+among people who truly need housing, for stigmatized and non-stigmatized people,and the gap between them, across each perturbation interval. It produces output presented in Table I. All parameters are invented for illustration, and results use seed 1111 with $n = 50{,}000$.
+
+## 1. The DAG assuming two periods and a score to prioritize shelter use in period 2 based on period 1 shelter use
+
+```{r dag}
+# SG = stigmatized identity; Y1, Y2 = (latent) housing need in periods 1 and 2
+# x1 = shelter nights in period 1; Cold = share of cold nights in period 1
+# Score = algorithm's priority score (uses x1 only)
+dag <- dagitty('dag {
+bb="-2.37,-4.697,3.894,4.778"
+Cold [pos="0.621,1.158"]
+SG [pos="2.403,-2.185"]
+Score [pos="2.169,2.469"]
+Y1 [latent,pos="0.500,-2.277"]
+Y2 [latent,pos="1.556,-1.114"]
+x1 [pos="1.596,1.103"]
+Cold -> x1
+SG -> Y1
+SG -> Y2
+SG -> x1
+Y1 -> Y2
+Y1 -> x1
+x1 -> Score
+}
+')
+plot(dag)
+# 
+# # Admissibility: cold does not change need
+# dseparated(dag, "Cold", "Y2", list())            # TRUE
+# dseparated(dag, "Cold", "Y2", c("Y1", "SG"))     # TRUE
+# # But the algorithm's score does depend on cold, through x1
+# dseparated(dag, "Cold", "Score", list())         # FALSE
+# # x1 is a collider: conditioning on it links need and cold
+# dseparated(dag, "Cold", "Y2", "x1")              # FALSE
+```
+
+## 2. Parameters for functional forms to generate data.
+Artificially set for simulation. We assume 30 days per period.
+
+```{r parameters}
+pars <- list(
+  p_sg     = 0.20,                                   # share stigmatized
+  n_nights = 30,                                     # nights observed per period
+  y1       = c(b0 = -1.6, sg = 0.6),                 # housing need in period 1
+  y2       = c(b0 = -2.4, lag = 2.5, sg = 0.6),      # housing need in period 2
+  shelter  = c(b0 = -3, need = 3, cold = 3, stigma = 2.5)
+)
+cold_base <- 0.05    # 5% of nights are cold in a normal period
+```
+
+## 3. Simulate people and shelter use based on DAG and functional forms
+
+```{r simulate}
+# Step A: need in both periods. This simple example assumes need is independent from weather.
+ 
+simulate_people <- function(n) {
+  SG   <- rbinom(n, 1, pars$p_sg)
+  p_y1 <- plogis(pars$y1[["b0"]] + pars$y1[["sg"]] * SG)
+  Y1   <- rbinom(n, 1, p_y1)
+  p_y2 <- plogis(pars$y2[["b0"]] + pars$y2[["lag"]] * Y1 + pars$y2[["sg"]] * SG)
+  Y2   <- rbinom(n, 1, p_y2)
+  # u: one fixed uniform number per person, reused across weather scenarios
+  tibble(SG, Y1, p_y2, Y2, u = runif(n))
+}
+
+# Step B: Count of shelter nights in period 1, given need, stigma and cold.
+# qbinom(u, ...) is a binomial draw that reuses the same u across scenarios, so the same people can be compared under different weather.
+add_shelter <- function(people, cold) {
+  s   <- pars$shelter
+  eta <- s[["b0"]] + people$Y1 * (s[["need"]] + s[["cold"]] * cold - s[["stigma"]] * people$SG)
+  people$x1 <- qbinom(people$u, size = pars$n_nights, prob = plogis(eta))
+  people
+}
+
+# Step C: the NAIVE (standard) perturbation. A share q of people get another random person's shelter count. It ignores SG, need and weather.
+add_noise <- function(d, q) {
+  swap <- runif(nrow(d)) < q
+  d$x1[swap] <- sample(d$x1)[swap]
+  d
+}
+
+# Look at the DGP: average shelter nights by need and SG, normal weather
+add_shelter(simulate_people(10000), cold_base) %>%
+  group_by(Y1, SG) %>%
+  summarise(mean_nights = mean(x1), .groups = "drop")
+```
+
+## 4. Metrics
+
+```{r metrics}
+# Expected top-k placement. 
+# Tied people at the cutoff share the remaining slots fractionally to removes random tie-breaking noise.
+expected_placed <- function(score, k = 0.20) {
+  m     <- ceiling(k * length(score))
+  cut   <- sort(score, decreasing = TRUE)[m]
+  above <- sum(score > cut)
+  tied  <- sum(score == cut)
+  ifelse(score > cut, 1, ifelse(score == cut, (m - above) / tied, 0))
+}
+
+evaluate <- function(d, score, k = 0.20) {
+  w    <- expected_placed(score, k)
+  need <- d$Y2 == 1
+  tibble(
+    recall_stigmatized       = mean(w[need & d$SG == 1]),  # stigmatized in need who are placed
+    recall_non         = mean(w[need & d$SG == 0]),
+    gap                = recall_stigmatized - recall_non,
+    share_stigmatized_placed = sum(w[d$SG == 1]) / sum(w), # stigmatized share of the top 20%
+    share_stigmatized_need   = mean(d$SG[need])            # stigmatized share of true need
+  )
+}
+```
+# 4. A simulated data check
+```{r }
+# Check People 
+set.seed(1111)
+people <- simulate_people(1000)
+
+# The same people under normal weather and under more cold nights
+d_normal <- add_shelter(people, cold_base)   # 5% cold nights
+d_cold   <- add_shelter(people, 0.50)        # 50% cold nights
+
+side_by_side <- people %>%
+  mutate(id = row_number(),
+         x1_normal = d_normal$x1,
+         x1_cold   = d_cold$x1) %>%
+  select(id, SG, Y1, Y2, p_y2, u, x1_normal, x1_cold)
+
+# People with no need (Y1 = 0) should be unchanged
+side_by_side %>% filter(Y1 == 0) %>% summarise(changed = sum(x1_normal != x1_cold))
+
+
+# Among people in need, who changed, and by how much?
+side_by_side %>%
+  filter(Y1 == 1) %>%
+  group_by(SG) %>%
+  summarise(n = n(),
+            mean_nights_normal = mean(x1_normal),
+            mean_nights_cold   = mean(x1_cold))
+```
+
+## 5. The algorithm is a fixed rule (shelter_rule): score = shelter nights in period 1 (x1).
+
+```{r Experiment}
+run_experiment <- function(n_test = 50000) {
+  # One population; only the shelter records change across scenarios
+  people <- simulate_people(n_test)
+  d_base <- add_shelter(people, cold_base)
+
+  score_and_eval <- function(d, label, value) {
+    scores <- list(
+      shelter_rule = d$x1,    # fixed rule: more past shelter nights = higher priority
+      oracle       = d$p_y2   # reference: P(Y2 = 1 | Y1, SG); no real algorithm sees Y1
+    )
+    map_dfr(names(scores), function(m)
+      evaluate(d, scores[[m]]) %>%
+        mutate(model = m, perturbation = label, value = value))
+  }
+
+  noise <- map_dfr(c(0, 0.1, 0.2, 0.3, 0.4, 0.5), function(q)
+    score_and_eval(add_noise(d_base, q),
+                   "Standard: random noise (share of records)", q))
+  cold  <- map_dfr(c(0.05, 0.25, 0.50, 0.75, 1.00), function(cd)
+    score_and_eval(add_shelter(people, cd),
+                   "Informed: more cold nights", cd))
+
+  bind_rows(noise, cold)
+}
+
+set.seed(1111)
+sweeps <- run_experiment()
+
+# Full results at every perturbation level
+sweeps %>%
+  filter(model == "shelter_rule") %>%
+  select(perturbation, value, recall_stigmatized, recall_non, gap,
+         share_stigmatized_placed, share_stigmatized_need) %>%
+  mutate(across(where(is.numeric), ~ round(.x, 3))) %>%
+  print(n = Inf)
+  
+```
+
+```{r plot}
+sweeps %>%
+  pivot_longer(c(recall_stigmatized, share_stigmatized_placed),
+               names_to = "metric", values_to = "y") %>%
+  mutate(metric = recode(metric,
+           recall_stigmatized       = "Recall: stigmatized people in need who are placed",
+           share_stigmatized_placed = "Stigmatized share of the priority list")) %>%
+  ggplot(aes(value, y, colour = model)) +
+  geom_line() + geom_point() +
+  facet_grid(metric ~ perturbation, scales = "free",
+             labeller = labeller(.rows = label_wrap_gen(22),
+                                 .cols = label_wrap_gen(30))) +
+  labs(title = "How do stigmatized people fare in the top-20% priority list?",
+       #subtitle = "The flat oracle line shows need is unchanged by both perturbations",
+       x = "Perturbation level", y = NULL) +
+  theme_minimal()
+```
+
+## 6. Perturbation Interval  
+
+```{r perturbation table}
+interval_table <- sweeps %>%
+  group_by(perturbation, model) %>%
+  arrange(value, .by_group = TRUE) %>%
+  summarise(
+    level_from        = first(value),
+    level_to          = last(value),
+    recall_stig_from  = first(recall_stigmatized),
+    recall_stig_to    = last(recall_stigmatized),
+    recall_non_from   = first(recall_non),
+    recall_non_to     = last(recall_non),
+    gap_from          = first(gap),
+    gap_to            = last(gap),
+    list_share_from   = first(share_stigmatized_placed),
+    list_share_to     = last(share_stigmatized_placed),
+    .groups = "drop"
+  ) %>%
+  mutate(
+    level_means = if_else(grepl("Informed", perturbation),
+                          "share of cold nights",
+                          "share of shelter records replaced by another person's"),
+    change_recall_stig = recall_stig_to - recall_stig_from,
+    change_recall_non  = recall_non_to  - recall_non_from,
+    change_gap         = gap_to - gap_from
+  ) %>%
+  relocate(level_means, .after = perturbation) %>%
+  mutate(across(where(is.numeric), ~ round(.x, 3)))
+
+# Compact view: how much does each metric move across the interval?
+interval_table %>%
+  select(perturbation, model, level_from, level_to,
+         change_recall_stig, change_recall_non, change_gap) %>%
+  knitr::kable(caption = "Change in each metric across the perturbation interval")
+
+# Full view: values at both ends of the interval
+interval_table %>%
+  select(perturbation, model, level_from, level_to,
+         recall_stig_from, recall_stig_to,
+         recall_non_from,  recall_non_to,
+         gap_from, gap_to) %>%
+  knitr::kable(caption = "Metric values at the start and end of each interval")
+
+# Share of true need that is stigmatized (the same in every scenario)
+unique(round(sweeps$share_stigmatized_need, 2))
+```
